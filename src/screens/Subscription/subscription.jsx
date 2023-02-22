@@ -17,7 +17,7 @@ function Subscription() {
   return (
     <View style={styles.MainView}>
         <Header title="Subscription"/>
-        <View style={{borderWidth:1}}>
+        <View>
             <Text style={styles.NameText}>Hello Abhishek</Text>
         </View>
         <TouchableOpacity style={[styles.MainBox,{borderWidth:CheckBox1?2:0,borderColor:CheckBox1?"#F05656":"green"}]} onPress={Check} >
