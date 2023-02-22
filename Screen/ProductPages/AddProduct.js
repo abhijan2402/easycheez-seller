@@ -2,15 +2,12 @@ import React from 'react'
 import { Text, View, StyleSheet, Dimensions, ScrollView, TextInput, Image, TouchableOpacity } from 'react-native'
 const windoWidth = Dimensions.get('window').width;
 const windoHeight = Dimensions.get('window').height;
-import ToastManager, { Toast } from 'toastify-react-native'
 function AddProduct() {
     const showToasts = () => {
         console.log("hey")
-        Toast.success('Promised is resolved')
     }
     return (<>
         <ScrollView style={styles.MainView}>
-            <ToastManager />
             <View style={styles.Header}>
                 <Text style={styles.HeaderText}>Add Product</Text>
             </View>
