@@ -12,6 +12,7 @@ import {
   Text,
   View,
 } from 'react-native';
+import AddProduct from './Screen/ProductPages/AddProduct';
 
 
 /* $FlowFixMe[missing-local-annot] The type annotation(s) required by Flow's
@@ -21,9 +22,7 @@ import {
 const App = () => {
   return (
     <>
-      <View>
-        <Text>hi</Text>
-      </View>
+      <AddProduct />
     </>
   );
 };
