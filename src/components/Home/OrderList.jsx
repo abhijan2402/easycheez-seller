@@ -3,9 +3,8 @@ import { Dimensions, FlatList, Image, Modal, Pressable, ScrollView, StyleSheet, 
 
 
 const {width,height}=Dimensions.get('window');
-import { orderDetails } from "../../data/orderDetails";
 
-const OrderList=()=>{
+const OrderList=({orderList})=>{
     const [showmodal,setShowModal]=useState(false);
     const [selectedOrder,setSelectedOrder]=useState('');
     const orderCard=(({item})=>(
@@ -39,7 +38,9 @@ const OrderList=()=>{
                     <Image style={{width:15,height:15,marginLeft:4}} source={{uri:"https://cdn-icons-png.flaticon.com/128/32/32195.png"}} />
                 </Pressable>
                 <Pressable style={{flexDirection:"row",justifyContent: 'center',alignItems: 'center',}}>
-                    <Image style={{width:15,height:15,marginRight:4}} source={{uri:"https://cdn-icons-png.flaticon.com/128/545/545661.png"}} />
+                    {
+                        item.orderStatus==="In progress"?<Image style={{width:15,height:15,marginRight:4}} source={{uri:"https://cdn-icons-png.flaticon.com/128/545/545661.png"}} />:null
+                    }
                     <Text style={styles.titleHeader}>{item.orderStatus}</Text>
                 </Pressable>
             </View>
@@ -48,7 +49,7 @@ const OrderList=()=>{
     return(
         <View>
             <FlatList
-                data={orderDetails}
+                data={orderList}
                 keyExtractor={item=>item.OrderID}
                 renderItem={orderCard}
             />  

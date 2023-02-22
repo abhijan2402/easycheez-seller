@@ -7,9 +7,9 @@ import {
 } from 'react-native';
 const {width,height}=Dimensions.get('window');
 
-const OrderButton=({title,backgroundcolor,textColor})=>{
+const OrderButton=({title,backgroundcolor,textColor,checkForActivOrders})=>{
     return(
-        <TouchableOpacity style={[styles.buttonBody,{backgroundColor:backgroundcolor}]}>
+        <TouchableOpacity style={[styles.buttonBody,{backgroundColor:backgroundcolor}]} onPress={()=>checkForActivOrders()}>
             <Text style={{fontWeight:"bold",color:textColor}}>{title}</Text>
         </TouchableOpacity>
     )

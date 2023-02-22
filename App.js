@@ -1,12 +1,15 @@
 import React from 'react';
 import Home from './src/screens/home/Home';
+import Orders from './src/screens/home/Orders';
+import AddProduct from './src/screens/Products/AddProduct';
 import Subscription from './src/screens/Subscription/subscription';
-// import AddProduct from './Screen/ProductPages/AddProduct';
 const App = () => {
   return (
     <>
-      <Subscription />
+      <Orders/>
+      {/* <AddProduct /> */}
       {/* <Home /> */}
+      {/* <Subscription/> */}
     </>
   );
 };
