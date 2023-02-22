@@ -2,9 +2,15 @@ import React from 'react'
 import { Text, View, StyleSheet, Dimensions, ScrollView, TextInput, Image, TouchableOpacity } from 'react-native'
 const windoWidth = Dimensions.get('window').width;
 const windoHeight = Dimensions.get('window').height;
+import ToastManager, { Toast } from 'toastify-react-native'
 function AddProduct() {
-    return (
+    const showToasts = () => {
+        console.log("hey")
+        Toast.success('Promised is resolved')
+    }
+    return (<>
         <ScrollView style={styles.MainView}>
+            <ToastManager />
             <View style={styles.Header}>
                 <Text style={styles.HeaderText}>Add Product</Text>
             </View>
@@ -28,11 +34,12 @@ function AddProduct() {
                         <Image source={{ uri: "https://cdn-icons-png.flaticon.com/128/9778/9778869.png" }} style={styles.ImageAdd} />
                     </View>
                 </View>
-                <TouchableOpacity style={styles.AddBtn}>
+                <TouchableOpacity onPress={() => Toast.info('Lorem ipsum info', 'top')} style={styles.AddBtn}>
                     <Text style={styles.AddBtnText}>Add</Text>
                 </TouchableOpacity>
             </View>
         </ScrollView>
+    </>
     )
 }
 
@@ -43,7 +50,6 @@ const styles = StyleSheet.create({
         backgroundColor: "white"
     },
     Header: {
-        // borderWidth: 1,
         height: windoHeight / 8,
         justifyContent: "center",
         alignItems: "center"
@@ -103,6 +109,5 @@ const styles = StyleSheet.create({
         fontWeight: "700",
         fontSize: 17
     }
-
 });
 export default AddProduct
