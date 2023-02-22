@@ -1,10 +1,12 @@
 import React from 'react';
-// import AddProduct from './Screen/ProductPages/AddProduct';
 import Home from './src/screens/home/Home';
+import Subscription from './src/screens/Subscription/subscription';
+// import AddProduct from './Screen/ProductPages/AddProduct';
 const App = () => {
   return (
     <>
-      <Home />
+      <Subscription />
+      {/* <Home /> */}
     </>
   );
 };

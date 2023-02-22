@@ -7,9 +7,6 @@ function Header({title}) {
     <View style={styles.Header}>
         <Text style={styles.HeaderText}>{title}</Text>
     </View>
-    <View>
-        <Image source={{uri:"https://img.freepik.com/free-vector/logistics-concept-illustration_114360-1561.jpg"}} style={styles.Image}/>
-    </View>
   </>
   )
 }
@@ -25,10 +22,5 @@ HeaderText: {
     color: "black",
     fontWeight: "700"
 },
-Image:{
-    width:windoWidth,
-    height:windoHeight/3.5,
-
-}
 })
 export default Header
