@@ -12,8 +12,8 @@ import {
   Text,
   View,
 } from 'react-native';
-import AddProduct from './Screen/ProductPages/AddProduct';
 import Orders from './src/screens/home/Orders';
+import AddProduct from './src/screens/Products/AddProduct';
 
 
 /* $FlowFixMe[missing-local-annot] The type annotation(s) required by Flow's
