@@ -14,14 +14,14 @@ const App = () => {
   const Stack = createNativeStackNavigator();
   return (
     <>
-      <Package />
+      {/* <Package /> */}
       {/* <Orders/> */}
       {/* <AddProduct /> */}
       {/* <Home /> */}
       {/* <Subscription/> */}
       {/* <Profile/> */}
       {/* <AccountDetails/> */}
-      {/* <StoreRegistration/> */}
+      <StoreRegistration/>
       {/* <NavigationContainer>
          <Stack.Navigator initialRouteName='Bottomtab' screenOptions={{headerShown:false}}>
                <Stack.Screen name='Bottomtab' component={MainNavigation}/>

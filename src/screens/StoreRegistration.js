@@ -1,7 +1,15 @@
 import { StyleSheet, Text, View,Image,ScrollView,TextInput,TouchableOpacity  } from 'react-native'
-import React from 'react'
-import { Dropdown } from 'react-native-element-dropdown';
+import React, { useState } from 'react'
+import { SelectList } from 'react-native-dropdown-select-list'
 const StoreRegistration = () => {
+    const[select,setSelected]=useState("");
+  const data=[
+    {key:'1',value:'A'},
+    {key:'2',value:'B'},
+    {key:'3',value:'C'},
+    {key:'4',value:'D'},
+    {key:'5',value:'E'},
+  ]
   return (
     <ScrollView style={{backgroundColor:"white"}}>
       <View style={{alignItems:"center",marginTop:25}}>
@@ -46,10 +54,10 @@ const StoreRegistration = () => {
           </View>
           <View>
             <Text style={{fontWeight: '700',fontSize:16,color:"black",marginLeft:50,marginTop: 20}}>Select Category</Text>
-            <TextInput style={{height: 44,width: 279,marginLeft: 50,marginTop: 10,borderRadius:10,borderColor:"black",borderWidth:1}}
-              placeholder={'Add Category'}
-             />
-             {/* <Dropdown/> */}
+            <SelectList boxStyles={{height: 44,width: 279,marginLeft: 50,marginTop: 10,borderRadius:10,borderColor:"black",borderWidth:1}}
+              placeholder={'Add Category'} data={data} setSelected={setSelected}
+              dropdownStyles={{width: 279,marginLeft: 50,}}
+              />
           </View>
           <View>
             <Text style={{fontWeight: '700',fontSize:16,color:"black",marginLeft:50,marginTop: 20}}>Shop No</Text>
