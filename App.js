@@ -10,6 +10,10 @@ import StoreRegistration from './src/screens/StoreRegistration';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import MainNavigation from './src/MainNavigation';
+import StoreAnalysis from './src/screens/StoreAnalysis';
+import SetProductDetails from './src/screens/SetProductDetails';
+
+
 const App = () => {
   const Stack = createNativeStackNavigator();
   return (
@@ -21,7 +25,7 @@ const App = () => {
       {/* <Subscription/> */}
       {/* <Profile/> */}
       {/* <AccountDetails/> */}
-      <StoreRegistration/>
+      <StoreAnalysis/>
       {/* <NavigationContainer>
          <Stack.Navigator initialRouteName='Bottomtab' screenOptions={{headerShown:false}}>
                <Stack.Screen name='Bottomtab' component={MainNavigation}/>
