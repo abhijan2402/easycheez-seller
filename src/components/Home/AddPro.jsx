@@ -4,10 +4,10 @@ const windoWidth = Dimensions.get('window').width;
 const windoHeight = Dimensions.get('window').height;
 function AddPro() {
   return (
-    <View style={styles.MainView}>
+    <TouchableOpacity style={styles.MainView}>
         <Image source={require("../../assets/WhitePlus-removebg.png")} style={styles.Image}/>
         <Text style={styles.Text}>Products</Text>
-    </View>
+    </TouchableOpacity>
   )
 }
 const styles = StyleSheet.create({

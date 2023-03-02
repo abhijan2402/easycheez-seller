@@ -1,7 +1,7 @@
 import { View, Text,Image,ScrollView,TextInput,TouchableOpacity } from 'react-native'
 import React from 'react'
 
-const Profile = () => {
+const Profile = ({navigation}) => {
   return (
  
     <ScrollView style={{backgroundColor:"white"}}>
@@ -52,7 +52,7 @@ const Profile = () => {
           </View>
          
           <TouchableOpacity style={{height: 44,width: 279,marginLeft: 50,marginTop: 30,backgroundColor: '#F05656',borderRadius: 20,marginBottom: 10,}}>
-              <Text style={{textAlign: 'center', marginTop: 13,color: 'white',fontSize: 15,fontWeight: '500'}}>Get Started</Text>
+              <Text style={{textAlign: 'center', marginTop: 13,color: 'white',fontSize: 15,fontWeight: '500'}} onPress={()=>{navigation.navigate('StoreRegistration')}}>Get Started</Text>
           </TouchableOpacity>
 
           <View style={{marginBottom:24}}></View>

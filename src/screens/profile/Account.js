@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Image, Dimensions, TouchableOpacity } from 'rea
 import Header from '../../components/Home/Header'
 const windoWidth = Dimensions.get('window').width;
 const windoHeight = Dimensions.get('window').height;
-function Account() {
+function Account({navigation}) {
     return (
         <View style={{ width: windoWidth, height: windoHeight, backgroundColor: "white" }}>
             <Header title="Account" />
@@ -15,7 +15,7 @@ function Account() {
                 <Text style={{ fontSize: 15, fontWeight: "700", marginLeft: 20, marginVertical: 10 }}>Options</Text>
                 <View style={[styles.OptiionView, { marginTop: 25 }]}>
                     <Image source={{ uri: "https://cdn-icons-png.flaticon.com/128/5643/5643764.png" }} style={styles.LogoImage} />
-                    <Text style={styles.OptionText}>Orders</Text>
+                    <Text style={styles.OptionText} onPress={()=>{navigation.navigate('Orders')}}>Orders</Text>
                     <Image source={{ uri: "https://cdn-icons-png.flaticon.com/128/2989/2989988.png" }} style={styles.LogoImage} />
                 </View>
                 <View style={styles.OptiionView}>
@@ -30,7 +30,7 @@ function Account() {
                 </View>
                 <View style={styles.OptiionView}>
                     <Image source={{ uri: "https://cdn-icons-png.flaticon.com/128/8822/8822225.png" }} style={styles.LogoImage} />
-                    <Text style={styles.OptionText}>Subscription</Text>
+                    <Text style={styles.OptionText} onPress={()=>{navigation.navigate('Subscription')}}>Subscription</Text>
                     <Image source={{ uri: "https://cdn-icons-png.flaticon.com/128/2989/2989988.png" }} style={styles.LogoImage} />
                 </View>
 

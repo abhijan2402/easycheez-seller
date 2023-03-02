@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View,Image,ScrollView,TextInput,TouchableOpacity } from 'react-native'
 import React from 'react'
 
-const AccountDetails = () => {
+const AccountDetails = ({navigation}) => {
   return (
   
  
@@ -43,7 +43,7 @@ const AccountDetails = () => {
               </View>
              
               <TouchableOpacity style={{height: 44,width: 279,marginLeft: 50,marginTop: 30,backgroundColor: '#F05656',borderRadius: 20,marginBottom: 10,}}>
-                  <Text style={{textAlign: 'center', marginTop: 13,color: 'white',fontSize: 15,fontWeight: '500'}}>Add</Text>
+                  <Text style={{textAlign: 'center', marginTop: 13,color: 'white',fontSize: 15,fontWeight: '500'}} onPress={()=>{navigation.navigate('Bottomtab')}}>Add</Text>
               </TouchableOpacity>
     
               <View style={{marginBottom:24}}></View>

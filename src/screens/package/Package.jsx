@@ -26,6 +26,7 @@ function Package() {
         <TouchableOpacity style={styles.Btn}>
             <Text style={styles.BtnText}>Proceed</Text>
         </TouchableOpacity>
+        <View style={{marginBottom:35}}></View>
     </ScrollView>
   )
 }

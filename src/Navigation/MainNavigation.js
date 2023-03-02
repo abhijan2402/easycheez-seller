@@ -4,9 +4,9 @@ import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 
-import Profile from './screens/Profile';
-import AccountDetails from './screens/AccountDetails';
-import StoreRegistration from './screens/StoreRegistration';
+import Home from "../screens/home/Home"
+import Package from '../screens/package/Package';
+import AccountNavigation from './AccountNavigation';
 
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
@@ -21,7 +21,7 @@ const MainNavigation = () => {
             tabBarStyle:[ {position:"absolute",elevation:0,backgroundColor:"#ffffff",borderTopWidth:1,borderTopColor:"#808080",height:54,},],
           }}
       >
-      <Tab.Screen name="Profile" component={Profile} options={{
+      <Tab.Screen name="Home" component={Home} options={{
         tabBarIcon:({focused})=>(
           <View style={{alignItems:'center',justifyContent:'center'}}>
             <Ionicons name='home'  color={focused ? '#F05656' : '#808080'} size={22}/>
@@ -30,7 +30,7 @@ const MainNavigation = () => {
         )
         }}/>
 
-        <Tab.Screen name='Account' component={AccountDetails} options={{
+        <Tab.Screen name='Package' component={Package} options={{
            tabBarIcon:({focused})=>(
              <View style={{alignItems:'center',justifyContent:'center'}}>
                 <FontAwesome5 name='shopping-cart' color={focused ? '#F05656' : '#808080'} size={22}/>
@@ -40,7 +40,7 @@ const MainNavigation = () => {
            }}
         />
 
-        <Tab.Screen name="Store" component={StoreRegistration} options={{
+        <Tab.Screen name="AccountNav" component={AccountNavigation} options={{
            tabBarIcon:({focused})=>(
               <View style={{alignItems:'center',justifyContent:'center'}}>
                 <Ionicons name='person' color={focused ? '#F05656' : '#808080'} size={22}/>

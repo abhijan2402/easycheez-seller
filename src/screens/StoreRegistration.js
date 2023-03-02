@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View,Image,ScrollView,TextInput,TouchableOpacity  } from 'react-native'
 import React, { useState } from 'react'
 import { SelectList } from 'react-native-dropdown-select-list'
-const StoreRegistration = () => {
+const StoreRegistration = ({navigation}) => {
     const[select,setSelected]=useState("");
   const data=[
     {key:'1',value:'A'},
@@ -79,7 +79,7 @@ const StoreRegistration = () => {
           </View>
          
           <TouchableOpacity style={{height: 44,width: 279,marginLeft: 50,marginTop: 30,backgroundColor: '#F05656',borderRadius: 20,marginBottom: 10,}}>
-              <Text style={{textAlign: 'center', marginTop: 13,color: 'white',fontSize: 15,fontWeight: '500'}}>Add</Text>
+              <Text style={{textAlign: 'center', marginTop: 13,color: 'white',fontSize: 15,fontWeight: '500'}} onPress={()=>{navigation.navigate('AccountDetails')}}>Add</Text>
           </TouchableOpacity>
 
           <View style={{marginBottom:24}}></View>

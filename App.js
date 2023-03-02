@@ -9,7 +9,7 @@ import AccountDetails from './src/screens/AccountDetails';
 import StoreRegistration from './src/screens/StoreRegistration';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import MainNavigation from './src/MainNavigation';
+import MainNavigation from '../easycheez-seller/src/Navigation/MainNavigation';
 import StoreAnalysis from './src/screens/StoreAnalysis';
 import SetProductDetails from './src/screens/SetProductDetails';
 import Account from './src/screens/profile/Account';
@@ -24,17 +24,21 @@ const App = () => {
       {/* <Package /> */}
       {/* <Orders/> */}
       {/* <AddProduct /> */}
-      <Home />
+      {/* <Home /> */}
       {/* <Subscription/> */}
       {/* <Profile/> */}
       {/* <AccountDetails/> */}
       {/* <StoreAnalysis/> */}
 
-      {/* <NavigationContainer>
-         <Stack.Navigator initialRouteName='Bottomtab' screenOptions={{headerShown:false}}>
+      <NavigationContainer>
+         <Stack.Navigator initialRouteName='Profile' screenOptions={{headerShown:false}}>
+                <Stack.Screen name='Profile' component={Profile}/>
+               <Stack.Screen name='StoreRegistration' component={StoreRegistration}/>
+               <Stack.Screen name='AccountDetails' component={AccountDetails}/>
                <Stack.Screen name='Bottomtab' component={MainNavigation}/>
+               {/* <Stack.Screen name='Bottomtab' component={MainNavigation}/> */}
          </Stack.Navigator>
-      </NavigationContainer> */}
+      </NavigationContainer>
     </>
   );
 };
