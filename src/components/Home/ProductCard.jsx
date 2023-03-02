@@ -29,7 +29,8 @@ const styles = StyleSheet.create({
         width:windoWidth/2,
         borderRadius:8,
         marginVertical:10,
-        marginLeft:10
+        marginLeft:10,
+        elevation:5
     },
     MainSeeText:{
         fontSize:18,

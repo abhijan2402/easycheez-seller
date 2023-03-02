@@ -15,15 +15,16 @@ const styles = StyleSheet.create({
         backgroundColor:"#6CE74D",
         height:windoHeight/3,
         marginVertical:11,
-        width:windoWidth/2.5,
+        width:windoWidth/2.6,
         marginHorizontal:10,
         borderRadius:9,
         justifyContent:"center",
-        alignItems:"center"
+        alignItems:"center",
+        elevation:5
     },
     Image:{
-        width:80,
-        height:80
+        width:windoWidth/5,
+        height:windoWidth/5
     },
     Text:{
         fontSize:18,

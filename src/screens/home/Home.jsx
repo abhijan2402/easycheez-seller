@@ -10,8 +10,8 @@ function Home() {
     <View style={styles.MainView}>
         <Header title="Home"/>
         <View>
-        <Image source={{uri:"https://img.freepik.com/free-vector/logistics-concept-illustration_114360-1561.jpg"}} style={styles.Image}/>
-    </View>
+            <Image source={{uri:"https://img.freepik.com/free-vector/logistics-concept-illustration_114360-1561.jpg"}} style={styles.Image}/>
+        </View>
         <View style={styles.cardView}>
             <View>
                 <ProductCard title="Products" Img="https://cdn-icons-png.flaticon.com/128/859/859270.png" bg="#FFE589"/>
