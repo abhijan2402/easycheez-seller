@@ -14,31 +14,25 @@ import StoreAnalysis from './src/screens/StoreAnalysis';
 import SetProductDetails from './src/screens/SetProductDetails';
 import Account from './src/screens/profile/Account';
 import Payment from './src/screens/Payment';
-
+import SignIn from './src/screens/Auth/SignIn';
+import SignUp from './src/screens/Auth/SignUp';
+import ForgotPass from './src/screens/Auth/ForgotPass';
 
 const App = () => {
   const Stack = createNativeStackNavigator();
   return (
     <>
-      {/* <Payment /> */}
-      {/* <Package /> */}
-      {/* <Orders/> */}
-      {/* <AddProduct /> */}
-      {/* <Home /> */}
-      {/* <Subscription/> */}
-      {/* <Profile/> */}
-      {/* <AccountDetails/> */}
-      {/* <StoreAnalysis/> */}
-
       <NavigationContainer>
-         <Stack.Navigator initialRouteName='Profile' screenOptions={{headerShown:false}}>
+         <Stack.Navigator initialRouteName='SignIn' screenOptions={{headerShown:false}}>
+                <Stack.Screen name='SignIn' component={SignIn}/>
+                <Stack.Screen name='SignUp' component={SignUp}/>
+                <Stack.Screen name='ForgotPass' component={ForgotPass}/>
                 <Stack.Screen name='Profile' component={Profile}/>
                <Stack.Screen name='StoreRegistration' component={StoreRegistration}/>
                <Stack.Screen name='AccountDetails' component={AccountDetails}/>
                <Stack.Screen name='Bottomtab' component={MainNavigation}/>
-               {/* <Stack.Screen name='Bottomtab' component={MainNavigation}/> */}
          </Stack.Navigator>
-      </NavigationContainer>
+       </NavigationContainer>
     </>
   );
 };
