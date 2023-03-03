@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "121007840161",
+    "project_id": "eazy-cheez",
+    "storage_bucket": "eazy-cheez.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:121007840161:android:52260bb7ca3695860349e0",
+        "android_client_info": {
+          "package_name": "com.easycheez_mainapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "121007840161-mj36gkpp3dudqcaa3aiom8hc5ttqvb8l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhh2dQiCSW6W6WipqklZVSO01PQlM7cKE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "121007840161-mj36gkpp3dudqcaa3aiom8hc5ttqvb8l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:121007840161:android:f55f2dcfd44f99e60349e0",
+        "android_client_info": {
+          "package_name": "com.easycheezseller"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "121007840161-mj36gkpp3dudqcaa3aiom8hc5ttqvb8l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhh2dQiCSW6W6WipqklZVSO01PQlM7cKE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "121007840161-mj36gkpp3dudqcaa3aiom8hc5ttqvb8l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
