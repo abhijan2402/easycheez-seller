@@ -4,7 +4,7 @@ import Home from '../screens/home/Home';
 import AddProduct from '../screens/Products/AddProduct';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 const Stack = createNativeStackNavigator();
-const AccountNavigation = () => {
+const HomeNavigation = () => {
     
   return (
     <>
@@ -16,4 +16,4 @@ const AccountNavigation = () => {
   )
 }
 
-export default AccountNavigation
+export default HomeNavigation

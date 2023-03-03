@@ -2,9 +2,9 @@ import React from 'react'
 import { Text, View, StyleSheet, Dimensions, ScrollView, TextInput, Image, TouchableOpacity } from 'react-native'
 const windoWidth = Dimensions.get('window').width;
 const windoHeight = Dimensions.get('window').height;
-function AddPro() {
+function AddPro({onpress}) {
   return (
-    <TouchableOpacity style={styles.MainView}>
+    <TouchableOpacity style={styles.MainView} onPress={onpress}>
         <Image source={require("../../assets/WhitePlus-removebg.png")} style={styles.Image}/>
         <Text style={styles.Text}>Products</Text>
     </TouchableOpacity>

@@ -7,10 +7,6 @@ function Header({title}) {
     <View style={styles.Header}>
         {/* <Text style={styles.HeaderText}>{title}</Text> */}
       <Text style={styles.HeaderText}>Yum Grocer</Text>
-      <Image
-        style={{width:40,height:40}}
-        source={require('../../assets/bar_code.png')}
-      />
     </View>
   </>
   )

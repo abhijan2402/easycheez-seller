@@ -5,7 +5,7 @@ import Header from '../../components/Home/Header';
 import ProductCard from '../../components/Home/ProductCard';
 const windoWidth = Dimensions.get('window').width;
 const windoHeight = Dimensions.get('window').height;
-function Home() {
+function Home({navigation}) {
   return (
     <View style={styles.MainView}>
         <Header title="Home"/>
@@ -18,7 +18,7 @@ function Home() {
                 <ProductCard title="Offers" Img="https://cdn-icons-png.flaticon.com/128/3176/3176371.png" bg="#62D7C2"/>
             </View>
             <View>
-                <AddPro/>
+                <AddPro onpress={()=>navigation.navigate('AddProduct')} />
             </View>
         </View>
     </View>
