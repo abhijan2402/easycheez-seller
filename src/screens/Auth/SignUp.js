@@ -40,7 +40,6 @@ const SignUp = ({ navigation }) => {
                         //         console.log(error);
                         //     })
                     })
-                // navigation.navigate("confimSignup", { email: email, password: password });
             } catch (error) {
                 console.log(error)
                 // setToastMessage(error);

@@ -3,7 +3,12 @@ import { View, Text, StyleSheet, Image, Dimensions, TouchableOpacity } from 'rea
 import Header from '../../components/Home/Header'
 const windoWidth = Dimensions.get('window').width;
 const windoHeight = Dimensions.get('window').height;
-function Account({navigation}) {
+import auth from '@react-native-firebase/auth';
+
+function Account({ navigation }) {
+    const logout = () => {
+        auth().signOut()
+    }
     return (
         <View style={{ width: windoWidth, height: windoHeight, backgroundColor: "white" }}>
             <Header title="Account" />
@@ -15,7 +20,7 @@ function Account({navigation}) {
                 <Text style={{ fontSize: 15, fontWeight: "700", marginLeft: 20, marginVertical: 10 }}>Options</Text>
                 <View style={[styles.OptiionView, { marginTop: 25 }]}>
                     <Image source={{ uri: "https://cdn-icons-png.flaticon.com/128/5643/5643764.png" }} style={styles.LogoImage} />
-                    <Text style={styles.OptionText} onPress={()=>{navigation.navigate('Orders')}}>Orders</Text>
+                    <Text style={styles.OptionText} onPress={() => { navigation.navigate('Orders') }}>Orders</Text>
                     <Image source={{ uri: "https://cdn-icons-png.flaticon.com/128/2989/2989988.png" }} style={styles.LogoImage} />
                 </View>
                 <View style={styles.OptiionView}>
@@ -30,9 +35,12 @@ function Account({navigation}) {
                 </View>
                 <View style={styles.OptiionView}>
                     <Image source={{ uri: "https://cdn-icons-png.flaticon.com/128/8822/8822225.png" }} style={styles.LogoImage} />
-                    <Text style={styles.OptionText} onPress={()=>{navigation.navigate('Subscription')}}>Subscription</Text>
+                    <Text style={styles.OptionText} onPress={() => { navigation.navigate('Subscription') }}>Subscription</Text>
                     <Image source={{ uri: "https://cdn-icons-png.flaticon.com/128/2989/2989988.png" }} style={styles.LogoImage} />
                 </View>
+                <TouchableOpacity style={{ margin: 20, borderWidth: 1, borderRadius: 15, marginHorizontal: 50, alignItems: "center" }} onPress={logout}>
+                    <Text>LogOut</Text>
+                </TouchableOpacity>
 
             </View>
         </View>
