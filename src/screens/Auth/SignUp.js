@@ -27,7 +27,7 @@ const SignUp = ({ navigation }) => {
                         const user = userCredential.user;
                         console.log(user, "congo")
                         setLoading(false)
-                        navigation.navigate("SignIn");
+                        navigation.navigate("Profile");
 
 
                         // firestore().collection("UserCollection").doc(user.uid).set(userDetails)

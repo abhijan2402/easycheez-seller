@@ -41,11 +41,11 @@ const SignIn = ({ navigation }) => {
           setLoading(false);
         })
     } catch (error) {
-      setToastMessage(error);
-      setToastTextColorState("white")
-      setToastColorState("red")
-      setLoading(false)
-      childRef.current.showToast();
+      // setToastMessage(error);
+      // setToastTextColorState("white")
+      // setToastColorState("red")
+      // setLoading(false)
+      // childRef.current.showToast();
     }
   }
   return (

@@ -65,6 +65,7 @@ const App = () => {
                 <Stack.Screen name='SignIn' component={SignIn} />
                 <Stack.Screen name='SignUp' component={SignUp} />
                 <Stack.Screen name='ForgotPass' component={ForgotPass} />
+                <Stack.Screen name='StoreRegistration' component={StoreRegistration} />
 
               </Stack.Navigator>
               :
