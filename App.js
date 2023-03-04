@@ -9,7 +9,7 @@ import AccountDetails from './src/screens/AccountDetails';
 import StoreRegistration from './src/screens/StoreRegistration';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import MainNavigation from '../easycheez-seller/src/Navigation/MainNavigation';
+import MainNavigation from './src/Navigation/MainNavigation';
 import StoreAnalysis from './src/screens/StoreAnalysis';
 import SetProductDetails from './src/screens/SetProductDetails';
 import Account from './src/screens/profile/Account';
@@ -23,16 +23,16 @@ const App = () => {
   return (
     <>
       <NavigationContainer>
-         <Stack.Navigator initialRouteName='SignIn' screenOptions={{headerShown:false}}>
-                <Stack.Screen name='SignIn' component={SignIn}/>
-                <Stack.Screen name='SignUp' component={SignUp}/>
-                <Stack.Screen name='ForgotPass' component={ForgotPass}/>
-                <Stack.Screen name='Profile' component={Profile}/>
-               <Stack.Screen name='StoreRegistration' component={StoreRegistration}/>
-               <Stack.Screen name='AccountDetails' component={AccountDetails}/>
-               <Stack.Screen name='Bottomtab' component={MainNavigation}/>
-         </Stack.Navigator>
-       </NavigationContainer>
+        <Stack.Navigator initialRouteName='SignIn' screenOptions={{ headerShown: false }}>
+          <Stack.Screen name='SignIn' component={SignIn} />
+          <Stack.Screen name='SignUp' component={SignUp} />
+          <Stack.Screen name='ForgotPass' component={ForgotPass} />
+          <Stack.Screen name='Profile' component={Profile} />
+          <Stack.Screen name='StoreRegistration' component={StoreRegistration} />
+          <Stack.Screen name='AccountDetails' component={AccountDetails} />
+          <Stack.Screen name='Bottomtab' component={MainNavigation} />
+        </Stack.Navigator>
+      </NavigationContainer>
     </>
   );
 };
