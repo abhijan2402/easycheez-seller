@@ -117,8 +117,10 @@ const styles = StyleSheet.create({
         width: windoWidth,
     },
     Box: {
-        height: 44,
-        width: 279,
+        // height: 44,
+        // width: 279,
+        width:windoWidth/1.4,
+        height:windoHeight/18,
         marginLeft: 50,
         marginTop: 10,
         borderRadius: 10,
@@ -126,8 +128,10 @@ const styles = StyleSheet.create({
         borderWidth: 1
     },
     Btn: {
-        height: 44,
-        width: 279,
+        // height: 44,
+        // width: 279,
+        width:windoWidth/1.4,
+        height:windoHeight/17,
         marginLeft: 50,
         marginTop: 15,
         backgroundColor: '#F05656',

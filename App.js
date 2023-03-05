@@ -17,6 +17,7 @@ import Payment from './src/screens/Payment';
 import SignIn from './src/screens/Auth/SignIn';
 import SignUp from './src/screens/Auth/SignUp';
 import ForgotPass from './src/screens/Auth/ForgotPass';
+import AuthNavigation from './src/Navigation/AuthNavigation';
 import auth from '@react-native-firebase/auth';
 
 export const GlobalVariable = createContext();
@@ -61,10 +62,8 @@ const App = () => {
         >
           {
             user == null ?
-              <Stack.Navigator initialRouteName='SignIn' screenOptions={{ headerShown: false }}>
-                <Stack.Screen name='SignIn' component={SignIn} />
-                <Stack.Screen name='SignUp' component={SignUp} />
-                <Stack.Screen name='ForgotPass' component={ForgotPass} />
+              <Stack.Navigator initialRouteName='AuthNavigation' screenOptions={{ headerShown: false }}>
+                <Stack.Screen name='AuthNavigation' component={AuthNavigation}/>
                 <Stack.Screen name='StoreRegistration' component={StoreRegistration} />
 
               </Stack.Navigator>
