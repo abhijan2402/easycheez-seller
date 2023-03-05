@@ -1,7 +1,9 @@
 import { View, Text, Image, ScrollView, TextInput, TouchableOpacity } from 'react-native'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import firestore from '@react-native-firebase/firestore';
+import { GlobalVariable } from '../../App';
 const Profile = ({ navigation }) => {
+  const {listenAut,userUid}=useContext(GlobalVariable);
   const [City, setCity] = useState("")
   const [FName, setFName] = useState("")
   const [LName, setLName] = useState("")
@@ -101,7 +103,8 @@ const Profile = ({ navigation }) => {
         />
       </View>
 
-      <TouchableOpacity style={{ height: 44, width: 279, marginLeft: 50, marginTop: 30, backgroundColor: '#F05656', borderRadius: 20, marginBottom: 10, }} onPress={createNewUSer}>
+      <TouchableOpacity style={{ height: 44, width: 279, marginLeft: 50, marginTop: 30, backgroundColor: '#F05656', borderRadius: 20, marginBottom: 10, }} 
+        onPress={()=>navigation.navigate("StoreRegistration")}>
         <Text style={{ textAlign: 'center', marginTop: 13, color: 'white', fontSize: 15, fontWeight: '500' }} >Get Started</Text>
       </TouchableOpacity>
 

@@ -34,48 +34,28 @@ const App = () => {
     if (initializing) setInitializing(false);
   }
 
-  useEffect(() => {
+  const checkForAuth=(data) => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
     return subscriber;
-  }, []);
+  }
   return (
-    <>
-      {/* <NavigationContainer>
-        <Stack.Navigator initialRouteName='SignIn' screenOptions={{ headerShown: false }}>
-          <Stack.Screen name='SignIn' component={SignIn} />
-          <Stack.Screen name='SignUp' component={SignUp} />
-          <Stack.Screen name='ForgotPass' component={ForgotPass} />
-          <Stack.Screen name='Profile' component={Profile} />
-          <Stack.Screen name='StoreRegistration' component={StoreRegistration} />
-          <Stack.Screen name='AccountDetails' component={AccountDetails} />
-          <Stack.Screen name='Bottomtab' component={MainNavigation} />
-        </Stack.Navigator>
-      </NavigationContainer> */}
-
-      <GlobalVariable.Provider value={{
-        userUid: user
-      }} >
-        <NavigationContainer
-          screenOptions={{
-            headerShown: false
-          }}
-        >
-          {
-            user == null ?
-              <Stack.Navigator initialRouteName='AuthNavigation' screenOptions={{ headerShown: false }}>
+    <GlobalVariable.Provider value={{
+      userUid: user,
+      listenAut:(user)=>checkForAuth(user),
+      setUserUID:(userID)=>setUser(userID)
+    }} >
+      <NavigationContainer>
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+            {
+              user == null ?
+              <>
                 <Stack.Screen name='AuthNavigation' component={AuthNavigation}/>
-                <Stack.Screen name='StoreRegistration' component={StoreRegistration} />
-
-              </Stack.Navigator>
-              :
-              <Stack.Navigator initialRouteName='Bottomtab' screenOptions={{ headerShown: false }}>
-
-                <Stack.Screen name="Bottomtab" component={MainNavigation} />
-              </Stack.Navigator>
-          }
-        </NavigationContainer>
-      </GlobalVariable.Provider>
-    </>
+              </>:
+              <Stack.Screen name="Bottomtab" component={MainNavigation} />
+            }
+        </Stack.Navigator>
+      </NavigationContainer>
+    </GlobalVariable.Provider>
   );
 };
 

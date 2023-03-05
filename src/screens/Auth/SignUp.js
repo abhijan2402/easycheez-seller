@@ -1,10 +1,12 @@
 import { StyleSheet, Text, View, Image, Dimensions, ScrollView, TouchableOpacity, TextInput, ActivityIndicator } from 'react-native'
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 const windoWidth = Dimensions.get('window').width;
 const windoHeight = Dimensions.get('window').height;
 // import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
+import { GlobalVariable } from '../../../App';
 const SignUp = ({ navigation }) => {
+    const {listenAut,userUid}=useContext(GlobalVariable);
     const [email, setemail] = useState('')
     const [password, setpassword] = useState('');
     const [Cpassword, setCpassword] = useState('');
@@ -27,7 +29,6 @@ const SignUp = ({ navigation }) => {
                         const user = userCredential.user;
                         console.log(user, "congo")
                         setLoading(false)
-                        navigation.navigate("Profile");
 
 
                         // firestore().collection("UserCollection").doc(user.uid).set(userDetails)
@@ -51,47 +52,40 @@ const SignUp = ({ navigation }) => {
     }
     return (
         <ScrollView style={styles.Background}>
-
-            <View style={styles.Head}>
-                <Text style={styles.SubHead}>Sign Up</Text>
-            </View>
-
-            <View>
-                <Image source={require('../../assets/SignUp.jpg')} style={styles.image} />
-            </View>
-
-            <View>
-                <TextInput style={styles.Box} placeholder={'Email'}
+            <Text style={styles.SubHead}>Sign Up</Text>
+            <Image source={require('../../assets/SignUp.jpg')} style={styles.image} />
+            <View style={{alignItems: 'center',}}>
+                <TextInput 
+                    style={styles.Box}
+                    placeholderTextColor={"black"} 
+                    placeholder={'Email'}
                     onChangeText={value => { setemail(value) }}
                 />
-            </View>
-
-            <View style={{ marginTop: 20 }}>
-                <TextInput style={styles.Box} placeholder={'Password'}
+                <TextInput 
+                    style={styles.Box} 
+                    placeholderTextColor={"black"} 
+                    placeholder={'Password'}
                     onChangeText={value => { setpassword(value) }}
                     autoCapitalize={true}
                 />
-            </View>
-
-            <View style={{ marginTop: 20 }}>
-                <TextInput style={styles.Box} placeholder={'Confirm Password'}
+                <TextInput 
+                    style={styles.Box} 
+                    placeholderTextColor={"black"} 
+                    placeholder={'Confirm Password'}
                     onChangeText={value => { setCpassword(value) }}
                     autoCapitalize={true}
                 />
-            </View>
-
-            <TouchableOpacity style={styles.Btn} onPress={validateUser}>
-                {
-                    loading ?
-                        <ActivityIndicator size={25} color={"white"} style={{ marginTop: 10 }} /> :
-
-                        <Text style={styles.BtnTxt}>Create Account</Text>
-                }
-            </TouchableOpacity>
-
-            <View style={styles.Last}>
-                <Text style={styles.LastTxt}>Already Have an Account ?</Text>
-                <Text style={styles.LastSubTxt} onPress={() => { navigation.navigate('SignIn') }}>Log In</Text>
+                <TouchableOpacity style={styles.Btn} onPress={()=>navigation.navigate('createprofile')}>
+                    {
+                        loading ?
+                            <ActivityIndicator size={25} color={"white"} /> :
+                            <Text style={styles.BtnTxt}>Create Account</Text>
+                    }
+                </TouchableOpacity>
+                <View style={styles.Last}>
+                    <Text style={styles.LastTxt}>Already Have an Account ?</Text>
+                    <Text style={styles.LastSubTxt} onPress={() => { navigation.navigate('SignIn') }}>Log In</Text>
+                </View>
             </View>
 
         </ScrollView>
@@ -110,37 +104,37 @@ const styles = StyleSheet.create({
     SubHead: {
         color: "black",
         fontSize: 30,
-        fontWeight: '900'
+        fontWeight: '900',
+        textAlign:"center",
+        padding:10
     },
     image: {
         height: windoHeight / 2,
         width: windoWidth,
     },
     Box: {
-        // height: 44,
-        // width: 279,
         width:windoWidth/1.4,
         height:windoHeight/18,
-        marginLeft: 50,
         marginTop: 10,
         borderRadius: 10,
         borderColor: "#808080",
-        borderWidth: 1
+        borderWidth: 1,
+        paddingLeft:10,
+        fontWeight:"bold",
+        color:"black",
+        paddingLeft:10
     },
     Btn: {
-        // height: 44,
-        // width: 279,
         width:windoWidth/1.4,
         height:windoHeight/17,
-        marginLeft: 50,
-        marginTop: 15,
+        marginTop: 10,
         backgroundColor: '#F05656',
         borderRadius: 10,
         marginBottom: 10,
+        alignItems:"center",
+        justifyContent: 'center',
     },
     BtnTxt: {
-        textAlign: 'center',
-        marginTop: 13,
         color: 'white',
         fontSize: 15,
         fontWeight: '500'

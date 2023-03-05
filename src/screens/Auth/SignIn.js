@@ -1,12 +1,17 @@
 import { StyleSheet, Text, View, Image, Dimensions, ScrollView, TouchableOpacity, TextInput, ActivityIndicator } from 'react-native'
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import auth from '@react-native-firebase/auth';
+import { GlobalVariable } from '../../../App';
 const windoWidth = Dimensions.get('window').width;
 const windoHeight = Dimensions.get('window').height;
 const SignIn = ({ navigation }) => {
+  const {listenAut,userUid}=useContext(GlobalVariable);
   const [loading, setLoading] = useState(false);
   const [email, setemail] = useState('')
   const [password, setpassword] = useState('');
+  useEffect(()=>{
+    console.log(userUid)
+  },[])
   const validateUser = () => {
     try {
       if (email === "")
@@ -14,9 +19,10 @@ const SignIn = ({ navigation }) => {
       if (password === "")
         throw "Please enter Password";
       setLoading(true)
-      auth().signInWithEmailAndPassword(email, password).then(() => {
+      auth().signInWithEmailAndPassword(email, password).then((res) => {
         console.log("use is auth")
-        navigation.navigate('Bottomtab')
+        listenAut()
+        setLoading(false)
       })
         .catch((error) => {
           if (error.code === 'auth/invalid-email') {
@@ -50,42 +56,35 @@ const SignIn = ({ navigation }) => {
   }
   return (
     <ScrollView style={styles.Scroll}>
-
-      <View style={styles.Head}>
-        <Text style={styles.Subhead}>Sign In</Text>
-      </View>
-
-      <View>
-        <Image source={require('../../assets/SignIn.jpg')} style={styles.image} />
-      </View>
-
-      <View>
-        <TextInput style={styles.Box} placeholder={'Email'} onChangeText={value => { setemail(value) }}
+      <Text style={styles.Subhead}>Sign In</Text>
+      <Image source={require('../../assets/SignIn.jpg')} style={styles.image} />
+      <View style={{alignItems: 'center',}}>
+        <TextInput 
+          placeholderTextColor={"black"}
+          style={styles.Box}
+          placeholder={'Email'} 
+          onChangeText={value => { setemail(value) }}
+          />
+        <TextInput 
+          placeholderTextColor={"black"}
+          style={styles.Box} 
+          placeholder={'Password'} 
+          onChangeText={value => { setpassword(value) }}
+          autoCapitalize={true} 
         />
-      </View>
-
-      <View style={{ marginTop: 20 }}>
-        <TextInput style={styles.Box} placeholder={'Password'} onChangeText={value => { setpassword(value) }}
-          autoCapitalize={true} />
-      </View>
-
-      <View style={styles.Forgot}>
         <Text style={styles.SubForgot} onPress={() => { navigation.navigate('ForgotPass') }}>Forgot Password ?</Text>
+        <TouchableOpacity style={styles.MainButton} onPress={validateUser}>
+          {
+            loading ?
+              <ActivityIndicator color={'white'} size={30}  /> :
+              <Text style={styles.BtnTxt}>Login</Text>
+          }
+        </TouchableOpacity>
+        <View style={styles.Last}>
+          <Text style={styles.LastTxt}>Don't Have an Account ?</Text>
+          <Text style={styles.SubLastTxt} onPress={() => { navigation.navigate('SignUp') }}>Create Account</Text>
+        </View>
       </View>
-
-      <TouchableOpacity style={styles.MainButton} onPress={validateUser}>
-        {
-          loading ?
-            <ActivityIndicator color={'white'} size={30} style={{ marginTop: 7 }} /> :
-            <Text style={styles.BtnTxt}>Login</Text>
-        }
-      </TouchableOpacity>
-
-      <View style={styles.Last}>
-        <Text style={styles.LastTxt}>Don't Have an Account ?</Text>
-        <Text style={styles.SubLastTxt} onPress={() => { navigation.navigate('SignUp') }}>Create Account</Text>
-      </View>
-
     </ScrollView>
   )
 }
@@ -104,21 +103,24 @@ const styles = StyleSheet.create({
     color: "black",
     fontSize: 30,
     fontWeight: '900',
+    textAlign:"center",
+    padding:10
   },
   image: {
     height: windoHeight / 2,
     width: windoWidth,
   },
   Box: {
-    // height: 44,
-    // width: 279,
     width:windoWidth/1.4,
     height:windoHeight/18,
-    marginLeft: 50,
-    marginTop: 10,
     borderRadius: 10,
     borderColor: "#808080",
-    borderWidth: 1
+    borderWidth: 1,
+    paddingLeft:10,
+    fontWeight:"bold",
+    marginTop:10,
+    color:"black",
+    paddingLeft:10
   },
   Forgot: {
     alignSelf: "center",
@@ -126,25 +128,22 @@ const styles = StyleSheet.create({
   },
   SubForgot: {
     color: "black",
-    fontWeight: "700"
+    fontWeight: "700",
+    marginVertical:10
   },
   MainButton: {
-    // height: 44,
-    // width: 279,
     width:windoWidth/1.4,
     height:windoHeight/17,
-    marginLeft: 50,
-    marginTop: 15,
     backgroundColor: '#F05656',
     borderRadius: 10,
-    marginBottom: 10,
+    alignItems:"center",
+    justifyContent:"center",
+    marginVertical:10
   },
   BtnTxt: {
-    textAlign: 'center',
-    marginTop: 13,
     color: 'white',
     fontSize: 15,
-    fontWeight: '500'
+    fontWeight: 'bold'
   },
   Last: {
     display: "flex",
@@ -158,5 +157,6 @@ const styles = StyleSheet.create({
   SubLastTxt: {
     color: "blue",
     fontWeight: "700",
+    marginLeft:5
   }
 })

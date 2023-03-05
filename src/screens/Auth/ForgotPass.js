@@ -33,29 +33,23 @@ const ForgotPass = ({ navigation }) => {
     }
     return (
         <ScrollView style={styles.Scroll}>
-
-            <View style={styles.Head}>
-                <Text style={styles.SubHead}>Forgot Password</Text>
-            </View>
-
-            <View>
-                <Image source={require('../../assets/Forgotpass.jpg')} style={styles.image} />
-            </View>
-
-            <View style={{ marginTop: 15 }}>
-                <TextInput style={styles.Box} placeholder={'Email'} onChangeText={value => { setemail(value) }}
+            <Text style={styles.SubHead}>Forgot Password</Text>
+            <Image source={require('../../assets/Forgotpass.jpg')} style={styles.image} />
+            <View style={{alignItems: 'center',}}>
+                <TextInput 
+                    style={styles.Box} 
+                    placeholder={'Email'} 
+                    onChangeText={value => { setemail(value) }}
+                    placeholderTextColor={"black"}
                 />
+                <TouchableOpacity style={styles.Btn} onPress={ResetLink}>
+                    <Text style={styles.BtnTxt}>Send Link</Text>
+                </TouchableOpacity>
+                <View style={styles.Last}>
+                    <Text style={styles.LastTxt}>Back to</Text>
+                    <Text style={styles.SubLastTxt} onPress={() => { navigation.navigate('SignIn') }}>Log In</Text>
+                </View>
             </View>
-
-            <TouchableOpacity style={styles.Btn} onPress={ResetLink}>
-                <Text style={styles.BtnTxt}>Send Link</Text>
-            </TouchableOpacity>
-
-            <View style={styles.Last}>
-                <Text style={styles.LastTxt}>Back to</Text>
-                <Text style={styles.SubLastTxt} onPress={() => { navigation.navigate('SignIn') }}>Log In</Text>
-            </View>
-
         </ScrollView>
     )
 }
@@ -73,37 +67,35 @@ const styles = StyleSheet.create({
     SubHead: {
         color: "black",
         fontSize: 30,
-        fontWeight: '900'
+        fontWeight: '900',
+        textAlign:"center",
+        padding:10
     },
     image: {
         height: windoHeight / 2,
         width: windoWidth,
     },
     Box: {
-        // height: 44,
-        // width: 279,
         width:windoWidth/1.4,
         height:windoHeight/18,
-        marginLeft: 50,
         marginTop: 10,
         borderRadius: 10,
         borderColor: "#808080",
-        borderWidth: 1
+        borderWidth: 1,
+        fontWeight:"bold",
+        color:"black",
+        paddingLeft:10
     },
     Btn: {
-        // height: 44,
-        // width: 279,
         width:windoWidth/1.4,
         height:windoHeight/17,
-        marginLeft: 50,
         marginTop: 15,
         backgroundColor: '#F05656',
         borderRadius: 10,
-        marginBottom: 10,
+        alignItems:"center",
+        justifyContent: 'center',
     },
     BtnTxt: {
-        textAlign: 'center',
-        marginTop: 13,
         color: 'white',
         fontSize: 15,
         fontWeight: '500'
@@ -111,7 +103,8 @@ const styles = StyleSheet.create({
     Last: {
         display: "flex",
         flexDirection: "row",
-        justifyContent: "center"
+        justifyContent: "center",
+        marginTop:10
     },
     LastTxt: {
         fontWeight: "700",
@@ -120,5 +113,6 @@ const styles = StyleSheet.create({
     SubLastTxt: {
         color: "blue",
         fontWeight: "700",
+        marginLeft:5
     }
 })
