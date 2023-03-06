@@ -1,12 +1,10 @@
 import { StyleSheet, Text, View, Image, Dimensions, ScrollView, TouchableOpacity, TextInput, ActivityIndicator } from 'react-native'
-import React, { useState, useEffect, useRef, useContext } from "react";
+import React, { useState, useEffect, useRef } from "react";
 const windoWidth = Dimensions.get('window').width;
 const windoHeight = Dimensions.get('window').height;
-// import firestore from '@react-native-firebase/firestore';
+import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
-import { GlobalVariable } from '../../../App';
 const SignUp = ({ navigation }) => {
-    const {listenAut,userUid}=useContext(GlobalVariable);
     const [email, setemail] = useState('')
     const [password, setpassword] = useState('');
     const [Cpassword, setCpassword] = useState('');
@@ -27,19 +25,19 @@ const SignUp = ({ navigation }) => {
                     .createUserWithEmailAndPassword(email, password)
                     .then((userCredential) => {
                         const user = userCredential.user;
-                        console.log(user, "congo")
-                        setLoading(false)
+                        firestore()
+                            .collection('Users')
+                            .doc(userCredential.user.uid)
+                            .set({
+                                email: email
+                            }).then(() => {
 
+                                console.log(user, "congo")
+                                setLoading(false)
+                                navigation.navigate("Profile");
+                            }
 
-                        // firestore().collection("UserCollection").doc(user.uid).set(userDetails)
-                        //     .then(() => {
-                        //         console.log("user created")
-                        //         setLoading(false)
-                        //     })
-                        //     .catch((error) => {
-                        //         // setLoading(false)
-                        //         console.log(error);
-                        //     })
+                            )
                     })
             } catch (error) {
                 console.log(error)
@@ -52,40 +50,47 @@ const SignUp = ({ navigation }) => {
     }
     return (
         <ScrollView style={styles.Background}>
-            <Text style={styles.SubHead}>Sign Up</Text>
-            <Image source={require('../../assets/SignUp.jpg')} style={styles.image} />
-            <View style={{alignItems: 'center',}}>
-                <TextInput 
-                    style={styles.Box}
-                    placeholderTextColor={"black"} 
-                    placeholder={'Email'}
+
+            <View style={styles.Head}>
+                <Text style={styles.SubHead}>Sign Up</Text>
+            </View>
+
+            <View>
+                <Image source={require('../../assets/SignUp.jpg')} style={styles.image} />
+            </View>
+
+            <View>
+                <TextInput style={styles.Box} placeholder={'Email'}
                     onChangeText={value => { setemail(value) }}
                 />
-                <TextInput 
-                    style={styles.Box} 
-                    placeholderTextColor={"black"} 
-                    placeholder={'Password'}
+            </View>
+
+            <View style={{ marginTop: 20 }}>
+                <TextInput style={styles.Box} placeholder={'Password'}
                     onChangeText={value => { setpassword(value) }}
                     autoCapitalize={true}
                 />
-                <TextInput 
-                    style={styles.Box} 
-                    placeholderTextColor={"black"} 
-                    placeholder={'Confirm Password'}
+            </View>
+
+            <View style={{ marginTop: 20 }}>
+                <TextInput style={styles.Box} placeholder={'Confirm Password'}
                     onChangeText={value => { setCpassword(value) }}
                     autoCapitalize={true}
                 />
-                <TouchableOpacity style={styles.Btn} onPress={()=>navigation.navigate('createprofile')}>
-                    {
-                        loading ?
-                            <ActivityIndicator size={25} color={"white"} /> :
-                            <Text style={styles.BtnTxt}>Create Account</Text>
-                    }
-                </TouchableOpacity>
-                <View style={styles.Last}>
-                    <Text style={styles.LastTxt}>Already Have an Account ?</Text>
-                    <Text style={styles.LastSubTxt} onPress={() => { navigation.navigate('SignIn') }}>Log In</Text>
-                </View>
+            </View>
+
+            <TouchableOpacity style={styles.Btn} onPress={validateUser}>
+                {
+                    loading ?
+                        <ActivityIndicator size={25} color={"white"} style={{ marginTop: 10 }} /> :
+
+                        <Text style={styles.BtnTxt}>Create Account</Text>
+                }
+            </TouchableOpacity>
+
+            <View style={styles.Last}>
+                <Text style={styles.LastTxt}>Already Have an Account ?</Text>
+                <Text style={styles.LastSubTxt} onPress={() => { navigation.navigate('SignIn') }}>Log In</Text>
             </View>
 
         </ScrollView>
@@ -104,37 +109,33 @@ const styles = StyleSheet.create({
     SubHead: {
         color: "black",
         fontSize: 30,
-        fontWeight: '900',
-        textAlign:"center",
-        padding:10
+        fontWeight: '900'
     },
     image: {
         height: windoHeight / 2,
         width: windoWidth,
     },
     Box: {
-        width:windoWidth/1.4,
-        height:windoHeight/18,
+        height: 44,
+        width: 279,
+        marginLeft: 50,
         marginTop: 10,
         borderRadius: 10,
         borderColor: "#808080",
-        borderWidth: 1,
-        paddingLeft:10,
-        fontWeight:"bold",
-        color:"black",
-        paddingLeft:10
+        borderWidth: 1
     },
     Btn: {
-        width:windoWidth/1.4,
-        height:windoHeight/17,
-        marginTop: 10,
+        height: 44,
+        width: 279,
+        marginLeft: 50,
+        marginTop: 15,
         backgroundColor: '#F05656',
         borderRadius: 10,
         marginBottom: 10,
-        alignItems:"center",
-        justifyContent: 'center',
     },
     BtnTxt: {
+        textAlign: 'center',
+        marginTop: 13,
         color: 'white',
         fontSize: 15,
         fontWeight: '500'
