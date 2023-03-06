@@ -1,11 +1,41 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Text, View, StyleSheet, Dimensions, ScrollView, TextInput, Image, TouchableOpacity } from 'react-native'
 const windoWidth = Dimensions.get('window').width;
 const windoHeight = Dimensions.get('window').height;
 import { commoneStyles } from '../../styles/commonStyles';
+import firestore from '@react-native-firebase/firestore';
 function AddProduct() {
-    const showToasts = () => {
-        console.log("hey")
+    const [productName, setproductName] = useState("")
+    const [ProductPrice, setProductPrice] = useState("")
+    const [ProCategory, setProCategory] = useState("")
+    const AddProd = async () => {
+        try {
+            if (productName == null)
+                throw "Please enter Product Name";
+            if (ProductPrice == null)
+                throw "Please enter Product Price";
+            if (ProCategory == null)
+                throw "Please enter Product Category";
+            const ProdDetails = {
+                Category: ProCategory,
+                ProImage: "jj",
+                ProOffer: "44",
+                ProductName: productName,
+                ProductPrice: ProductPrice,
+            }
+            await firestore()
+                .collection('ProductPage')
+                .add(ProdDetails)
+                .then((res) => {
+                    console.log(res)
+                })
+                .catch((error) => {
+                    // setLoading(false)
+                    console.log(error);
+                })
+        } catch (error) {
+            console.log(error)
+        }
     }
     return (<>
         <ScrollView style={styles.MainView}>
@@ -16,11 +46,11 @@ function AddProduct() {
                 <Text style={styles.StoredetailsText}>Store Details</Text>
                 <View style={styles.fields}>
                     <Text style={styles.LabelName}>Product Name</Text>
-                    <TextInput style={commoneStyles.textField} placeholder='Add Product Name ' />
+                    <TextInput style={commoneStyles.textField} placeholder='Add Product Name ' onChangeText={value => { setproductName(value) }} />
                     <Text style={styles.LabelName}>Product Price</Text>
-                    <TextInput style={commoneStyles.textField} placeholder='Add Price ' />
+                    <TextInput style={commoneStyles.textField} placeholder='Add Price ' onChangeText={value => { setProductPrice(value) }} />
                     <Text style={styles.LabelName}>Select category</Text>
-                    <TextInput style={commoneStyles.textField} placeholder='Add Category ' />
+                    <TextInput style={commoneStyles.textField} placeholder='Add Category ' onChangeText={value => { setProCategory(value) }} />
                 </View>
                 <View style={styles.InputFooter}>
                     <View>
@@ -32,7 +62,7 @@ function AddProduct() {
                         <Image source={{ uri: "https://cdn-icons-png.flaticon.com/128/9778/9778869.png" }} style={styles.ImageAdd} />
                     </View>
                 </View>
-                <TouchableOpacity onPress={() => Toast.info('Lorem ipsum info', 'top')} style={styles.AddBtn}>
+                <TouchableOpacity onPress={AddProd} style={styles.AddBtn}>
                     <Text style={styles.AddBtnText}>Add</Text>
                 </TouchableOpacity>
             </View>

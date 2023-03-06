@@ -49,7 +49,6 @@ const StoreRegistration = ({ navigation }) => {
         .collection('StoreRegis')
         .add(userDetails)
         .then((res) => {
-          // setLoading(false)
           console.log(res)
           console.log("Inserted")
           // navigation.navigate('StoreRegistration')
