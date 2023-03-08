@@ -17,11 +17,11 @@ function Package() {
              <Image source={{uri:"https://cdn-icons-png.flaticon.com/128/1828/1828925.png"}} style={styles.Plusicon}/>
 
             </View>
-             <TextInput style={[commoneStyles.textField,{borderColor:"#F05656"}]} placeholder='Add Product Name ' />
+             <TextInput style={[commoneStyles.textField,{borderColor:"#F05656"}]} placeholderTextColor={"black"} placeholder='Add Product Name ' />
         </View>
         <View>
              <Text style={styles.LabelName}>Price</Text>
-             <TextInput style={[commoneStyles.textField,{borderColor:"#F05656"}]} placeholder='Add Price ' />
+             <TextInput style={[commoneStyles.textField,{borderColor:"#F05656"}]} placeholderTextColor={"black"} placeholder='Add Price ' />
         </View>
         <TouchableOpacity style={styles.Btn}>
             <Text style={styles.BtnText}>Proceed</Text>

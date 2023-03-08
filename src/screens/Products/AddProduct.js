@@ -24,15 +24,15 @@ function AddProduct() {
                 ProductPrice: ProductPrice,
             }
             await firestore()
-                .collection('ProductPage')
-                .add(ProdDetails)
-                .then((res) => {
-                    console.log(res)
-                })
-                .catch((error) => {
-                    // setLoading(false)
-                    console.log(error);
-                })
+            .collection('ProductPage')
+            .add(ProdDetails)
+            .then((res) => {
+                console.log(res)
+            })
+            .catch((error) => {
+                // setLoading(false)
+                console.log(error);
+            })
         } catch (error) {
             console.log(error)
         }
@@ -46,11 +46,11 @@ function AddProduct() {
                 <Text style={styles.StoredetailsText}>Store Details</Text>
                 <View style={styles.fields}>
                     <Text style={styles.LabelName}>Product Name</Text>
-                    <TextInput style={commoneStyles.textField} placeholder='Add Product Name ' onChangeText={value => { setproductName(value) }} />
+                    <TextInput style={commoneStyles.textField} placeholderTextColor={"black"} placeholder='Add Product Name ' onChangeText={value => { setproductName(value) }} />
                     <Text style={styles.LabelName}>Product Price</Text>
-                    <TextInput style={commoneStyles.textField} placeholder='Add Price ' onChangeText={value => { setProductPrice(value) }} />
+                    <TextInput style={commoneStyles.textField} placeholderTextColor={"black"} placeholder='Add Price ' onChangeText={value => { setProductPrice(value) }} />
                     <Text style={styles.LabelName}>Select category</Text>
-                    <TextInput style={commoneStyles.textField} placeholder='Add Category ' onChangeText={value => { setProCategory(value) }} />
+                    <TextInput style={commoneStyles.textField} placeholderTextColor={"black"} placeholder='Add Category ' onChangeText={value => { setProCategory(value) }} />
                 </View>
                 <View style={styles.InputFooter}>
                     <View>

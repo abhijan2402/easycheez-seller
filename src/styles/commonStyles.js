@@ -6,6 +6,8 @@ export const commoneStyles = StyleSheet.create({
         borderRadius: 8,
         borderColor: "#808080",
         marginHorizontal: 20,
-        marginVertical: 10
+        marginVertical: 10,
+        color:"black",
+        paddingHorizontal:15
     }
 })

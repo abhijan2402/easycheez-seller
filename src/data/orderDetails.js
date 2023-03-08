@@ -1,6 +1,6 @@
 export const orderDetails=[
     {
-        OrderID:1,
+        OrderID:1, //doc id
         orderBY:"Chirag",
         customAddedss:"Housing Board Colony,bangalore",
         totalAmount:450,

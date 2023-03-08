@@ -12,7 +12,7 @@ const OrderList=({orderList})=>{
         <View style={{width:"100%",justifyContent:"space-around",flexDirection:"row",padding:5,borderBottomColor:"black",borderBottomWidth:1}}>
             <View style={{alignItems:"center"}}>
                 <Text style={styles.titleHeader}>OrderID</Text>
-                <Text style={styles.titleHeader}>{item.OrderID}</Text>
+                <Text style={[styles.titleHeader,{fontSize:10}]}>{item.OrderID}</Text>
             </View>
             <View style={{alignItems:"center"}}>
                 <Text style={styles.titleHeader}>Amount</Text>

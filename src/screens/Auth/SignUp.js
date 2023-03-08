@@ -4,13 +4,18 @@ const windoWidth = Dimensions.get('window').width;
 const windoHeight = Dimensions.get('window').height;
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
-import { GlobalVariable } from '../../../App';
+import Geolocation from '@react-native-community/geolocation';
+
 const SignUp = ({ navigation }) => {
-    const {listenAut,setUserData}=useContext(GlobalVariable);
+
     const [email, setemail] = useState('')
     const [password, setpassword] = useState('');
     const [Cpassword, setCpassword] = useState('');
     const [loading, setLoading] = useState(false)
+    const [coords,setCoords]=useState('');
+    useEffect(()=>{
+        Geolocation.getCurrentPosition(info => setCoords(info.coords));
+    },[])
     const validateUser = async () => {
         if (email === "" || password === "" || Cpassword === "") {
             console.log("fillthe details")
@@ -31,7 +36,9 @@ const SignUp = ({ navigation }) => {
                         setLoading(false)
                         return firestore().collection("Users").doc(user.uid).set({
                             email:email,
-                            accountState:"newprofile"
+                            accountState:"newprofile",
+                            latitude:coords.latitude,
+                            longitude:coords.longitude
                         })
                         .then(async() => {
                             console.log("user created")
