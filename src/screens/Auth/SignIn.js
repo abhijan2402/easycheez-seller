@@ -5,13 +5,10 @@ import { GlobalVariable } from '../../../App';
 const windoWidth = Dimensions.get('window').width;
 const windoHeight = Dimensions.get('window').height;
 const SignIn = ({ navigation }) => {
-  const {listenAut,userUid}=useContext(GlobalVariable);
   const [loading, setLoading] = useState(false);
   const [email, setemail] = useState('')
   const [password, setpassword] = useState('');
-  useEffect(()=>{
-    console.log(userUid)
-  },[])
+
   const validateUser = () => {
     try {
       if (email === "")
@@ -21,7 +18,6 @@ const SignIn = ({ navigation }) => {
       setLoading(true)
       auth().signInWithEmailAndPassword(email, password).then((res) => {
         console.log("use is auth")
-        listenAut()
         setLoading(false)
       })
         .catch((error) => {
@@ -47,6 +43,7 @@ const SignIn = ({ navigation }) => {
           setLoading(false);
         })
     } catch (error) {
+      setLoading(false);
       // setToastMessage(error);
       // setToastTextColorState("white")
       // setToastColorState("red")

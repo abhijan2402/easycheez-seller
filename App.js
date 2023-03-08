@@ -19,6 +19,8 @@ import SignUp from './src/screens/Auth/SignUp';
 import ForgotPass from './src/screens/Auth/ForgotPass';
 import AuthNavigation from './src/Navigation/AuthNavigation';
 import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
+import { ActivityIndicator, View } from 'react-native';
 
 export const GlobalVariable = createContext();
 
@@ -27,35 +29,80 @@ const App = () => {
   const Stack = createNativeStackNavigator();
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState(null);
+  const [userDetails,setUserDetains]=useState(null);
 
+  const [loading,setLoading]=useState(true);
 
-  function onAuthStateChanged(userNew) {
-    setUser(userNew);
-    if (initializing) setInitializing(false);
+  async function onAuthStateChanged(userNew) {
+    if(userNew){
+      firestore().collection("Users").doc(userNew.uid).get()
+      .then((res) => {
+        if(res._data.accountState==="complete"){
+          setUser(userNew)
+          setUserDetains(res._data)
+          if (initializing) setInitializing(false);
+        }
+        else{
+          setUserDetains({...res._data,id:userNew.uid})
+          setUser(null)
+          console.log("Create Profile")
+        }
+
+      })
+      .then(()=>setLoading(false))
+      .catch((error) => {
+          console.log(error);
+          setLoading(false)
+      })
+    }
+    else{
+      console.log("Null")
+      setUser(null)
+      setLoading(false)
+      setUserDetains(null)
+    }
   }
 
-  const checkForAuth=(data) => {
+  const checkForAuth=() => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
     return subscriber;
   }
+
+  useEffect(()=>{
+    checkForAuth()
+    return 
+  },[])
+
+  if(loading){
+    return (
+      <View style={{backgroundColor:"white",flex:1,alignItems: 'center',justifyContent: 'center',}}>
+        <ActivityIndicator size={35} color="blue" />
+      </View>
+    )
+  }
   return (
-    <GlobalVariable.Provider value={{
-      userUid: user,
-      listenAut:(user)=>checkForAuth(user),
-      setUserUID:(userID)=>setUser(userID)
-    }} >
-      <NavigationContainer>
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
-            {
-              user == null ?
-              <>
-                <Stack.Screen name='AuthNavigation' component={AuthNavigation}/>
-              </>:
-              <Stack.Screen name="Bottomtab" component={MainNavigation} />
-            }
-        </Stack.Navigator>
-      </NavigationContainer>
-    </GlobalVariable.Provider>
+   
+     <GlobalVariable.Provider value={{
+        userUid: user,
+        setUserUID:(userID)=>setUser(userID),
+        userDetails:{userDetails},
+        setUserData:()=>checkForAuth()
+      }} >
+        <NavigationContainer>
+          <Stack.Navigator screenOptions={{ headerShown: false }}>
+              {
+                user == null ?
+                <>
+                  <Stack.Screen name='AuthNavigation' component={AuthNavigation} options={{
+
+                  }} />
+                </>:
+                <Stack.Screen name="Bottomtab" component={MainNavigation} />
+              }
+          </Stack.Navigator>
+        </NavigationContainer>
+      </GlobalVariable.Provider>
+   
   );
 };
 

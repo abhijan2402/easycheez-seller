@@ -1,17 +1,25 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React from 'react';
+import React, { useContext, useEffect, useReducer } from 'react';
 import SignIn from '../screens/Auth/SignIn';
 import SignUp from '../screens/Auth/SignUp';
 import ForgotPass from '../screens/Auth/ForgotPass';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Profile from '../screens/Profile';
 import StoreRegistration from '../screens/StoreRegistration';
+import { GlobalVariable } from '../../App';
 const Stack = createNativeStackNavigator();
 const AuthNavigation = () => {
-    
+  const {userDetails,userUid}=useContext(GlobalVariable)
   return (
     <>
-        <Stack.Navigator initialRouteName='SignIn' screenOptions={{headerShown:false}}>
+        <Stack.Navigator 
+          initialRouteName={
+            !userUid?"SignIn":
+            userDetails.userDetails && userDetails.userDetails.accountState==="newprofile"?'createprofile':
+            userDetails.userDetails && userDetails.userDetails.accountState==="newShop"?'StoreRegistration':'SignIn'
+          }
+          screenOptions={{headerShown:false}}
+        >
             <Stack.Screen name='SignIn' component={SignIn}/>
             <Stack.Screen name='SignUp' component={SignUp}/>
             <Stack.Screen name='ForgotPass' component={ForgotPass}/>

@@ -10,18 +10,18 @@ const OrderList=({orderList})=>{
     const orderCard=(({item})=>(
         <View style={styles.orderCard}>
         <View style={{width:"100%",justifyContent:"space-around",flexDirection:"row",padding:5,borderBottomColor:"black",borderBottomWidth:1}}>
-                <View style={{alignItems:"center"}}>
-                    <Text style={styles.titleHeader}>OrderID</Text>
-                    <Text style={styles.titleHeader}>{item.OrderID}</Text>
-                </View>
-                <View style={{alignItems:"center"}}>
-                    <Text style={styles.titleHeader}>Amount</Text>
-                    <Text style={styles.titleHeader}>{item.totalAmount}</Text>
-                </View>
-                <View style={{alignItems:"center"}}>
-                    <Text style={styles.titleHeader}>Items</Text>
-                    <Text style={styles.titleHeader}>{item.numOfItems}</Text>
-                </View>
+            <View style={{alignItems:"center"}}>
+                <Text style={styles.titleHeader}>OrderID</Text>
+                <Text style={styles.titleHeader}>{item.OrderID}</Text>
+            </View>
+            <View style={{alignItems:"center"}}>
+                <Text style={styles.titleHeader}>Amount</Text>
+                <Text style={styles.titleHeader}>{item.totalAmount}</Text>
+            </View>
+            <View style={{alignItems:"center"}}>
+                <Text style={styles.titleHeader}>Items</Text>
+                <Text style={styles.titleHeader}>{item.numOfItems}</Text>
+            </View>
             </View>
             <View style={{width:"100%",justifyContent:"space-around",padding:10,borderBottomColor:"black",borderBottomWidth:2}}>
                 <Text style={styles.titleHeader}>Place On {item.orderDate}</Text>
@@ -37,11 +37,8 @@ const OrderList=({orderList})=>{
                     <Text style={styles.titleHeader}>View Details</Text>
                     <Image style={{width:15,height:15,marginLeft:4}} source={{uri:"https://cdn-icons-png.flaticon.com/128/32/32195.png"}} />
                 </Pressable>
-                <Pressable style={{flexDirection:"row",justifyContent: 'center',alignItems: 'center',}}>
-                    {
-                        item.orderStatus==="In progress"?<Image style={{width:15,height:15,marginRight:4}} source={{uri:"https://cdn-icons-png.flaticon.com/128/545/545661.png"}} />:null
-                    }
-                    <Text style={styles.titleHeader}>{item.orderStatus}</Text>
+                <Pressable style={[styles.orderStatus,item.orderStatus==="In progress"?{backgroundColor:"#F05656"}:{backgroundColor:"#7DFFA2"}]}>
+                    <Text style={[styles.titleHeader,item.orderStatus==="In progress"?{color:"white"}:{color:"black"}]}>{item.orderStatus}</Text>
                 </Pressable>
             </View>
         </View>
@@ -128,6 +125,14 @@ const styles=StyleSheet.create({
         borderRadius:10,
         fontWeight:"bold",
         color:"white"
+    },
+    orderStatus:{
+        flexDirection:"row",
+        justifyContent: 'center',
+        alignItems: 'center',
+        width:width/2.4,
+        height:40,
+        borderRadius:5
     }
 })
 export default OrderList;

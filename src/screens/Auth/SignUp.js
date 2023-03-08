@@ -1,10 +1,12 @@
 import { StyleSheet, Text, View, Image, Dimensions, ScrollView, TouchableOpacity, TextInput, ActivityIndicator } from 'react-native'
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 const windoWidth = Dimensions.get('window').width;
 const windoHeight = Dimensions.get('window').height;
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
+import { GlobalVariable } from '../../../App';
 const SignUp = ({ navigation }) => {
+    const {listenAut,setUserData}=useContext(GlobalVariable);
     const [email, setemail] = useState('')
     const [password, setpassword] = useState('');
     const [Cpassword, setCpassword] = useState('');
@@ -25,19 +27,22 @@ const SignUp = ({ navigation }) => {
                     .createUserWithEmailAndPassword(email, password)
                     .then((userCredential) => {
                         const user = userCredential.user;
-                        firestore()
-                            .collection('Users')
-                            .doc(userCredential.user.uid)
-                            .set({
-                                email: email
-                            }).then(() => {
-
-                                console.log(user, "congo")
-                                setLoading(false)
-                                navigation.navigate("Profile");
-                            }
-
-                            )
+                        console.log(user, "congo")
+                        setLoading(false)
+                        return firestore().collection("Users").doc(user.uid).set({
+                            email:email,
+                            accountState:"newprofile"
+                        })
+                        .then(async() => {
+                            console.log("user created")
+                            setLoading(false)
+                            await setUserData(user.uid)
+                            navigation.navigate('createprofile')
+                        })
+                        .catch((error) => {
+                            // setLoading(false)
+                            console.log(error);
+                        })
                     })
             } catch (error) {
                 console.log(error)
@@ -77,20 +82,17 @@ const SignUp = ({ navigation }) => {
                     onChangeText={value => { setCpassword(value) }}
                     autoCapitalize={true}
                 />
-            </View>
-
-            <TouchableOpacity style={styles.Btn} onPress={validateUser}>
-                {
-                    loading ?
-                        <ActivityIndicator size={25} color={"white"} style={{ marginTop: 10 }} /> :
-
-                        <Text style={styles.BtnTxt}>Create Account</Text>
-                }
-            </TouchableOpacity>
-
-            <View style={styles.Last}>
-                <Text style={styles.LastTxt}>Already Have an Account ?</Text>
-                <Text style={styles.LastSubTxt} onPress={() => { navigation.navigate('SignIn') }}>Log In</Text>
+                <TouchableOpacity style={styles.Btn} onPress={validateUser}>
+                    {
+                        loading ?
+                            <ActivityIndicator size={25} color={"white"} /> :
+                            <Text style={styles.BtnTxt}>Create Account</Text>
+                    }
+                </TouchableOpacity>
+                <View style={styles.Last}>
+                    <Text style={styles.LastTxt}>Already Have an Account ?</Text>
+                    <Text style={styles.LastSubTxt} onPress={() => { navigation.navigate('SignIn') }}>Log In</Text>
+                </View>
             </View>
 
         </ScrollView>
