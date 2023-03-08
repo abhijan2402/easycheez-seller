@@ -38,8 +38,8 @@ function Account({ navigation }) {
                     <Text style={styles.OptionText} onPress={() => { navigation.navigate('Subscription') }}>Subscription</Text>
                     <Image source={{ uri: "https://cdn-icons-png.flaticon.com/128/2989/2989988.png" }} style={styles.LogoImage} />
                 </View>
-                <TouchableOpacity style={{ margin: 20, borderWidth: 1, borderRadius: 15, marginHorizontal: 50, alignItems: "center" }} onPress={logout}>
-                    <Text style={{color:"black",padding:20}}>LogOut</Text>
+                <TouchableOpacity style={{ margin: 20, borderWidth: 1, borderRadius: 10, marginHorizontal: 50, alignItems: "center" }} onPress={logout}>
+                    <Text style={{color:"black",padding:10}}>LogOut</Text>
                 </TouchableOpacity>
 
             </View>
