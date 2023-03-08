@@ -1,7 +1,6 @@
 import { StyleSheet, Text, View, Image, Dimensions, ScrollView, TouchableOpacity, TextInput, ActivityIndicator } from 'react-native'
 import React, { useContext, useEffect, useState } from 'react'
 import auth from '@react-native-firebase/auth';
-import { GlobalVariable } from '../../../App';
 const windoWidth = Dimensions.get('window').width;
 const windoHeight = Dimensions.get('window').height;
 const SignIn = ({ navigation }) => {

@@ -36,7 +36,6 @@ const SignUp = ({ navigation }) => {
                         .then(async() => {
                             console.log("user created")
                             setLoading(false)
-                            await setUserData(user.uid)
                             navigation.navigate('createprofile')
                         })
                         .catch((error) => {
@@ -55,30 +54,26 @@ const SignUp = ({ navigation }) => {
     }
     return (
         <ScrollView style={styles.Background}>
-
-            <View style={styles.Head}>
-                <Text style={styles.SubHead}>Sign Up</Text>
-            </View>
-
-            <View>
-                <Image source={require('../../assets/SignUp.jpg')} style={styles.image} />
-            </View>
-
-            <View>
-                <TextInput style={styles.Box} placeholder={'Email'}
+            <Text style={styles.SubHead}>Sign Up</Text>
+            <Image source={require('../../assets/SignUp.jpg')} style={styles.image} />
+            <View style={{alignItems: 'center',}}>
+                <TextInput 
+                    style={styles.Box}
+                    placeholderTextColor={"black"} 
+                    placeholder={'Email'}
                     onChangeText={value => { setemail(value) }}
                 />
-            </View>
-
-            <View style={{ marginTop: 20 }}>
-                <TextInput style={styles.Box} placeholder={'Password'}
+                <TextInput 
+                    style={styles.Box} 
+                    placeholderTextColor={"black"} 
+                    placeholder={'Password'}
                     onChangeText={value => { setpassword(value) }}
                     autoCapitalize={true}
                 />
-            </View>
-
-            <View style={{ marginTop: 20 }}>
-                <TextInput style={styles.Box} placeholder={'Confirm Password'}
+                <TextInput 
+                    style={styles.Box} 
+                    placeholderTextColor={"black"} 
+                    placeholder={'Confirm Password'}
                     onChangeText={value => { setCpassword(value) }}
                     autoCapitalize={true}
                 />
@@ -111,33 +106,37 @@ const styles = StyleSheet.create({
     SubHead: {
         color: "black",
         fontSize: 30,
-        fontWeight: '900'
+        fontWeight: '900',
+        textAlign:"center",
+        padding:10
     },
     image: {
         height: windoHeight / 2,
         width: windoWidth,
     },
     Box: {
-        height: 44,
-        width: 279,
-        marginLeft: 50,
+        width:windoWidth/1.4,
+        height:windoHeight/18,
         marginTop: 10,
         borderRadius: 10,
         borderColor: "#808080",
-        borderWidth: 1
+        borderWidth: 1,
+        paddingLeft:10,
+        fontWeight:"bold",
+        color:"black",
+        paddingLeft:10
     },
     Btn: {
-        height: 44,
-        width: 279,
-        marginLeft: 50,
-        marginTop: 15,
+        width:windoWidth/1.4,
+        height:windoHeight/17,
+        marginTop: 10,
         backgroundColor: '#F05656',
         borderRadius: 10,
         marginBottom: 10,
+        alignItems:"center",
+        justifyContent: 'center',
     },
     BtnTxt: {
-        textAlign: 'center',
-        marginTop: 13,
         color: 'white',
         fontSize: 15,
         fontWeight: '500'

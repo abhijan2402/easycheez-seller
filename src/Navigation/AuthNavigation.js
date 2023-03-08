@@ -14,7 +14,7 @@ const AuthNavigation = () => {
     <>
         <Stack.Navigator 
           initialRouteName={
-            !userUid?"SignIn":
+            userUid?"SignIn":
             userDetails.userDetails && userDetails.userDetails.accountState==="newprofile"?'createprofile':
             userDetails.userDetails && userDetails.userDetails.accountState==="newShop"?'StoreRegistration':'SignIn'
           }
