@@ -7,7 +7,7 @@ import {
     Image,
     ScrollView
 } from 'react-native';
-import { shopProductData } from "../data/shopProductData";
+import { shopProductData } from "../../data/shopProductData";
 import DropDownPicker from 'react-native-dropdown-picker';
 
 const{width,height}=Dimensions.get('window')
@@ -32,7 +32,7 @@ const StoreAnalysis=()=>{
                 <Text style={{color:"black",fontWeight:"bold",fontSize:25}}>Store Analysis</Text>
                 <View style={{alignItems:"center"}}>
                     <Image
-                        source={require('../assets/qqq.png')}
+                        source={require('../../assets/qqq.png')}
                         style={{width:width-40,height:width-40,resizeMode:"contain",borderRadius:20}}            
                     />
                     <View style={{width:width-40,flexDirection: 'row',justifyContent:"space-between",alignItems: 'center',marginVertical:10}}>  
@@ -64,10 +64,10 @@ const StoreAnalysis=()=>{
                     <View style={{flexDirection:"row",flexWrap:"wrap",justifyContent:"space-evenly"}}>
                         {
                             shopProductData.map((item,index)=>(
-                                    <View style={styles.shopProductDataCard} key={index}>
-                                        <Text style={{color:"black",fontWeight:"600"}}>{item.title}</Text>
-                                        <Text style={{color:"black",fontWeight:"600"}}>{item.available}</Text>
-                                    </View>
+                                <View style={styles.shopProductDataCard} key={index}>
+                                    <Text style={{color:"black",fontWeight:"600"}}>{item.title}</Text>
+                                    <Text style={{color:"black",fontWeight:"600"}}>{item.available}</Text>
+                                </View>
                             ))
                         }
                     </View>

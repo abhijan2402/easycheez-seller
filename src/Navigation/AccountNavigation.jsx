@@ -4,6 +4,7 @@ import Orders from '../screens/profile/Orders';
 import Account from '../screens/profile/Account';
 import Subscription from '../screens/profile/subscription';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import StoreAnalysis from '../screens/profile/StoreAnalysis';
 const Stack = createNativeStackNavigator();
 const AccountNavigation = () => {
     
@@ -13,6 +14,7 @@ const AccountNavigation = () => {
             <Stack.Screen name='Account' component={Account}/>
             <Stack.Screen name='Orders' component={Orders}/>
             <Stack.Screen name='Subscription' component={Subscription}/>
+            <Stack.Screen name='storeAnalysis' component={StoreAnalysis}/>
         </Stack.Navigator>
     </>
   )

@@ -28,17 +28,17 @@ const StoreRegistration = ({ navigation }) => {
   const StoreRegis = async () => {
     console.log(storeName, AboutThStore, OpeningTime, closeTime, MobileNum, ShopNum, Address, LandMark)
     try {
-      if (storeName == null)
+      if (storeName == '')
         throw "Please enter Store Name";
-      if (OpeningTime == null)
+      if (OpeningTime == '')
         throw "Please enter Opening Time";
-      if (closeTime == null)
+      if (closeTime == '')
         throw "Please enter Close Time";
-      if (MobileNum == null)
+      if (MobileNum == '')
         throw "Please enter MobileNum";
-      if (ShopNum == null)
+      if (ShopNum == '')
         throw "Please enter ShopNum";
-      if (Address == null)
+      if (Address == '')
         throw "Please enter Address";
       const shopDetails = {
         storeName: storeName,
