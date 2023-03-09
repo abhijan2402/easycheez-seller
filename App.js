@@ -76,7 +76,7 @@ const App = () => {
       <NavigationContainer>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           {
-            user == null ?
+            !user == null ?
               <>
                 <Stack.Screen name='AuthNavigation' component={AuthNavigation} options={{
 

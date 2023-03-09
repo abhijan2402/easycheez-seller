@@ -6,12 +6,12 @@ const windoHeight = Dimensions.get('window').height;
 import auth from '@react-native-firebase/auth';
 import { GlobalVariable } from '../../../App';
 import firestore from '@react-native-firebase/firestore';
-import AddresModal from '../../components/profile/AddressModal';
+// import AddresModal from '../../components/profile/AddressModal';
 function Account({ navigation }) {
     const { userUid } = useContext(GlobalVariable);
     const addressModalRef = useRef(null);
-    const [storedetails,setStoreDetails]=useState('');
-    const [userDetails,setUserDetails]=useState('');
+    const [storedetails, setStoreDetails] = useState('');
+    const [userDetails, setUserDetails] = useState('');
     const logout = () => {
         auth().signOut()
     }
@@ -25,30 +25,30 @@ function Account({ navigation }) {
             const user = await firestore().collection('Users').doc(userUid.uid).get()
             const Data = user._data;
             firestore().collection("StoreRegis").doc(user._data.storeID).get()
-            .then((res)=>{
-                setStoreDetails(res._data);
-                firestore().collection("SellerShop").doc(user._data.profileID).get()
-                .then((res)=>{
-                    setUserDetails({...user._data,...res._data,id:user.id})
+                .then((res) => {
+                    setStoreDetails(res._data);
+                    firestore().collection("SellerShop").doc(user._data.profileID).get()
+                        .then((res) => {
+                            setUserDetails({ ...user._data, ...res._data, id: user.id })
+                        })
+                        .catch((e) => {
+                            console.log(e)
+                        })
                 })
-                .catch((e)=>{
+                .catch((e) => {
                     console.log(e)
                 })
-            })
-            .catch((e)=>{
-                console.log(e)
-            })
         } catch (error) {
             console.error(error);
         }
     }
-    if(!userDetails){
+    if (!userDetails) {
         return (
-          <View style={{backgroundColor:"white",flex:1,alignItems: 'center',justifyContent: 'center',}}>
-            <ActivityIndicator size={35} color="blue" />
-          </View>
+            <View style={{ backgroundColor: "white", flex: 1, alignItems: 'center', justifyContent: 'center', }}>
+                <ActivityIndicator size={35} color="blue" />
+            </View>
         )
-      }
+    }
     return (
         <View style={{ width: windoWidth, height: windoHeight, backgroundColor: "white" }}>
             <Header title="Account" />
@@ -65,7 +65,7 @@ function Account({ navigation }) {
                 </View>
                 <View style={styles.OptiionView}>
                     <Image source={{ uri: "https://cdn-icons-png.flaticon.com/128/684/684908.png" }} style={styles.LogoImage} />
-                    <Text style={styles.OptionText} onPress={()=> addressModalRef.current.showAddress()}>Address</Text>
+                    <Text style={styles.OptionText} onPress={() => addressModalRef.current.showAddress()}>Address</Text>
                     <Image source={{ uri: "https://cdn-icons-png.flaticon.com/128/2989/2989988.png" }} style={styles.LogoImage} />
                 </View>
                 <View style={styles.OptiionView}>
@@ -84,12 +84,12 @@ function Account({ navigation }) {
                     <Image source={{ uri: "https://cdn-icons-png.flaticon.com/128/2989/2989988.png" }} style={styles.LogoImage} />
                 </View>
                 <TouchableOpacity style={{ margin: 20, borderWidth: 1, borderRadius: 10, marginHorizontal: 50, alignItems: "center" }} onPress={logout}>
-                    <Text style={{color:"black",padding:10}}>LogOut</Text>
+                    <Text style={{ color: "black", padding: 10 }}>LogOut</Text>
                 </TouchableOpacity>
             </View>
-            {
+            {/* {
                 storedetails && <AddresModal ref={addressModalRef} storeData={storedetails} />
-            }
+            } */}
         </View>
     )
 }

@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
-import { Text, View, StyleSheet, Dimensions, ScrollView, TextInput, Image, TouchableOpacity } from 'react-native'
+import { Text, View, StyleSheet, Dimensions, ActivityIndicator, ScrollView, TextInput, Image, TouchableOpacity } from 'react-native'
 const windoWidth = Dimensions.get('window').width;
 const windoHeight = Dimensions.get('window').height;
+import DropDownPicker from 'react-native-dropdown-picker';
 import { commoneStyles } from '../../styles/commonStyles';
 import firestore from '@react-native-firebase/firestore';
 function AddProduct() {
@@ -10,8 +11,16 @@ function AddProduct() {
     const [ProCategory, setProCategory] = useState("")
     const [ImageLink, setImageLink] = useState("")
     const [OfferPrice, setOfferPrice] = useState("")
+    const [loading, setLoading] = useState(false)
+    const [Category, setCategory] = useState(false);
+    const [CategoryValue, setCategoryValue] = useState(null);
+    const [CatVal, setCatVal] = useState([
+        { label: 'Grocery', value: 'Grocery' },
+        { label: 'Food', value: 'Food' }
+    ]);
     const AddProd = async () => {
         try {
+            setLoading(true)
             if (productName == null)
                 throw "Please enter Product Name";
             if (ProductPrice == null)
@@ -22,8 +31,10 @@ function AddProduct() {
                 throw "Please enter Product Image";
             if (OfferPrice == null)
                 throw "Please enter Product Offer Price";
+            if (CategoryValue == null)
+                throw "Please Select Category";
             const ProdDetails = {
-                Category: ProCategory,
+                Category: CategoryValue,
                 ProImage: ImageLink,
                 ProOffer: OfferPrice,
                 ProductName: productName,
@@ -34,6 +45,7 @@ function AddProduct() {
                 .add(ProdDetails)
                 .then((res) => {
                     console.log(res)
+                    setLoading(false)
                 })
                 .catch((error) => {
                     // setLoading(false)
@@ -55,7 +67,17 @@ function AddProduct() {
                     <Text style={styles.LabelName}>Product Price</Text>
                     <TextInput style={commoneStyles.textField} placeholderTextColor={"black"} placeholder='Add Price ' onChangeText={value => { setProductPrice(value) }} />
                     <Text style={styles.LabelName}>Select category</Text>
-                    <TextInput style={commoneStyles.textField} placeholderTextColor={"black"} placeholder='Add Category ' onChangeText={value => { setProCategory(value) }} />
+                    <DropDownPicker
+                        placeholder="Select Category"
+                        style={styles.dropdownsstyle}
+                        open={Category}
+                        value={CategoryValue}
+                        items={CatVal}
+                        setOpen={setCategory}
+                        setValue={setCategoryValue}
+                        setItems={setCatVal}
+                    />
+                    {/* <TextInput style={commoneStyles.textField} placeholderTextColor={"black"} placeholder='Add Category ' onChangeText={value => { setProCategory(value) }} /> */}
                     <Text style={styles.LabelName}>Add Product Image Link</Text>
                     <TextInput style={commoneStyles.textField} placeholderTextColor={"black"} placeholder='Add Image Link ' onChangeText={value => { setImageLink(value) }} />
                     <Text style={styles.LabelName}>Add Offer Price</Text>
@@ -72,7 +94,11 @@ function AddProduct() {
                     </View>
                 </View> */}
                 <TouchableOpacity onPress={AddProd} style={styles.AddBtn}>
-                    <Text style={styles.AddBtnText}>Add</Text>
+                    {
+                        loading ?
+                            <ActivityIndicator size={25} color={"white"} /> :
+                            <Text style={styles.AddBtnText}>Add</Text>
+                    }
                 </TouchableOpacity>
             </View>
         </ScrollView>
@@ -81,6 +107,20 @@ function AddProduct() {
 }
 
 const styles = StyleSheet.create({
+    dropdownsstyle: {
+        width: windoWidth / 1.244,
+        height: 40,
+        borderWidth: 0.6,
+        // borderColor: "#F05656",
+        borderRadius: 8,
+        paddingHorizontal: 10,
+        marginHorizontal: 20,
+        fontWeight: "bold",
+        color: "black",
+        textAlign: "center",
+        textAlignVertical: "center",
+        marginBottom: 20
+    },
     MainView: {
         height: windoHeight,
         width: windoWidth,
@@ -129,7 +169,7 @@ const styles = StyleSheet.create({
         marginVertical: 10
     },
     AddBtn: {
-        marginHorizontal: 20,
+        marginHorizontal: 30,
         justifyContent: "center",
         alignItems: "center",
         marginVertical: 25,
