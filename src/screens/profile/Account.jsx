@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect, useRef } from 'react'
-import { View, Text, StyleSheet, Image, Dimensions, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, Image, Dimensions, TouchableOpacity, ActivityIndicator } from 'react-native'
 import Header from '../../components/Home/Header'
 const windoWidth = Dimensions.get('window').width;
 const windoHeight = Dimensions.get('window').height;
@@ -42,9 +42,14 @@ function Account({ navigation }) {
             console.error(error);
         }
     }
-
+    if(!userDetails){
+        return (
+          <View style={{backgroundColor:"white",flex:1,alignItems: 'center',justifyContent: 'center',}}>
+            <ActivityIndicator size={35} color="blue" />
+          </View>
+        )
+      }
     return (
-        userDetails &&
         <View style={{ width: windoWidth, height: windoHeight, backgroundColor: "white" }}>
             <Header title="Account" />
             <View style={styles.MainView}>
