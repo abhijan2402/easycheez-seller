@@ -8,6 +8,8 @@ function AddProduct() {
     const [productName, setproductName] = useState("")
     const [ProductPrice, setProductPrice] = useState("")
     const [ProCategory, setProCategory] = useState("")
+    const [ImageLink, setImageLink] = useState("")
+    const [OfferPrice, setOfferPrice] = useState("")
     const AddProd = async () => {
         try {
             if (productName == null)
@@ -16,23 +18,27 @@ function AddProduct() {
                 throw "Please enter Product Price";
             if (ProCategory == null)
                 throw "Please enter Product Category";
+            if (ImageLink == null)
+                throw "Please enter Product Image";
+            if (OfferPrice == null)
+                throw "Please enter Product Offer Price";
             const ProdDetails = {
                 Category: ProCategory,
-                ProImage: "jj",
-                ProOffer: "44",
+                ProImage: ImageLink,
+                ProOffer: OfferPrice,
                 ProductName: productName,
                 ProductPrice: ProductPrice,
             }
             await firestore()
-            .collection('ProductPage')
-            .add(ProdDetails)
-            .then((res) => {
-                console.log(res)
-            })
-            .catch((error) => {
-                // setLoading(false)
-                console.log(error);
-            })
+                .collection('ProductPage')
+                .add(ProdDetails)
+                .then((res) => {
+                    console.log(res)
+                })
+                .catch((error) => {
+                    // setLoading(false)
+                    console.log(error);
+                })
         } catch (error) {
             console.log(error)
         }
@@ -50,8 +56,12 @@ function AddProduct() {
                     <TextInput style={commoneStyles.textField} placeholderTextColor={"black"} placeholder='Add Price ' onChangeText={value => { setProductPrice(value) }} />
                     <Text style={styles.LabelName}>Select category</Text>
                     <TextInput style={commoneStyles.textField} placeholderTextColor={"black"} placeholder='Add Category ' onChangeText={value => { setProCategory(value) }} />
+                    <Text style={styles.LabelName}>Add Product Image Link</Text>
+                    <TextInput style={commoneStyles.textField} placeholderTextColor={"black"} placeholder='Add Image Link ' onChangeText={value => { setImageLink(value) }} />
+                    <Text style={styles.LabelName}>Add Offer Price</Text>
+                    <TextInput style={commoneStyles.textField} placeholderTextColor={"black"} placeholder='Add Offer Price ' onChangeText={value => { setOfferPrice(value) }} />
                 </View>
-                <View style={styles.InputFooter}>
+                {/* <View style={styles.InputFooter}>
                     <View>
                         <Text style={styles.LabelName}>Product Name</Text>
                         <Image source={{ uri: "https://cdn-icons-png.flaticon.com/128/565/565761.png" }} style={styles.ImageAdd} />
@@ -60,7 +70,7 @@ function AddProduct() {
                         <Text style={styles.LabelName}>Add Offer</Text>
                         <Image source={{ uri: "https://cdn-icons-png.flaticon.com/128/9778/9778869.png" }} style={styles.ImageAdd} />
                     </View>
-                </View>
+                </View> */}
                 <TouchableOpacity onPress={AddProd} style={styles.AddBtn}>
                     <Text style={styles.AddBtnText}>Add</Text>
                 </TouchableOpacity>
@@ -101,7 +111,7 @@ const styles = StyleSheet.create({
         color: "black",
         marginTop: 15,
         marginVertical: 5,
-        paddingHorizontal:20
+        paddingHorizontal: 20
     },
     fields: {
         marginHorizontal: 15
