@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState, useContext, useEffect, useRef } from 'react'
 import { View, Text, StyleSheet, Image, Dimensions, TouchableOpacity } from 'react-native'
 import Header from '../../components/Home/Header'
 const windoWidth = Dimensions.get('window').width;
@@ -6,11 +6,16 @@ const windoHeight = Dimensions.get('window').height;
 import auth from '@react-native-firebase/auth';
 import { GlobalVariable } from '../../../App';
 import firestore from '@react-native-firebase/firestore';
+import AddresModal from '../../components/profile/AddressModal';
 function Account({ navigation }) {
     const { userUid } = useContext(GlobalVariable);
+    const addressModalRef = useRef(null);
+    const [storedetails,setStoreDetails]=useState('');
+    const [userDetails,setUserDetails]=useState('');
     const logout = () => {
         auth().signOut()
     }
+
     useEffect(() => {
         UserInfo();
     }, [])
@@ -19,18 +24,32 @@ function Account({ navigation }) {
         try {
             const user = await firestore().collection('Users').doc(userUid.uid).get()
             const Data = user._data;
-            console.log(Data)
-            // setgetAllDetails(Data);
+            firestore().collection("StoreRegis").doc(user._data.storeID).get()
+            .then((res)=>{
+                setStoreDetails(res._data);
+                firestore().collection("SellerShop").doc(user._data.profileID).get()
+                .then((res)=>{
+                    setUserDetails({...user._data,...res._data,id:user.id})
+                })
+                .catch((e)=>{
+                    console.log(e)
+                })
+            })
+            .catch((e)=>{
+                console.log(e)
+            })
         } catch (error) {
             console.error(error);
         }
     }
+
     return (
+        userDetails &&
         <View style={{ width: windoWidth, height: windoHeight, backgroundColor: "white" }}>
             <Header title="Account" />
             <View style={styles.MainView}>
                 <Image source={{ uri: "https://cdn-icons-png.flaticon.com/128/3135/3135715.png" }} style={styles.Image} />
-                <Text style={styles.NameText}>Abhishek</Text>
+                <Text style={styles.NameText}>{userDetails.FirstName} {userDetails.LastName}</Text>
             </View>
             <View style={{ marginTop: 30 }}>
                 <Text style={{ fontSize: 15, fontWeight: "700", marginLeft: 20, marginVertical: 10 }}>Options</Text>
@@ -41,7 +60,7 @@ function Account({ navigation }) {
                 </View>
                 <View style={styles.OptiionView}>
                     <Image source={{ uri: "https://cdn-icons-png.flaticon.com/128/684/684908.png" }} style={styles.LogoImage} />
-                    <Text style={styles.OptionText}>Address</Text>
+                    <Text style={styles.OptionText} onPress={()=> addressModalRef.current.showAddress()}>Address</Text>
                     <Image source={{ uri: "https://cdn-icons-png.flaticon.com/128/2989/2989988.png" }} style={styles.LogoImage} />
                 </View>
                 <View style={styles.OptiionView}>
@@ -54,11 +73,18 @@ function Account({ navigation }) {
                     <Text style={styles.OptionText} onPress={() => { navigation.navigate('Subscription') }}>Subscription</Text>
                     <Image source={{ uri: "https://cdn-icons-png.flaticon.com/128/2989/2989988.png" }} style={styles.LogoImage} />
                 </View>
+                <View style={styles.OptiionView}>
+                    <Image source={{ uri: "https://cdn-icons-png.flaticon.com/128/868/868681.png" }} style={styles.LogoImage} />
+                    <Text style={styles.OptionText} onPress={() => { navigation.navigate('storeAnalysis') }}>Store Analysis</Text>
+                    <Image source={{ uri: "https://cdn-icons-png.flaticon.com/128/2989/2989988.png" }} style={styles.LogoImage} />
+                </View>
                 <TouchableOpacity style={{ margin: 20, borderWidth: 1, borderRadius: 10, marginHorizontal: 50, alignItems: "center" }} onPress={logout}>
                     <Text style={{color:"black",padding:10}}>LogOut</Text>
                 </TouchableOpacity>
-
             </View>
+            {
+                storedetails && <AddresModal ref={addressModalRef} storeData={storedetails} />
+            }
         </View>
     )
 }
