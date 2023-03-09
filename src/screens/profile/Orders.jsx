@@ -9,7 +9,6 @@ import {
 } from 'react-native';
 import OrderButton from '../../components/Home/orderButton';
 import OrderList from '../../components/Home/OrderList';
-import { orderDetails } from '../../data/orderDetails';
 import firestore from '@react-native-firebase/firestore';
 const {width,height}=Dimensions.get('window');
 

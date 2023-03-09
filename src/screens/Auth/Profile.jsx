@@ -1,7 +1,7 @@
 import { View, Text, Image, ScrollView, TextInput, TouchableOpacity, StyleSheet, Dimensions } from 'react-native'
 import React, { useContext, useEffect, useState } from 'react'
 import firestore from '@react-native-firebase/firestore';
-import { GlobalVariable } from '../../App';
+import { GlobalVariable } from '../../../App';
 const windoWidth = Dimensions.get('window').width;
 const windoHeight = Dimensions.get('window').height;
 
@@ -67,7 +67,7 @@ const Profile = ({ navigation }) => {
   return (
 
     <ScrollView style={{ backgroundColor: "white" }}>
-      <Image source={require('../assets/profile.png')} style={{ width: 390, height: 340, alignSelf: "center" }} />
+      <Image source={require('../../assets/profile.png')} style={{ width: 390, height: 340, alignSelf: "center" }} />
       <Text style={{ fontWeight: '800', fontSize: 22, color: "black",textAlign:"center",padding:10,width:windoWidth }}>Create Your Profile</Text>
       <View style={{alignItems:"center"}}>
         <View>

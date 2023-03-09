@@ -1,10 +1,10 @@
 import React from 'react'
-import { Text, View, StyleSheet, Dimensions, ScrollView, TextInput, Image, TouchableOpacity } from 'react-native'
+import { Text, View, StyleSheet, Dimensions, ScrollView, TextInput, Image, TouchableOpacity, Pressable } from 'react-native'
 const windoWidth = Dimensions.get('window').width;
 const windoHeight = Dimensions.get('window').height;
-function ProductCard({title,bg,Img}) {
+function ProductCard({title,bg,Img,onpress  }) {
     return (
-        <View style={[styles.MainView,{backgroundColor:bg}]}>
+        <Pressable style={[styles.MainView,{backgroundColor:bg}]} onPress={onpress}>
             <View style={{marginVertical:10,display:"flex",flexDirection:"row",justifyContent:"space-around"}}>
                 <Image source={{uri:Img}} style={styles.Image}/>
                 <Image source={{uri:"https://cdn-icons-png.flaticon.com/128/545/545682.png"}} style={styles.Image1}/>
@@ -13,7 +13,7 @@ function ProductCard({title,bg,Img}) {
                 <Text style={styles.MainSeeText}>{title}</Text>
                 <Text style={styles.MainSeeText}>25</Text>
             </View>
-        </View>
+        </Pressable>
       )
     }
 const styles = StyleSheet.create({

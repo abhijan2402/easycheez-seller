@@ -7,7 +7,7 @@ import { commoneStyles } from '../../styles/commonStyles';
 function Package() {
   return (
     <ScrollView style={styles.MainView}>
-        <Header title="Package"/>
+        <Text style={styles.titleStyle}>Add Package</Text>
         <View>
             <Image source={{uri:"https://5.imimg.com/data5/SELLER/Default/2021/4/KT/ZR/TX/42561548/c851b0b6-491f-41f5-9664-aae78a3d9183-1000x1000.jpg"}} style={styles.Image}/>
         </View>
@@ -20,11 +20,11 @@ function Package() {
              <TextInput style={[commoneStyles.textField,{borderColor:"#F05656"}]} placeholderTextColor={"black"} placeholder='Add Product Name ' />
         </View>
         <View>
-             <Text style={styles.LabelName}>Price</Text>
+             <Text style={styles.LabelName}>Package Price</Text>
              <TextInput style={[commoneStyles.textField,{borderColor:"#F05656"}]} placeholderTextColor={"black"} placeholder='Add Price ' />
         </View>
         <TouchableOpacity style={styles.Btn}>
-            <Text style={styles.BtnText}>Proceed</Text>
+            <Text style={styles.BtnText}>Add Package</Text>
         </TouchableOpacity>
         <View style={{marginBottom:35}}></View>
     </ScrollView>
@@ -73,6 +73,13 @@ const styles = StyleSheet.create({
         flexDirection:"row",
         justifyContent:"space-between",
         alignItems:"center"
+    },
+    titleStyle:{
+        textAlign:"center",
+        color:"black",
+        fontWeight:"bold",
+        padding:10,
+        fontSize:30
     }
 })
 export default Package

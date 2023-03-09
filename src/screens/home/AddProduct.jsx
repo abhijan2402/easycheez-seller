@@ -43,7 +43,6 @@ function AddProduct() {
                 <Text style={styles.HeaderText}>Add Product</Text>
             </View>
             <View style={styles.MidView}>
-                <Text style={styles.StoredetailsText}>Store Details</Text>
                 <View style={styles.fields}>
                     <Text style={styles.LabelName}>Product Name</Text>
                     <TextInput style={commoneStyles.textField} placeholderTextColor={"black"} placeholder='Add Product Name ' onChangeText={value => { setproductName(value) }} />
@@ -101,7 +100,8 @@ const styles = StyleSheet.create({
         fontSize: 13,
         color: "black",
         marginTop: 15,
-        marginVertical: 5
+        marginVertical: 5,
+        paddingHorizontal:20
     },
     fields: {
         marginHorizontal: 15

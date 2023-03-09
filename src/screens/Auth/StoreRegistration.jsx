@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, Image, ScrollView, TextInput, TouchableOpacity,
 import React, { useContext, useEffect, useState } from 'react'
 // import { SelectList } from 'react-native-dropdown-select-list'
 import firestore from '@react-native-firebase/firestore';
-import { GlobalVariable } from '../../App';
+import { GlobalVariable } from '../../../App';
 const windoWidth = Dimensions.get('window').width;
 const windoHeight = Dimensions.get('window').height;
 const StoreRegistration = ({ navigation }) => {

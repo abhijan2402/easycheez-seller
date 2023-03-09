@@ -2,10 +2,9 @@ import { View, Text,StyleSheet,style,Image } from 'react-native'
 import React from 'react'
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer } from '@react-navigation/native';
 
 import HomeNavigation from './HomeNavigation';
-import Package from '../screens/package/Package';
+import Package from '../screens/store/Package';
 import AccountNavigation from './AccountNavigation';
 
 import Ionicons from 'react-native-vector-icons/Ionicons'

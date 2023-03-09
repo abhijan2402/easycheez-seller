@@ -4,8 +4,8 @@ import SignIn from '../screens/Auth/SignIn';
 import SignUp from '../screens/Auth/SignUp';
 import ForgotPass from '../screens/Auth/ForgotPass';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Profile from '../screens/Profile';
-import StoreRegistration from '../screens/StoreRegistration';
+import Profile from '../screens/Auth/Profile';
+import StoreRegistration from '../screens/Auth/StoreRegistration';
 import { GlobalVariable } from '../../App';
 const Stack = createNativeStackNavigator();
 const AuthNavigation = () => {

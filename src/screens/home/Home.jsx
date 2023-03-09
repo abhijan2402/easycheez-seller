@@ -14,8 +14,18 @@ function Home({navigation}) {
         </View>
         <View style={styles.cardView}>
             <View>
-                <ProductCard title="Products" Img="https://cdn-icons-png.flaticon.com/128/859/859270.png" bg="#FFE589"/>
-                <ProductCard title="Offers" Img="https://cdn-icons-png.flaticon.com/128/3176/3176371.png" bg="#62D7C2"/>
+                <ProductCard 
+                    title="Products" 
+                    Img="https://cdn-icons-png.flaticon.com/128/859/859270.png" 
+                    bg="#FFE589"
+                    onpress={()=>navigation.navigate('seeEditproduct')}
+                />
+                <ProductCard 
+                    title="Offers" 
+                    Img="https://cdn-icons-png.flaticon.com/128/3176/3176371.png" 
+                    bg="#62D7C2"
+                    // onpress={()=>navigation.navigate('AddProduct')}
+                />
             </View>
             <View>
                 <AddPro onpress={()=>navigation.navigate('AddProduct')} />
