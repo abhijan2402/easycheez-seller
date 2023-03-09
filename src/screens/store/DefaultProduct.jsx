@@ -3,6 +3,7 @@ import { Text, View, StyleSheet, Dimensions, ActivityIndicator, ScrollView, Text
 const windoWidth = Dimensions.get('window').width;
 const windoHeight = Dimensions.get('window').height;
 import DropDownPicker from 'react-native-dropdown-picker';
+import PackageData from '../../data/PackageData';
 function DefaultProduct() {
     const Data = [
         {
@@ -25,24 +26,24 @@ function DefaultProduct() {
 
     ]
     return (
-        <View style={styles.MainView}>
+        <ScrollView style={styles.MainView}>
             <View style={styles.Header}>
                 <Text style={styles.HeaderText}>Default Product</Text>
             </View>
             <View style={styles.ProView}>
                 {
-                    Data.map((item) => (
-                        <View key={item.id} >
+                    PackageData.map((item) => (
+                        <View key={item.id} style={{ marginVertical: 10, borderWidth: 0.8, marginHorizontal: 4, borderRadius: 8 }} >
                             <View style={styles.ImageView}>
-                                <Image source={{ uri: "https://images.mamaearth.in/catalog/product/u/b/ubtan-face-wash_1_1_2.jpg" }} style={styles.ImagePro} />
+                                <Image source={{ uri: item.imageUrl }} style={styles.ImagePro} />
                             </View>
-                            <Text>Hi</Text>
-                            <View>
-                                <TouchableOpacity>
-                                    <Text>Add Price</Text>
+                            <Text style={styles.ProText}>{item.name}</Text>
+                            <View style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
+                                <TouchableOpacity style={[styles.AddPriceBtn, { borderRightWidth: 1 }]}>
+                                    <Text style={{ fontSize: 12, color: "black" }}>Add Price</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity>
-                                    <Text>Add Offer</Text>
+                                <TouchableOpacity style={styles.AddPriceBtn}>
+                                    <Text style={{ color: "skyblue", fontSize: 12 }}>Add Offer</Text>
                                 </TouchableOpacity>
                             </View>
                         </View>
@@ -50,7 +51,7 @@ function DefaultProduct() {
                 }
 
             </View>
-        </View>
+        </ScrollView>
     )
 }
 const styles = StyleSheet.create({
@@ -60,7 +61,6 @@ const styles = StyleSheet.create({
         width: windoWidth
     },
     Header: {
-        borderWidth: 1,
         height: windoHeight / 11,
         justifyContent: "center",
         alignItems: "center"
@@ -71,18 +71,33 @@ const styles = StyleSheet.create({
         fontWeight: "700"
     },
     ImagePro: {
-        width: windoWidth / 2.4,
-        height: windoHeight / 5
+        width: windoWidth / 2.5,
+        height: windoHeight / 4.7,
+        borderRadius: 10,
     },
     ProView: {
         display: "flex",
         flexDirection: "row",
         flexWrap: "wrap",
-        marginHorizontal: 10,
+        marginHorizontal: 5,
         justifyContent: "center"
     },
     ImageView: {
-        borderWidth: 1
+        // borderWidth: 1
+    },
+    AddPriceBtn: {
+        // borderWidth: 1,
+        paddingHorizontal: 10,
+        paddingVertical: 5,
+        borderTopWidth: 1,
+        paddingHorizontal: 13
+    },
+    ProText: {
+        marginVertical: 10,
+        width: windoWidth / 2.6,
+        alignSelf: "center",
+        color: 'black'
+
     }
 
 
