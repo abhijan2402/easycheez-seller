@@ -16,13 +16,16 @@ const {width,height}=Dimensions.get('window');
 const Orders=()=>{
     const [orderList,setOrderList]=useState([]);
     const [filteredOrders,setFilteredOrders]=useState([]);
+    const [selectedFeature,setSelectedFeature]=useState("allorders");
     const fiilterOrders=()=>{
         let finalArray=orderList.filter((item)=>{
             return item.orderStatus === "In progress"
         })
         setFilteredOrders(finalArray)
+        setSelectedFeature("active")
     }
     const setAllOrders=()=>{
+        setSelectedFeature("allorders")
         setFilteredOrders(orderList)
     }
 
@@ -48,8 +51,20 @@ const Orders=()=>{
             <Text style={{color:"black",fontWeight:"bold",fontSize:30,textAlign:"center",padding:10}}>Orders</Text>
             <Image style={{width:width,height:width,resizeMode:"contain"}} source={require("../../assets/imageOrder.png")} />   
             <View style={{flexDirection:"row",width:width,justifyContent:"space-around"}}>
-                <OrderButton title="Active Orders" backgroundcolor={"#F05656"} textColor={"white"} checkForActivOrders={fiilterOrders}  />
-                <OrderButton title="All Orders" backgroundcolor={"#7DFFA2"} textColor={"black"} checkForActivOrders={setAllOrders} />
+                <OrderButton 
+                    bordercolor={"#F05656"} 
+                    title="Active Orders" 
+                    backgroundcolor={selectedFeature==='active'?"#F05656":"white"} 
+                    textColor={selectedFeature==='active'?"white":"black"} 
+                    checkForActivOrders={fiilterOrders}  
+                />
+                <OrderButton 
+                    bordercolor={"#7DFFA2"} 
+                    title="All Orders" 
+                    backgroundcolor={selectedFeature==='allorders'?"#7DFFA2":"white"} 
+                    textColor={"black"} 
+                    checkForActivOrders={setAllOrders} 
+                />
             </View>
             {
                 orderList && <OrderList orderList={filteredOrders.length==0?orderList:filteredOrders} />

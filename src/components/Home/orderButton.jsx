@@ -7,9 +7,9 @@ import {
 } from 'react-native';
 const {width,height}=Dimensions.get('window');
 
-const OrderButton=({title,backgroundcolor,textColor,checkForActivOrders})=>{
+const OrderButton=({title,backgroundcolor,textColor,checkForActivOrders,bordercolor})=>{
     return(
-        <TouchableOpacity style={[styles.buttonBody,{backgroundColor:backgroundcolor}]} onPress={()=>checkForActivOrders()}>
+        <TouchableOpacity style={[styles.buttonBody,{backgroundColor:backgroundcolor,borderColor:bordercolor}]} onPress={()=>checkForActivOrders()}>
             <Text style={{fontWeight:"bold",color:textColor}}>{title}</Text>
         </TouchableOpacity>
     )
@@ -21,7 +21,8 @@ const styles=StyleSheet.create({
         paddingVertical:12,
         alignItems:"center",
         justifyContent:"center",
-        borderRadius:5
+        borderRadius:5,
+        borderWidth:1.5
     }
 })
 
