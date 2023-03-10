@@ -24,7 +24,7 @@ const SetProductDetails=()=>{
                 <View style={{alignItems:"center"}}>
                     <View style={{backgroundColor:"#EDEDED",width:width-40,height:width-40,margin:10,borderRadius:10,alignItems:"center",justifyContent:"center"}}>
                         <Image
-                            source={{uri:selectedItem.productImage}}
+                            source={{uri:selectedItem.imageUrl}}
                             style={{width:'50%',height:'50%',resizeMode:"contain",borderRadius:20}}            
                         />
                     </View>

@@ -6,7 +6,7 @@ const windoHeight = Dimensions.get('window').height;
 import auth from '@react-native-firebase/auth';
 import { GlobalVariable } from '../../../App';
 import firestore from '@react-native-firebase/firestore';
-// import AddresModal from '../../components/profile/AddressModal';
+import AddresModal from '../../components/profile/AddressModal';
 function Account({ navigation }) {
     const { userUid } = useContext(GlobalVariable);
     const addressModalRef = useRef(null);
@@ -28,12 +28,12 @@ function Account({ navigation }) {
                 .then((res) => {
                     setStoreDetails(res._data);
                     firestore().collection("SellerShop").doc(user._data.profileID).get()
-                        .then((res) => {
-                            setUserDetails({ ...user._data, ...res._data, id: user.id })
-                        })
-                        .catch((e) => {
-                            console.log(e)
-                        })
+                    .then((res) => {
+                        setUserDetails({ ...user._data, ...res._data, id: user.id })
+                    })
+                    .catch((e) => {
+                        console.log(e)
+                    })
                 })
                 .catch((e) => {
                     console.log(e)
@@ -87,9 +87,9 @@ function Account({ navigation }) {
                     <Text style={{ color: "black", padding: 10 }}>LogOut</Text>
                 </TouchableOpacity>
             </View>
-            {/* {
+            {
                 storedetails && <AddresModal ref={addressModalRef} storeData={storedetails} />
-            } */}
+            }
         </View>
     )
 }

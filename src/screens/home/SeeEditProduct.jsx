@@ -9,6 +9,7 @@ import {
     Image,
     Pressable
 } from 'react-native';
+import CustomButton from "../../components/Home/CustomButton";
 import { shopProduct } from "../../data/stopProductList";
 const windoWidth = Dimensions.get('window').width;
 const windoHeight = Dimensions.get('window').height;
@@ -17,6 +18,10 @@ const SeeEditProduct=()=>{
     const navigation=useNavigation();
     return (
         <ScrollView style={{backgroundColor:"white",alignSelf:"center",flex:1,width:windoWidth}}>
+            <View style={{flexDirection: 'row',justifyContent:"space-between",padding:15}}>
+                <CustomButton title={"Add Packages"} onpress={()=>navigation.navigate("package")} />
+                <CustomButton title={"Default Products"} onpress={()=>navigation.navigate("defaultproduct")} />
+            </View>
             {
                 shopProduct.map((item,index)=>(
                     <View style={styles.ProView} key={index}>
@@ -27,7 +32,7 @@ const SeeEditProduct=()=>{
                             />
                         </Pressable>
                         <Image
-                            source={{uri: item.productImage}}
+                            source={{uri: item.imageUrl}}
                             style={styles.ProImage}
                         />
                         <View style={{width: windoWidth / 2.7}}>
