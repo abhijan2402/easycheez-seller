@@ -1,34 +1,67 @@
-import React from 'react'
-import { Text, View, StyleSheet, Dimensions, ScrollView, TextInput, Image, TouchableOpacity } from 'react-native'
-import Header from '../../components/Home/Header';
+import React, { useState } from 'react'
+import { Text, View, StyleSheet, Dimensions, ScrollView, TextInput, Image, TouchableOpacity, Pressable } from 'react-native'
 const windoWidth = Dimensions.get('window').width;
 const windoHeight = Dimensions.get('window').height;
 import { commoneStyles } from '../../styles/commonStyles';
 function Package() {
-  return (
-    <ScrollView style={styles.MainView}>
-        <Text style={styles.titleStyle}>Add Package</Text>
-        <View>
-            <Image source={{uri:"https://5.imimg.com/data5/SELLER/Default/2021/4/KT/ZR/TX/42561548/c851b0b6-491f-41f5-9664-aae78a3d9183-1000x1000.jpg"}} style={styles.Image}/>
-        </View>
-        <View style={{marginTop:35}}>
-            <View style={styles.ImageSettlement}>
-             <Text style={styles.LabelName}>Product Name</Text>
-             <Image source={{uri:"https://cdn-icons-png.flaticon.com/128/1828/1828925.png"}} style={styles.Plusicon}/>
+    const [productNames,setProductNames]=useState([]);
+    const [productSingleName,setSingleProductName]=useState('');
+    const [packagePrice,setPackagePrice]=useState('');
 
+    const AddPackage=()=>{
+        console.log(packagePrice);
+    }
+    const addProductNameToArray=()=>{
+        console.log("L");
+        setSingleProductName('');
+    }
+    return (
+        <ScrollView style={styles.MainView}>
+            <Text style={styles.titleStyle}>Add Package</Text>
+            <View>
+                <Image 
+                    source={{uri:"https://5.imimg.com/data5/SELLER/Default/2021/4/KT/ZR/TX/42561548/c851b0b6-491f-41f5-9664-aae78a3d9183-1000x1000.jpg"}} 
+                    style={styles.Image}
+                />
             </View>
-             <TextInput style={[commoneStyles.textField,{borderColor:"#F05656"}]} placeholderTextColor={"black"} placeholder='Add Product Name ' />
-        </View>
-        <View>
-             <Text style={styles.LabelName}>Package Price</Text>
-             <TextInput style={[commoneStyles.textField,{borderColor:"#F05656"}]} placeholderTextColor={"black"} placeholder='Add Price ' />
-        </View>
-        <TouchableOpacity style={styles.Btn}>
-            <Text style={styles.BtnText}>Add Package</Text>
-        </TouchableOpacity>
-        <View style={{marginBottom:35}}></View>
-    </ScrollView>
-  )
+            <View style={{marginTop:35}}>
+                <View style={styles.ImageSettlement}>
+                    <Text style={styles.LabelName}>
+                        Product Name
+                    </Text>
+                    <Pressable style={styles.add_image_box} onPress={addProductNameToArray}>
+                        <Image 
+                            source={{uri:"https://cdn-icons-png.flaticon.com/128/1828/1828925.png"}} 
+                            style={styles.Plusicon}
+                        />
+                    </Pressable>
+                </View>
+                <TextInput 
+                    style={[commoneStyles.textField,{borderColor:"#F05656",fontWeight:"bold",borderWidth:2}]} 
+                    placeholderTextColor={"black"} 
+                    placeholder='Add Product Name'
+                    onChangeText={(price)=>setPackagePrice(price)} 
+
+                />
+            </View>
+            <View>
+                <Text style={styles.LabelName}>
+                    Package Price
+                </Text>
+                <TextInput 
+                    style={[commoneStyles.textField,{borderColor:"#F05656",fontWeight:"bold",borderWidth:2}]} 
+                    placeholderTextColor={"black"} 
+                    placeholder='Add Price'
+                    onChangeText={(price)=>setPackagePrice(price)} 
+                />
+            </View>
+            <TouchableOpacity style={styles.Btn} onPress={AddPackage}>
+                <Text style={styles.BtnText}>
+                    Add Package
+                </Text>
+            </TouchableOpacity>
+        </ScrollView>
+    )
 }
 const styles = StyleSheet.create({
     Image:{
@@ -66,7 +99,6 @@ const styles = StyleSheet.create({
     Plusicon:{
         width:20,
         height:20,
-        marginHorizontal:25
     },
     ImageSettlement:{
         display:"flex",
@@ -80,6 +112,17 @@ const styles = StyleSheet.create({
         fontWeight:"bold",
         padding:10,
         fontSize:30
+    },
+    add_image_box:{
+        backgroundColor:"white",
+        elevation:5,
+        padding:10,
+        marginRight:20,
+        borderRadius:20,
+        height:40,
+        width:40,
+        alignItems: 'center',
+        justifyContent: 'center',
     }
 })
 export default Package
