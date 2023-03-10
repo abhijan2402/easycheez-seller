@@ -5,26 +5,23 @@ const windoHeight = Dimensions.get('window').height;
 import DropDownPicker from 'react-native-dropdown-picker';
 import PackageData from '../../data/PackageData';
 function DefaultProduct() {
-    const Data = [
-        {
-            id: "1",
-            image: "https://images.mamaearth.in/catalog/product/u/b/ubtan-face-wash_1_1_2.jpg",
-        },
-        {
-            id: "2",
-            image: "https://images.mamaearth.in/catalog/product/u/b/ubtan-face-wash_1_1_2.jpg",
-        },
-        {
-            id: "3",
-            image: "https://images.mamaearth.in/catalog/product/u/b/ubtan-face-wash_1_1_2.jpg",
-        },
-        {
-            id: "4",
-            image: "https://images.mamaearth.in/catalog/product/u/b/ubtan-face-wash_1_1_2.jpg",
-        },
-
-
-    ]
+    const TakeText = (item) => {
+        const TakeShortName = item;
+        let updatedVal = "";
+        const Dot = "...."
+        for (i = 0; i < TakeShortName.length; i++) {
+            if (i < 35) {
+                const men = TakeShortName[i];
+                console.log(men, "I am men")
+                updatedVal = updatedVal + men
+            }
+            else {
+                break;
+            }
+        }
+        const Newdata = updatedVal + Dot
+        return Newdata
+    }
     return (
         <ScrollView style={styles.MainView}>
             <View style={styles.Header}>
@@ -37,7 +34,7 @@ function DefaultProduct() {
                             <View style={styles.ImageView}>
                                 <Image source={{ uri: item.imageUrl }} style={styles.ImagePro} />
                             </View>
-                            <Text style={styles.ProText}>{item.name}</Text>
+                            <Text style={styles.ProText}>{TakeText(item.name)}</Text>
                             <View style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
                                 <TouchableOpacity style={[styles.AddPriceBtn, { borderRightWidth: 1 }]}>
                                     <Text style={{ fontSize: 12, color: "black" }}>Add Price</Text>
@@ -71,7 +68,7 @@ const styles = StyleSheet.create({
         fontWeight: "700"
     },
     ImagePro: {
-        width: windoWidth / 2.5,
+        width: windoWidth / 2.35,
         height: windoHeight / 4.7,
         borderRadius: 10,
     },
