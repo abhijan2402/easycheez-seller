@@ -1,26 +1,56 @@
+import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react'
-import { Text, View, StyleSheet, Dimensions, ActivityIndicator, ScrollView, TextInput, Image, TouchableOpacity } from 'react-native'
+import { Text, View, StyleSheet, Dimensions, ActivityIndicator, Modal, loading, ScrollView, Pressable, TextInput, Image, TouchableOpacity } from 'react-native'
 const windoWidth = Dimensions.get('window').width;
 const windoHeight = Dimensions.get('window').height;
-import DropDownPicker from 'react-native-dropdown-picker';
+import firestore from '@react-native-firebase/firestore';
 import PackageData from '../../data/PackageData';
 function DefaultProduct() {
-    const TakeText = (item) => {
-        const TakeShortName = item;
-        let updatedVal = "";
-        const Dot = "...."
-        for (var i = 0; i < TakeShortName.length; i++) {
-            if (i < 35) {
-                const men = TakeShortName[i];
-                console.log(men, "I am men")
-                updatedVal = updatedVal + men
+    const [modalVisible, setModalVisible] = useState(false);
+    const [price, setprice] = useState("")
+    const [loading, setLoading] = useState(false);
+    const [OfferPrice, setOfferPrice] = useState("")
+    const [NewName, setNewName] = useState('')
+    const [NewImage, setNewImage] = useState("")
+    const navigation = useNavigation()
+    const SetVal = (name, image) => {
+        // console.log(name, image)
+        setModalVisible(true)
+        let test1 = name;
+        let test2 = image
+        setNewName(test1)
+        setNewImage(test2)
+        // console.log(NewName, NewImage, "try")
+    }
+    const AddProd = async () => {
+        setLoading(true)
+        try {
+            if (OfferPrice == null)
+                throw "Please enter Offer Price";
+            if (price == null)
+                throw "Please enter Price";
+            const ProdDetails = {
+                Category: "Grocery",
+                ProImage: NewImage,
+                ProOffer: OfferPrice,
+                ProductName: NewName,
+                ProductPrice: price,
             }
-            else {
-                break;
-            }
+            await firestore()
+                .collection('ProductPage')
+                .add(ProdDetails)
+                .then((res) => {
+                    // console.log(res)
+                    setLoading(false)
+                    setModalVisible(false)
+                })
+                .catch((error) => {
+                    setLoading(false)
+                    console.log(error);
+                })
+        } catch (error) {
+            console.log(error)
         }
-        const Newdata = updatedVal + Dot
-        return Newdata
     }
     return (
         <ScrollView style={styles.MainView}>
@@ -30,23 +60,60 @@ function DefaultProduct() {
             <View style={styles.ProView}>
                 {
                     PackageData.map((item) => (
-                        <View key={item.id} style={{ marginVertical: 10, borderWidth: 0.8, marginHorizontal: 4, borderRadius: 8 }} >
+                        <View key={item.id} style={{ marginVertical: 10, elevation: 10, backgroundColor: "white", marginHorizontal: 4, borderRadius: 8, width: windoWidth / 2.2, }} >
                             <View style={styles.ImageView}>
                                 <Image source={{ uri: item.imageUrl }} style={styles.ImagePro} />
                             </View>
-                            <Text style={styles.ProText}>{TakeText(item.name)}</Text>
-                            <View style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
-                                <TouchableOpacity style={[styles.AddPriceBtn, { borderRightWidth: 1 }]}>
-                                    <Text style={{ fontSize: 12, color: "black" }}>Add Price</Text>
+                            <Text style={styles.ProText}>
+                                {item.name.substring(0, 35)}....
+                            </Text>
+                            <View style={{ flexDirection: "row", justifyContent: "space-between", borderTopWidth: 1.5 }}>
+                                <TouchableOpacity style={[styles.AddPriceBtn, { borderRightWidth: 1 }]} onPress={() => navigation.navigate("editproduct", { selectedItem: item })}>
+                                    <Text style={{ fontSize: 12, color: "black", fontWeight: "bold" }}>Add Price</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity style={styles.AddPriceBtn}>
-                                    <Text style={{ color: "skyblue", fontSize: 12 }}>Add Offer</Text>
+                                <TouchableOpacity style={[styles.AddPriceBtn, { borderLeftWidth: 1 }]} onPress={() => SetVal(item.name, item.imageUrl)}>
+                                    <Text style={{ color: "skyblue", fontSize: 12, fontWeight: "bold" }}>Add Offer</Text>
                                 </TouchableOpacity>
                             </View>
                         </View>
                     ))
                 }
+                <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={modalVisible}
+                >
+                    <View style={styles.centeredView}>
+                        <View style={styles.modalView}>
+                            <TouchableOpacity onPress={() => { setModalVisible(false) }}>
 
+                                <Text style={styles.modalText}>Add Product to list</Text>
+                            </TouchableOpacity>
+                            <View>
+                                <TextInput
+                                    placeholderTextColor={"black"}
+                                    style={styles.Box}
+                                    placeholder={'Add Price'}
+                                    onChangeText={value => { setprice(value) }}
+                                />
+                                <TextInput
+                                    placeholderTextColor={"black"}
+                                    style={styles.Box}
+                                    placeholder={'Add Offer Price'}
+                                    onChangeText={value => { setOfferPrice(value) }}
+                                    autoCapitalize={true}
+                                />
+                            </View>
+                            <TouchableOpacity style={styles.MainButton} onPress={AddProd}>
+                                {
+                                    loading ?
+                                        <ActivityIndicator color={'white'} size={30} /> :
+                                        <Text style={styles.BtnTxt}>Add Product</Text>
+                                }
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </Modal>
             </View>
         </ScrollView>
     )
@@ -68,34 +135,100 @@ const styles = StyleSheet.create({
         fontWeight: "700"
     },
     ImagePro: {
-        width: windoWidth / 2.35,
+        width: '100%',
         height: windoHeight / 4.7,
         borderRadius: 10,
+        // margin: 10,
     },
     ProView: {
         display: "flex",
         flexDirection: "row",
         flexWrap: "wrap",
         marginHorizontal: 5,
-        justifyContent: "center"
+        justifyContent: "center",
     },
     ImageView: {
-        // borderWidth: 1
     },
     AddPriceBtn: {
-        // borderWidth: 1,
-        paddingHorizontal: 10,
-        paddingVertical: 5,
-        borderTopWidth: 1,
-        paddingHorizontal: 13
+        width: '50%',
+        padding: 5,
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: 40
     },
     ProText: {
         marginVertical: 10,
-        width: windoWidth / 2.6,
-        alignSelf: "center",
-        color: 'black'
-
-    }
+        color: 'black',
+        fontWeight: "bold",
+        paddingHorizontal: 10,
+    },
+    centeredView: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 22,
+    },
+    modalView: {
+        margin: 20,
+        backgroundColor: 'white',
+        borderRadius: 20,
+        padding: 35,
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+    },
+    button: {
+        borderRadius: 20,
+        padding: 10,
+        elevation: 2,
+    },
+    buttonOpen: {
+        backgroundColor: '#F194FF',
+    },
+    buttonClose: {
+        backgroundColor: '#2196F3',
+    },
+    textStyle: {
+        color: 'white',
+        fontWeight: 'bold',
+        textAlign: 'center',
+    },
+    modalText: {
+        marginBottom: 15,
+        textAlign: 'center',
+    },
+    Box: {
+        width: windoWidth / 1.4,
+        height: windoHeight / 18,
+        borderRadius: 10,
+        borderColor: "#808080",
+        borderWidth: 1,
+        paddingLeft: 10,
+        fontWeight: "bold",
+        marginTop: 10,
+        color: "black",
+        paddingLeft: 10
+    },
+    MainButton: {
+        width: windoWidth / 1.4,
+        height: windoHeight / 17,
+        backgroundColor: '#F05656',
+        borderRadius: 10,
+        alignItems: "center",
+        justifyContent: "center",
+        marginVertical: 10
+    },
+    BtnTxt: {
+        color: 'white',
+        fontSize: 15,
+        fontWeight: 'bold'
+    },
 
 
 })
