@@ -1,16 +1,17 @@
-import React, { useState } from 'react'
-import { Text, View, StyleSheet, Dimensions, ScrollView, TextInput, Image, TouchableOpacity, Pressable } from 'react-native'
+import React, { useContext, useEffect, useState } from 'react'
+import { Text, View, StyleSheet, Dimensions, ScrollView, TextInput, Image, TouchableOpacity, Pressable, ActivityIndicator } from 'react-native'
+import { GlobalVariable } from '../../../App';
+import { AddPackage } from '../../services/AddPackage';
 const windoWidth = Dimensions.get('window').width;
 const windoHeight = Dimensions.get('window').height;
 import { commoneStyles } from '../../styles/commonStyles';
 function Package() {
+    const { userDetails } = useContext(GlobalVariable);
     const [productNames,setProductNames]=useState([]);
     const [productSingleName,setSingleProductName]=useState('');
     const [packagePrice,setPackagePrice]=useState('');
+    const [loading,setLoading]=useState(false);
 
-    const AddPackage=()=>{
-        console.log(productNames);
-    }
     const addProductNameToArray=()=>{
         setProductNames([...productNames,productSingleName])
         setSingleProductName('');
@@ -22,6 +23,8 @@ function Package() {
         })
         setProductNames(filteredArray)
     }
+
+    
     return (
         <ScrollView style={styles.MainView}>
             <Text style={styles.titleStyle}>Add Package</Text>
@@ -61,6 +64,7 @@ function Package() {
                     placeholderTextColor={"black"} 
                     placeholder='Add Price'
                     onChangeText={(price)=>setPackagePrice(price)} 
+                    keyboardType={"numeric"}
                 />
             </View>
             {
@@ -69,8 +73,8 @@ function Package() {
                     <Text style={[styles.productnamestyle,{fontSize:25}]}>Added Products</Text>
                     {
                         productNames.map((item,index)=>(
-                            <View style={{flexDirection: 'row',justifyContent:"space-between",marginVertical:5}}>
-                                <Text key={index} style={[styles.productnamestyle,{paddingVertical:5,}]}>{item}</Text>
+                            <View key={index} style={{flexDirection: 'row',justifyContent:"space-between",marginVertical:5}}>
+                                <Text  style={[styles.productnamestyle,{paddingVertical:5,}]}>{item}</Text>
                                 <Pressable style={[styles.add_image_box,{width:30,height:30,borderRadius:15}]} onPress={()=>removeSelctedItem(item)}>
                                 <Image 
                                     source={{uri:"https://cdn-icons-png.flaticon.com/128/4096/4096251.png"}} 
@@ -83,10 +87,23 @@ function Package() {
                     }
                 </View>
             }
-            <TouchableOpacity style={styles.Btn} onPress={AddPackage}>
-                <Text style={styles.BtnText}>
-                    Add Package
-                </Text>
+            <TouchableOpacity style={styles.Btn} onPress={async()=>{
+                setLoading(true)
+                const res=await AddPackage(productNames,packagePrice,userDetails.userDetails.storeID);
+                if(res.response){
+                    alert(res.data)
+                    setLoading(false)
+                }
+                else{
+                    console.log(res.error)
+                    setLoading(false)
+                }
+            }}>
+                {
+                    loading?
+                    <ActivityIndicator size={25} color="white" />:
+                    <Text style={styles.BtnText}>Add Package</Text>
+                }
             </TouchableOpacity>
         </ScrollView>
     )

@@ -41,7 +41,7 @@ const App = () => {
         })
     }
     else {
-      console.log("Null")
+      console.log(userNew)
       setUser(null)
       setLoading(false)
       setUserDetains(null)
@@ -76,7 +76,7 @@ const App = () => {
       <NavigationContainer>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           {
-            !user == null ?
+            user == null ?
               <>
                 <Stack.Screen name='AuthNavigation' component={AuthNavigation} options={{
 
