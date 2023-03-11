@@ -18,6 +18,7 @@ function Account({ navigation }) {
 
     useEffect(() => {
         UserInfo();
+        // console.log(userUid);
     }, [])
 
     const UserInfo = async () => {
