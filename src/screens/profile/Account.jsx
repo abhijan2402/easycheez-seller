@@ -8,7 +8,7 @@ import { GlobalVariable } from '../../../App';
 import firestore from '@react-native-firebase/firestore';
 import AddresModal from '../../components/profile/AddressModal';
 function Account({ navigation }) {
-    const { userUid,userDetails } = useContext(GlobalVariable);
+    const { userUid, userDetails } = useContext(GlobalVariable);
     const addressModalRef = useRef(null);
     const [storedetails, setStoreDetails] = useState('');
     const [userDetail, setUserDetails] = useState('');
@@ -26,12 +26,12 @@ function Account({ navigation }) {
                 .then((res) => {
                     setStoreDetails(res._data);
                     firestore().collection("SellerShop").doc(userDetails.userDetails.profileID).get()
-                    .then((res) => {
-                        setUserDetails({ ...res._data, id: userUid.uid })
-                    })
-                    .catch((e) => {
-                        console.log(e)
-                    })
+                        .then((res) => {
+                            setUserDetails({ ...res._data, id: userUid.uid })
+                        })
+                        .catch((e) => {
+                            console.log(e)
+                        })
                 })
                 .catch((e) => {
                     console.log(e)
@@ -66,23 +66,23 @@ function Account({ navigation }) {
                     <Text style={styles.OptionText} onPress={() => addressModalRef.current.showAddress()}>Address</Text>
                     <Image source={{ uri: "https://cdn-icons-png.flaticon.com/128/2989/2989988.png" }} style={styles.LogoImage} />
                 </View>
-                <View style={styles.OptiionView}>
+                {/* <View style={styles.OptiionView}>
                     <Image source={{ uri: "https://cdn-icons-png.flaticon.com/128/868/868681.png" }} style={styles.LogoImage} />
                     <Text style={styles.OptionText}>Help</Text>
                     <Image source={{ uri: "https://cdn-icons-png.flaticon.com/128/2989/2989988.png" }} style={styles.LogoImage} />
-                </View>
+                </View> */}
                 <View style={styles.OptiionView}>
                     <Image source={{ uri: "https://cdn-icons-png.flaticon.com/128/8822/8822225.png" }} style={styles.LogoImage} />
                     <Text style={styles.OptionText} onPress={() => { navigation.navigate('Subscription') }}>Subscription</Text>
                     <Image source={{ uri: "https://cdn-icons-png.flaticon.com/128/2989/2989988.png" }} style={styles.LogoImage} />
                 </View>
                 <View style={styles.OptiionView}>
-                    <Image source={{ uri: "https://cdn-icons-png.flaticon.com/128/868/868681.png" }} style={styles.LogoImage} />
+                    <Image source={{ uri: "https://cdn-icons-png.flaticon.com/128/869/869636.png" }} style={styles.LogoImage} />
                     <Text style={styles.OptionText} onPress={() => { navigation.navigate('storeAnalysis') }}>Store Analysis</Text>
                     <Image source={{ uri: "https://cdn-icons-png.flaticon.com/128/2989/2989988.png" }} style={styles.LogoImage} />
                 </View>
                 <TouchableOpacity style={{ margin: 20, borderWidth: 1, borderRadius: 10, marginHorizontal: 50, alignItems: "center" }} onPress={logout}>
-                    <Text style={{ color: "black", padding: 10 }}>LogOut</Text>
+                    <Text style={{ color: "red", padding: 10 }}>LogOut</Text>
                 </TouchableOpacity>
             </View>
             {

@@ -18,7 +18,7 @@ const MainNavigation = () => {
     <Tab.Navigator
       screenOptions={{
         headerShown: false, tabBarShowLabel: false, showIcon: false,
-        tabBarStyle: [{ elevation: 0, backgroundColor: "#ffffff", borderTopWidth: 1, borderTopColor: "#808080", height: 54, },],
+        tabBarStyle: [{ elevation: 0, backgroundColor: "#ffffff", borderTopWidth: 1, borderTopColor: "#808080", height: 60, },],
       }}
     >
       <Tab.Screen name="HomeNavigation" component={HomeNavigation} options={{
