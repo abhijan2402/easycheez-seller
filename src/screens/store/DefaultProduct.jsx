@@ -1,11 +1,27 @@
-import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react'
 import { Text, View, StyleSheet, Dimensions, ActivityIndicator, ScrollView, TextInput, Image, TouchableOpacity } from 'react-native'
 const windoWidth = Dimensions.get('window').width;
 const windoHeight = Dimensions.get('window').height;
+import DropDownPicker from 'react-native-dropdown-picker';
 import PackageData from '../../data/PackageData';
 function DefaultProduct() {
-    const navigation=useNavigation()
+    const TakeText = (item) => {
+        const TakeShortName = item;
+        let updatedVal = "";
+        const Dot = "...."
+        for (var i = 0; i < TakeShortName.length; i++) {
+            if (i < 35) {
+                const men = TakeShortName[i];
+                console.log(men, "I am men")
+                updatedVal = updatedVal + men
+            }
+            else {
+                break;
+            }
+        }
+        const Newdata = updatedVal + Dot
+        return Newdata
+    }
     return (
         <ScrollView style={styles.MainView}>
             <View style={styles.Header}>
@@ -14,24 +30,23 @@ function DefaultProduct() {
             <View style={styles.ProView}>
                 {
                     PackageData.map((item) => (
-                        <View key={item.id}  style={{ marginVertical: 10, elevation:10,backgroundColor:"white",marginHorizontal: 4, borderRadius: 8,width:windoWidth/2.2,}} >
+                        <View key={item.id} style={{ marginVertical: 10, borderWidth: 0.8, marginHorizontal: 4, borderRadius: 8 }} >
                             <View style={styles.ImageView}>
                                 <Image source={{ uri: item.imageUrl }} style={styles.ImagePro} />
                             </View>
-                            <Text style={styles.ProText}>
-                                {item.name.substring(0,35)}....
-                            </Text>
-                            <View style={{ flexDirection: "row", justifyContent: "space-between",borderTopWidth:1.5 }}>
-                                <TouchableOpacity style={[styles.AddPriceBtn,{borderRightWidth:1}]} onPress={()=>navigation.navigate("editproduct",{selectedItem:item})}>
-                                    <Text style={{ fontSize: 12, color: "black",fontWeight:"bold" }}>Add Price</Text>
+                            <Text style={styles.ProText}>{TakeText(item.name)}</Text>
+                            <View style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
+                                <TouchableOpacity style={[styles.AddPriceBtn, { borderRightWidth: 1 }]}>
+                                    <Text style={{ fontSize: 12, color: "black" }}>Add Price</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity style={[styles.AddPriceBtn,{borderLeftWidth:1}]} >
-                                    <Text style={{ color: "skyblue", fontSize: 12,fontWeight:"bold" }}>Add Offer</Text>
+                                <TouchableOpacity style={styles.AddPriceBtn}>
+                                    <Text style={{ color: "skyblue", fontSize: 12 }}>Add Offer</Text>
                                 </TouchableOpacity>
                             </View>
                         </View>
                     ))
                 }
+
             </View>
         </ScrollView>
     )
@@ -53,32 +68,33 @@ const styles = StyleSheet.create({
         fontWeight: "700"
     },
     ImagePro: {
-        width: '100%',
+        width: windoWidth / 2.35,
         height: windoHeight / 4.7,
         borderRadius: 10,
-        // margin: 10,
     },
     ProView: {
         display: "flex",
         flexDirection: "row",
         flexWrap: "wrap",
         marginHorizontal: 5,
-        justifyContent: "center",
+        justifyContent: "center"
     },
     ImageView: {
+        // borderWidth: 1
     },
     AddPriceBtn: {
-        width:'50%',
-        padding:5,
-        alignItems: 'center',
-        justifyContent: 'center',
-        height:40
+        // borderWidth: 1,
+        paddingHorizontal: 10,
+        paddingVertical: 5,
+        borderTopWidth: 1,
+        paddingHorizontal: 13
     },
     ProText: {
         marginVertical: 10,
-        color: 'black',
-        fontWeight:"bold",
-        paddingHorizontal:10,
+        width: windoWidth / 2.6,
+        alignSelf: "center",
+        color: 'black'
+
     }
 
 
