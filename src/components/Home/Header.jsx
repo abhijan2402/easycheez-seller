@@ -5,8 +5,7 @@ function Header({title}) {
   return (
   <>
     <View style={styles.Header}>
-        {/* <Text style={styles.HeaderText}>{title}</Text> */}
-      <Text style={styles.HeaderText}>Yum Grocer</Text>
+        <Text style={styles.HeaderText}>{title}</Text>
     </View>
   </>
   )

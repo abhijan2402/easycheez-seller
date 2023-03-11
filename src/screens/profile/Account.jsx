@@ -8,29 +8,26 @@ import { GlobalVariable } from '../../../App';
 import firestore from '@react-native-firebase/firestore';
 import AddresModal from '../../components/profile/AddressModal';
 function Account({ navigation }) {
-    const { userUid } = useContext(GlobalVariable);
+    const { userUid,userDetails } = useContext(GlobalVariable);
     const addressModalRef = useRef(null);
     const [storedetails, setStoreDetails] = useState('');
-    const [userDetails, setUserDetails] = useState('');
+    const [userDetail, setUserDetails] = useState('');
     const logout = () => {
         auth().signOut()
     }
 
     useEffect(() => {
         UserInfo();
-        // console.log(userUid);
     }, [])
 
     const UserInfo = async () => {
         try {
-            const user = await firestore().collection('Users').doc(userUid.uid).get()
-            const Data = user._data;
-            firestore().collection("StoreRegis").doc(user._data.storeID).get()
+            firestore().collection("StoreRegis").doc(userDetails.userDetails.storeID).get()
                 .then((res) => {
                     setStoreDetails(res._data);
-                    firestore().collection("SellerShop").doc(user._data.profileID).get()
+                    firestore().collection("SellerShop").doc(userDetails.userDetails.profileID).get()
                     .then((res) => {
-                        setUserDetails({ ...user._data, ...res._data, id: user.id })
+                        setUserDetails({ ...res._data, id: userUid.uid })
                     })
                     .catch((e) => {
                         console.log(e)
@@ -43,7 +40,7 @@ function Account({ navigation }) {
             console.error(error);
         }
     }
-    if (!userDetails) {
+    if (!userDetail) {
         return (
             <View style={{ backgroundColor: "white", flex: 1, alignItems: 'center', justifyContent: 'center', }}>
                 <ActivityIndicator size={35} color="blue" />
@@ -52,10 +49,10 @@ function Account({ navigation }) {
     }
     return (
         <View style={{ width: windoWidth, height: windoHeight, backgroundColor: "white" }}>
-            <Header title="Account" />
+            <Header title={storedetails.storeName} />
             <View style={styles.MainView}>
                 <Image source={{ uri: "https://cdn-icons-png.flaticon.com/128/3135/3135715.png" }} style={styles.Image} />
-                <Text style={styles.NameText}>{userDetails.FirstName} {userDetails.LastName}</Text>
+                <Text style={styles.NameText}>{userDetail.FirstName} {userDetail.LastName}</Text>
             </View>
             <View style={{ marginTop: 30 }}>
                 <Text style={{ fontSize: 15, fontWeight: "700", marginLeft: 20, marginVertical: 10 }}>Options</Text>

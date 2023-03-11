@@ -16,6 +16,8 @@ const App = () => {
   const [user, setUser] = useState(null);
   const [userDetails, setUserDetains] = useState(null);
 
+  const [storeData,setStoreData]=useState('');
+
   const [loading, setLoading] = useState(true);
 
   async function onAuthStateChanged(userNew) {
@@ -71,7 +73,9 @@ const App = () => {
       userUid: user,
       setUserUID: (userID) => setUser(userID),
       userDetails: { userDetails },
-      setUserData: () => checkForAuth()
+      setUserData: () => checkForAuth(),
+      storeData:{storeData},
+      setStore:(data)=>setStoreData(data)
     }} >
       <NavigationContainer>
         <Stack.Navigator screenOptions={{ headerShown: false }}>

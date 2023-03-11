@@ -6,33 +6,34 @@ import ProductCard from '../../components/Home/ProductCard';
 const windoWidth = Dimensions.get('window').width;
 const windoHeight = Dimensions.get('window').height;
 function Home({navigation}) {
-  return (
-    <View style={styles.MainView}>
-        <Header title="Home"/>
-        <View>
-            <Image source={{uri:"https://img.freepik.com/free-vector/logistics-concept-illustration_114360-1561.jpg"}} style={styles.Image}/>
-        </View>
-        <View style={styles.cardView}>
+
+    return (
+        <View style={styles.MainView}>
+            <Header title="Home"/>
             <View>
-                <ProductCard 
-                    title="Products" 
-                    Img="https://cdn-icons-png.flaticon.com/128/859/859270.png" 
-                    bg="#FFE589"
-                    onpress={()=>navigation.navigate('seeEditproduct')}
-                />
-                <ProductCard 
-                    title="Offers" 
-                    Img="https://cdn-icons-png.flaticon.com/128/3176/3176371.png" 
-                    bg="#62D7C2"
-                    // onpress={()=>navigation.navigate('AddProduct')}
-                />
+                <Image source={{uri:"https://img.freepik.com/free-vector/logistics-concept-illustration_114360-1561.jpg"}} style={styles.Image}/>
             </View>
-            <View>
-                <AddPro onpress={()=>navigation.navigate('AddProduct')} />
+            <View style={styles.cardView}>
+                <View>
+                    <ProductCard 
+                        title="Products" 
+                        Img="https://cdn-icons-png.flaticon.com/128/859/859270.png" 
+                        bg="#FFE589"
+                        onpress={()=>navigation.navigate('seeEditproduct')}
+                    />
+                    <ProductCard 
+                        title="Offers" 
+                        Img="https://cdn-icons-png.flaticon.com/128/3176/3176371.png" 
+                        bg="#62D7C2"
+                        // onpress={()=>navigation.navigate('AddProduct')}
+                    />
+                </View>
+                <View>
+                    <AddPro onpress={()=>navigation.navigate('AddProduct')} />
+                </View>
             </View>
         </View>
-    </View>
-  )
+    )
 }
 const styles = StyleSheet.create({
     Image:{
