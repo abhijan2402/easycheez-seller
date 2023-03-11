@@ -1,12 +1,19 @@
 import { StyleSheet, Text, View, Image, Dimensions, ScrollView, TouchableOpacity, TextInput, ActivityIndicator } from 'react-native'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import auth from '@react-native-firebase/auth';
+import Toast from '../../components/common/Toast';
 const windoWidth = Dimensions.get('window').width;
 const windoHeight = Dimensions.get('window').height;
 const SignIn = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
   const [email, setemail] = useState('')
   const [password, setpassword] = useState('');
+
+  const childRef = useRef(null);
+
+  const [toastColorState, setToastColorState] = useState('rgba(41,250,25,1)');
+  const [toastTextColorState, setToastTextColorState] = useState('black');
+  const [toastMessage, setToastMessage] = useState('');
 
   const validateUser = () => {
     try {
@@ -21,67 +28,74 @@ const SignIn = ({ navigation }) => {
       })
         .catch((error) => {
           if (error.code === 'auth/invalid-email') {
-            // setToastMessage("Email Address is Wrong");
-            // setToastTextColorState("white")
-            // setToastColorState("red")
-            // childRef.current.showToast();
+            setToastMessage("Email Address is Wrong");
+            setToastTextColorState("white")
+            setToastColorState("red")
+            childRef.current.showToast();
           }
           if (error.code === 'auth/wrong-password') {
-            // setToastMessage('Incorrect Password');
-            // setToastTextColorState("white")
-            // setToastColorState("red")
-            // childRef.current.showToast();
+            setToastMessage('Incorrect Password');
+            setToastTextColorState("white")
+            setToastColorState("red")
+            childRef.current.showToast();
           }
           if (error.code === 'auth/user-not-found') {
-            // setToastMessage('User not Found');
-            // setToastTextColorState("white")
-            // setToastColorState("red")
-            // childRef.current.showToast();
+            setToastMessage('User not Found');
+            setToastTextColorState("white")
+            setToastColorState("red")
+            childRef.current.showToast();
           }
           console.log(error);
           setLoading(false);
         })
     } catch (error) {
-      setLoading(false);
-      // setToastMessage(error);
-      // setToastTextColorState("white")
-      // setToastColorState("red")
-      // setLoading(false)
-      // childRef.current.showToast();
+      setToastMessage(error);
+      setToastTextColorState("white")
+      setToastColorState("red")
+      setLoading(false)
+      childRef.current.showToast();
     }
   }
   return (
-    <ScrollView style={styles.Scroll}>
-      <Text style={styles.Subhead}>Sign In</Text>
-      <Image source={require('../../assets/SignIn.jpg')} style={styles.image} />
-      <View style={{alignItems: 'center',}}>
-        <TextInput 
-          placeholderTextColor={"black"}
-          style={styles.Box}
-          placeholder={'Email'} 
-          onChangeText={value => { setemail(value) }}
+    <>
+      <Toast
+        toastColor={toastColorState}
+        toastTextColor={toastTextColorState}
+        toastMessage={toastMessage}
+        ref={childRef}
+      />
+      <ScrollView style={styles.Scroll}>
+        <Text style={styles.Subhead}>Sign In</Text>
+        <Image source={require('../../assets/SignIn.jpg')} style={styles.image} />
+        <View style={{alignItems: 'center',}}>
+          <TextInput 
+            placeholderTextColor={"black"}
+            style={styles.Box}
+            placeholder={'Email'} 
+            onChangeText={value => { setemail(value) }}
+            />
+          <TextInput 
+            placeholderTextColor={"black"}
+            style={styles.Box} 
+            placeholder={'Password'} 
+            onChangeText={value => { setpassword(value) }}
+            autoCapitalize={true} 
           />
-        <TextInput 
-          placeholderTextColor={"black"}
-          style={styles.Box} 
-          placeholder={'Password'} 
-          onChangeText={value => { setpassword(value) }}
-          autoCapitalize={true} 
-        />
-        <Text style={styles.SubForgot} onPress={() => { navigation.navigate('ForgotPass') }}>Forgot Password ?</Text>
-        <TouchableOpacity style={styles.MainButton} onPress={validateUser}>
-          {
-            loading ?
+          <Text style={styles.SubForgot} onPress={() => { navigation.navigate('ForgotPass') }}>Forgot Password ?</Text>
+          <TouchableOpacity style={styles.MainButton} onPress={validateUser}>
+            {
+              loading ?
               <ActivityIndicator color={'white'} size={30}  /> :
               <Text style={styles.BtnTxt}>Login</Text>
-          }
-        </TouchableOpacity>
-        <View style={styles.Last}>
-          <Text style={styles.LastTxt}>Don't Have an Account ?</Text>
-          <Text style={styles.SubLastTxt} onPress={() => { navigation.navigate('SignUp') }}>Create Account</Text>
+            }
+          </TouchableOpacity>
+          <View style={styles.Last}>
+            <Text style={styles.LastTxt}>Don't Have an Account ?</Text>
+            <Text style={styles.SubLastTxt} onPress={() => { navigation.navigate('SignUp') }}>Create Account</Text>
+          </View>
         </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </>
   )
 }
 

@@ -1,7 +1,8 @@
-import { View, Text, Image, ScrollView, TextInput, TouchableOpacity, StyleSheet, Dimensions } from 'react-native'
-import React, { useContext, useEffect, useState } from 'react'
+import { View, Text, Image, ScrollView, TextInput, TouchableOpacity, StyleSheet, Dimensions, ActivityIndicator } from 'react-native'
+import React, { useContext, useRef, useState } from 'react'
 import firestore from '@react-native-firebase/firestore';
 import { GlobalVariable } from '../../../App';
+import Toast from '../../components/common/Toast';
 const windoWidth = Dimensions.get('window').width;
 const windoHeight = Dimensions.get('window').height;
 
@@ -14,19 +15,25 @@ const Profile = ({ navigation }) => {
   const [MobNum, setMobNum] = useState("")
   const [State, setState] = useState("")
 
+  const [loading,setLoading]=useState(false);
+
+  const childRef = useRef(null);
+  const [toastColorState, setToastColorState] = useState('rgba(41,250,25,1)');
+  const [toastTextColorState, setToastTextColorState] = useState('black');
+  const [toastMessage, setToastMessage] = useState('');
+
   const createNewUSer = async () => {
     try {
-      if (FName == null)
+      if (FName == '')
         throw "Please enter Name";
-      if (LName == null)
+      if (LName == '')
         throw "Please enter Lname";
-      if (MobNum == null)
+      if (MobNum == '')
         throw "Please enter Mob Num";
-      if (State == null)
+      if (State == '')
         throw "Please enter state";
-      if (City == null)
+      if (City == '')
         throw "Please enter city";
-      console.log(FName, LName, MobNum, State, City)
       const profileDetails = {
         City: City,
         FirstName: FName,
@@ -34,10 +41,8 @@ const Profile = ({ navigation }) => {
         MobNum: MobNum,
         State: State,
       }
-      console.log(FName, LName, MobNum, State, City)
-      firestore()
-      .collection('SellerShop')
-      .add(profileDetails)
+      setLoading(true);
+      firestore().collection('SellerShop').add(profileDetails)
       .then((res) => {
         console.log(userDetails)
         firestore().collection("Users").doc(userDetails.userDetails.id).update({
@@ -45,87 +50,104 @@ const Profile = ({ navigation }) => {
           profileID:res.id
         })
         .then(() => {
-          console.log("PRofil added");
-          navigation.navigate('StoreRegistration')
+          navigation.replace('StoreRegistration')
         })
         .catch((error) => {
-            console.log(error);
+          console.log(error);
+          setToastMessage("Something went wrong");
+          setToastTextColorState("white")
+          setToastColorState("red")
+          childRef.current.showToast();
         })
+        .finally(()=>setLoading(false));
       })
       .catch((error) => {
-        // setLoading(false)
-        console.log(error);
+        setToastMessage("Something went wrong");
+        setToastTextColorState("white")
+        setToastColorState("red")
+        childRef.current.showToast();
       })
+      .finally(()=>setLoading(false))
     } catch (error) {
-      console.log(error)
-      // setToastMessage(error);
-      // setToastTextColorState("white")
-      // setToastColorState("red")
-      // childRef.current.showToast();
+      setToastMessage(error);
+      setToastTextColorState("white")
+      setToastColorState("red")
+      childRef.current.showToast();
+      setLoading(false)
     }
   }
   return (
-
-    <ScrollView style={{ backgroundColor: "white" }}>
-      <Image source={require('../../assets/profile.png')} style={{ width: 390, height: 340, alignSelf: "center" }} />
-      <Text style={{ fontWeight: '800', fontSize: 22, color: "black",textAlign:"center",padding:10,width:windoWidth }}>Create Your Profile</Text>
-      <View style={{alignItems:"center"}}>
-        <View>
-          <Text style={{ fontWeight: '700', fontSize: 16, color: "black", marginTop: 30 }}>First Name*</Text>
-          <TextInput style={styles.inputbox}
-            placeholderTextColor={"black"}
-            placeholder={'Enter your first Name'}
-            onChangeText={value => { setFName(value) }}
-          />
+    <>
+      <Toast
+        toastColor={toastColorState}
+        toastTextColor={toastTextColorState}
+        toastMessage={toastMessage}
+        ref={childRef}
+      />
+      <ScrollView style={{ backgroundColor: "white" }}>
+        <Image source={require('../../assets/profile.png')} style={{ width: 390, height: 340, alignSelf: "center" }} />
+        <Text style={{ fontWeight: '800', fontSize: 22, color: "black",textAlign:"center",padding:10,width:windoWidth }}>Create Your Profile</Text>
+        <View style={{alignItems:"center"}}>
+          <View>
+            <Text style={{ fontWeight: '700', fontSize: 16, color: "black", marginTop: 30 }}>First Name*</Text>
+            <TextInput style={styles.inputbox}
+              placeholderTextColor={"black"}
+              placeholder={'Enter your first Name'}
+              onChangeText={value => { setFName(value) }}
+            />
+          </View>
+          <View>
+            <Text style={{ fontWeight: '700', fontSize: 16, color: "black", marginTop: 20 }}>Last Name*</Text>
+            <TextInput style={styles.inputbox}
+              placeholderTextColor={"black"}
+              placeholder={'Enter your last Name'}
+              onChangeText={value => { setLName(value) }}
+            />
+          </View>
+          <View>
+            <Text style={{ fontWeight: '700', fontSize: 16, color: "black", marginTop: 20 }}>Mobile Number</Text>
+            <TextInput style={styles.inputbox}
+              placeholderTextColor={"black"}
+              placeholder={'+91 Enter your Mobile Number'}
+              onChangeText={value => { setMobNum(value) }}
+              keyboardType={"numeric"}
+            />
+          </View>
+          {/* <View>
+            <Text style={{ fontWeight: '700', fontSize: 16, color: "black", marginTop: 20 }}>Email ID</Text>
+            <TextInput style={styles.inputbox}
+              placeholderTextColor={"black"}
+              placeholder={'Enter your Email ID'}
+            />
+          </View> */}
+          <View>
+            <Text style={{ fontWeight: '700', fontSize: 16, color: "black", marginTop: 20 }}>State*</Text>
+            <TextInput style={styles.inputbox}
+              placeholderTextColor={"black"}
+              placeholder={'Select State'}
+              onChangeText={value => { setState(value) }}
+            />
+          </View>
+          <View>
+            <Text style={{ fontWeight: '700', fontSize: 16, color: "black", marginTop: 20 }}>City*</Text>
+            <TextInput style={styles.inputbox}
+              placeholderTextColor={"black"}
+              placeholder={'Enter city Name'}
+              onChangeText={value => { setCity(value) }}
+            />
+          </View>
+          <TouchableOpacity style={{ height: 44, width: 279, marginTop: 30, backgroundColor: '#F05656', borderRadius: 20, marginBottom: 10,alignItems: 'center',justifyContent: 'center', }} 
+            onPress={createNewUSer}
+          >
+            {
+              loading ?
+              <ActivityIndicator color={'white'} size={30}  /> :
+              <Text style={{ textAlign: 'center',color: 'white', fontSize: 15, fontWeight: '500' }} >Get Started</Text>
+            }
+          </TouchableOpacity>
         </View>
-        <View>
-          <Text style={{ fontWeight: '700', fontSize: 16, color: "black", marginTop: 20 }}>Last Name*</Text>
-          <TextInput style={styles.inputbox}
-            placeholderTextColor={"black"}
-            placeholder={'Enter your last Name'}
-            onChangeText={value => { setLName(value) }}
-          />
-        </View>
-        <View>
-          <Text style={{ fontWeight: '700', fontSize: 16, color: "black", marginTop: 20 }}>Mobile Number</Text>
-          <TextInput style={styles.inputbox}
-            placeholderTextColor={"black"}
-            placeholder={'+91 Enter your Mobile Number'}
-            onChangeText={value => { setMobNum(value) }}
-          />
-        </View>
-        <View>
-          <Text style={{ fontWeight: '700', fontSize: 16, color: "black", marginTop: 20 }}>Email ID</Text>
-          <TextInput style={styles.inputbox}
-            placeholderTextColor={"black"}
-            placeholder={'Enter your Email ID'}
-          />
-        </View>
-        <View>
-          <Text style={{ fontWeight: '700', fontSize: 16, color: "black", marginTop: 20 }}>State*</Text>
-          <TextInput style={styles.inputbox}
-            placeholderTextColor={"black"}
-            placeholder={'Select State'}
-            onChangeText={value => { setState(value) }}
-          />
-        </View>
-        <View>
-          <Text style={{ fontWeight: '700', fontSize: 16, color: "black", marginTop: 20 }}>City*</Text>
-          <TextInput style={styles.inputbox}
-            placeholderTextColor={"black"}
-            placeholder={'Enter city Name'}
-            onChangeText={value => { setCity(value) }}
-          />
-        </View>
-        <TouchableOpacity style={{ height: 44, width: 279, marginTop: 30, backgroundColor: '#F05656', borderRadius: 20, marginBottom: 10, }} 
-          onPress={createNewUSer}
-        >
-          <Text style={{ textAlign: 'center', marginTop: 13, color: 'white', fontSize: 15, fontWeight: '500' }} >Get Started</Text>
-        </TouchableOpacity>
-      </View>
-
-    </ScrollView>
-
+      </ScrollView>
+    </>
   )
 }
 const styles=StyleSheet.create({

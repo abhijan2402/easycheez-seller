@@ -5,6 +5,7 @@ const windoHeight = Dimensions.get('window').height;
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import Geolocation from '@react-native-community/geolocation';
+import Toast from '../../components/common/Toast';
 
 const SignUp = ({ navigation }) => {
 
@@ -13,27 +14,30 @@ const SignUp = ({ navigation }) => {
     const [Cpassword, setCpassword] = useState('');
     const [loading, setLoading] = useState(false)
     const [coords,setCoords]=useState('');
+    const childRef = useRef(null);
+
+    const [toastColorState, setToastColorState] = useState('rgba(41,250,25,1)');
+    const [toastTextColorState, setToastTextColorState] = useState('black');
+    const [toastMessage, setToastMessage] = useState('');
+
     useEffect(()=>{
         Geolocation.getCurrentPosition(info => setCoords(info.coords));
     },[])
     const validateUser = async () => {
-        if (email === "" || password === "" || Cpassword === "") {
-            console.log("fillthe details")
-        }
-        else if (password != Cpassword) {
-            console.log("Not same ")
-        }
-        else {
-            setLoading(true)
-            console.log("i am in else")
-            try {
-                console.log("i am in else11")
-                await auth()
+        try {
+            if (email === "" || password === "" || Cpassword === "") {
+                throw "Please fill email and password";
+            }
+            if (password != Cpassword) {
+                throw "Both Password must be same"
+            }
+            else {
+                setLoading(true)
+                try {
+                    await auth()
                     .createUserWithEmailAndPassword(email, password)
                     .then((userCredential) => {
                         const user = userCredential.user;
-                        console.log(user, "congo")
-                        setLoading(false)
                         return firestore().collection("Users").doc(user.uid).set({
                             email:email,
                             accountState:"newprofile",
@@ -41,63 +45,78 @@ const SignUp = ({ navigation }) => {
                             longitude:coords.longitude
                         })
                         .then(async() => {
-                            console.log("user created")
-                            setLoading(false)
-                            navigation.navigate('createprofile')
+                            navigation.replace('createprofile')
                         })
                         .catch((error) => {
-                            // setLoading(false)
                             console.log(error);
                         })
+                        .finally(()=>setLoading(false))
                     })
-            } catch (error) {
-                console.log(error)
-                // setToastMessage(error);
-                // setToastTextColorState("white")
-                // setToastColorState("red")
-                // childRef.current.showToast();
+                } catch (error) {
+                    console.log(error)
+                    setToastMessage('Something went wrong');
+                    setToastTextColorState("white")
+                    setToastColorState("red")
+                    childRef.current.showToast();
+                    setLoading(false)
+                }
             }
+        } catch (error) {
+            setToastMessage(error);
+            setToastTextColorState("white")
+            setToastColorState("red")
+            childRef.current.showToast();
+        }finally{
+            setLoading(false)
         }
     }
     return (
-        <ScrollView style={styles.Background}>
-            <Text style={styles.SubHead}>Sign Up</Text>
-            <Image source={require('../../assets/SignUp.jpg')} style={styles.image} />
-            <View style={{alignItems: 'center',}}>
-                <TextInput 
-                    style={styles.Box}
-                    placeholderTextColor={"black"} 
-                    placeholder={'Email'}
-                    onChangeText={value => { setemail(value) }}
-                />
-                <TextInput 
-                    style={styles.Box} 
-                    placeholderTextColor={"black"} 
-                    placeholder={'Password'}
-                    onChangeText={value => { setpassword(value) }}
-                    autoCapitalize={true}
-                />
-                <TextInput 
-                    style={styles.Box} 
-                    placeholderTextColor={"black"} 
-                    placeholder={'Confirm Password'}
-                    onChangeText={value => { setCpassword(value) }}
-                    autoCapitalize={true}
-                />
-                <TouchableOpacity style={styles.Btn} onPress={validateUser}>
-                    {
-                        loading ?
+        <>
+            <Toast
+                toastColor={toastColorState}
+                toastTextColor={toastTextColorState}
+                toastMessage={toastMessage}
+                ref={childRef}
+            />
+            <ScrollView style={styles.Background}>
+                <Text style={styles.SubHead}>Sign Up</Text>
+                <Image source={require('../../assets/SignUp.jpg')} style={styles.image} />
+                <View style={{alignItems: 'center',}}>
+                    <TextInput 
+                        style={styles.Box}
+                        placeholderTextColor={"black"} 
+                        placeholder={'Email'}
+                        onChangeText={value => { setemail(value) }}
+                    />
+                    <TextInput 
+                        style={styles.Box} 
+                        placeholderTextColor={"black"} 
+                        placeholder={'Password'}
+                        onChangeText={value => { setpassword(value) }}
+                        autoCapitalize={true}
+                    />
+                    <TextInput 
+                        style={styles.Box} 
+                        placeholderTextColor={"black"} 
+                        placeholder={'Confirm Password'}
+                        onChangeText={value => { setCpassword(value) }}
+                        autoCapitalize={true}
+                    />
+                    <TouchableOpacity style={styles.Btn} onPress={validateUser}>
+                        {
+                            loading ?
                             <ActivityIndicator size={25} color={"white"} /> :
                             <Text style={styles.BtnTxt}>Create Account</Text>
-                    }
-                </TouchableOpacity>
-                <View style={styles.Last}>
-                    <Text style={styles.LastTxt}>Already Have an Account ?</Text>
-                    <Text style={styles.LastSubTxt} onPress={() => { navigation.navigate('SignIn') }}>Log In</Text>
+                        }
+                    </TouchableOpacity>
+                    <View style={styles.Last}>
+                        <Text style={styles.LastTxt}>Already Have an Account ?</Text>
+                        <Text style={styles.LastSubTxt} onPress={() => { navigation.navigate('SignIn') }}>Log In</Text>
+                    </View>
                 </View>
-            </View>
 
-        </ScrollView>
+            </ScrollView>
+        </>
     )
 }
 
