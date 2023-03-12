@@ -6,52 +6,53 @@ import ProductCard from '../../components/Home/ProductCard';
 import { HomeContext } from '../../Navigation/HomeNavigation';
 const windoWidth = Dimensions.get('window').width;
 const windoHeight = Dimensions.get('window').height;
-function Home({navigation}) {
-    const {productAmount} = useContext(HomeContext);
+function Home({ navigation }) {
+    const { productAmount } = useContext(HomeContext);
     return (
         <View style={styles.MainView}>
-            <Header title="Home"/>
+            <Header title="Home" />
             <View>
-                <Image source={{uri:"https://img.freepik.com/free-vector/logistics-concept-illustration_114360-1561.jpg"}} style={styles.Image}/>
+                <Image source={{ uri: "https://img.freepik.com/free-vector/logistics-concept-illustration_114360-1561.jpg" }} style={styles.Image} />
             </View>
             <View style={styles.cardView}>
                 <View>
-                    <ProductCard 
-                        title="Products" 
-                        Img="https://cdn-icons-png.flaticon.com/128/859/859270.png" 
+                    <ProductCard
+                        title="Products"
+                        Img="https://cdn-icons-png.flaticon.com/128/859/859270.png"
                         bg="#FFE589"
-                        onpress={()=>navigation.navigate('seeEditproduct')}
+                        onpress={() => navigation.navigate('seeEditproduct')}
                         number={productAmount}
                     />
-                    <ProductCard 
-                        title="Offers" 
-                        Img="https://cdn-icons-png.flaticon.com/128/3176/3176371.png" 
+                    <ProductCard
+                        title="Offers"
+                        Img="https://cdn-icons-png.flaticon.com/128/3176/3176371.png"
                         bg="#62D7C2"
-                        // onpress={()=>navigation.navigate('AddProduct')}
+                        onpress={() => navigation.navigate('Offer')}
+                    // onpress={()=>navigation.navigate('AddProduct')}
                     />
                 </View>
                 <View>
-                    <AddPro onpress={()=>navigation.navigate('AddProduct')} />
+                    <AddPro onpress={() => navigation.navigate('AddProduct')} />
                 </View>
             </View>
         </View>
     )
 }
 const styles = StyleSheet.create({
-    Image:{
-        width:windoWidth,
-        height:windoHeight/3.5,
-    
+    Image: {
+        width: windoWidth,
+        height: windoHeight / 3.5,
+
     },
-    MainView:{
-        width:windoWidth,
-        height:windoHeight,
-        backgroundColor:"white"
+    MainView: {
+        width: windoWidth,
+        height: windoHeight,
+        backgroundColor: "white"
     },
-    cardView:{
-        display:"flex",
-        flexDirection:"row",
-        marginVertical:20
+    cardView: {
+        display: "flex",
+        flexDirection: "row",
+        marginVertical: 20
     }
 
 })
