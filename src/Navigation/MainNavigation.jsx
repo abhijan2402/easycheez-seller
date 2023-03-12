@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, style, Image } from 'react-native'
-import React,{createContext, useContext, useEffect, useState} from 'react'
+import React, { createContext, useContext, useEffect, useState } from 'react'
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
@@ -16,50 +16,50 @@ import DefaultProduct from '../screens/store/DefaultProduct';
 import PackageData from '../data/PackageData';
 import { GlobalVariable } from '../../App';
 const Tab = createBottomTabNavigator();
-export const MainContext=createContext();
+export const MainContext = createContext();
 
 const MainNavigation = () => {
   const { userDetails } = useContext(GlobalVariable);
-  const [shopAllProducts,setShopAllProducts]=useState([]);
-  const [shopOrders,setShopOrders]=useState([]);
-  useEffect(()=>{
+  const [shopAllProducts, setShopAllProducts] = useState([]);
+  const [shopOrders, setShopOrders] = useState([]);
+  useEffect(() => {
     getAllProducts()
-  },[])
-  const getAllProducts=()=>{
-    const resulArray=[];
-    firestore().collection("ProductPage").where("storeID","==",userDetails.userDetails.storeID).get()
-    .then((res) => {      
-      res._docs.map(item => {
-        resulArray.push(item._data);
-      });
-      setShopAllProducts([...resulArray])
-      getAllOrders()
-    })
-    .catch((e) => {
-        console.log(e)
-    })
-  }
-  const getAllOrders=async()=>{
-    let resultArray=[];
-      return firestore().collection("OrderPage").where("shopID","==",userDetails.userDetails.storeID).get()
-      .then((res)=>{
-          res.forEach((data)=>{
-              resultArray.push({...data._data,OrderID:data.id});
-          })
-          setShopOrders(resultArray)
-          return resultArray
+  }, [])
+  const getAllProducts = () => {
+    const resulArray = [];
+    firestore().collection("ProductPage").where("storeID", "==", userDetails.userDetails.storeID).get()
+      .then((res) => {
+        res._docs.map(item => {
+          resulArray.push(item._data);
+        });
+        setShopAllProducts([...resulArray])
+        getAllOrders()
       })
-      .catch((e)=>{
-          console.log(e);
+      .catch((e) => {
+        console.log(e)
+      })
+  }
+  const getAllOrders = async () => {
+    let resultArray = [];
+    return firestore().collection("OrderPage").where("shopID", "==", userDetails.userDetails.storeID).get()
+      .then((res) => {
+        res.forEach((data) => {
+          resultArray.push({ ...data._data, OrderID: data.id });
+        })
+        setShopOrders(resultArray)
+        return resultArray
+      })
+      .catch((e) => {
+        console.log(e);
       })
   }
   return (
     <MainContext.Provider
       value={{
-        products:shopAllProducts,
-        productAmount:shopAllProducts.length,
-        orders:shopOrders,
-        setOrders:getAllOrders
+        products: shopAllProducts,
+        productAmount: shopAllProducts.length,
+        orders: shopOrders,
+        setOrders: getAllOrders
       }}
     >
       <Tab.Navigator
@@ -77,7 +77,7 @@ const MainNavigation = () => {
           )
         }} />
 
-        <Tab.Screen name='Package' component={Package} options={{
+        <Tab.Screen name='Default' component={DefaultProduct} options={{
           tabBarIcon: ({ focused }) => (
             <View style={{ alignItems: 'center', justifyContent: 'center' }}>
               <FontAwesome5 name='box' color={focused ? '#F05656' : '#808080'} size={22} />

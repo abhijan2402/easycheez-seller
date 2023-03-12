@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { StyleSheet, Text, View, Image, ScrollView, TextInput, TouchableOpacity, FlatList, Dimensions, ActivityIndicator } from 'react-native'
 import firestore from '@react-native-firebase/firestore';
 import { GlobalVariable } from '../../../App';
@@ -16,6 +16,7 @@ function Offer() {
     const [OfferPercentage, setOfferPercentage] = useState("")
     const [offerName, setofferName] = useState("")
     const [loading, setLoading] = useState(false)
+    const [performanceStateArray, setPerformanceStateArray] = useState([]);
     const names = [
         { name: 'ABC', percentage: "30%" },
         { name: 'DEF', percentage: "50%" },
@@ -48,6 +49,7 @@ function Offer() {
                     setToastTextColorState("black")
                     setToastColorState("rgba(41,250,25,1)")
                     childRef.current.showToast();
+                    getData();
                     console.log(res)
                 })
                 .catch((error) => {
@@ -65,6 +67,54 @@ function Offer() {
             childRef.current.showToast();
         }
     }
+    const getData = async () => {
+        try {
+            let i = 0;
+            let j = 0;
+            // const NewAppendArray = []
+            const resultedArray = []
+            const resultedArray1 = []
+            const performanceData = await firestore().collection("Offer").where("storeId", "==", userDetails.userDetails.storeID).get();
+            performanceData.forEach((item) => {
+                resultedArray.push({ ...item.data(), id: item.id });
+            })
+
+            setPerformanceStateArray(resultedArray);
+            console.log(performanceStateArray)
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    const del = async (id) => {
+        console.log(id)
+        firestore()
+            .collection('Offer')
+            .doc(`${id}`)
+            .delete()
+            .then(() => {
+                setToastMessage('Offer deleted');
+                setToastTextColorState("black")
+                setToastColorState("rgba(41,250,25,1)")
+                childRef.current.showToast();
+                getData();
+            });
+        try {
+            firestore()
+                .collection('Offer').doc(`${id}`).delete()
+                .then(() => {
+                    console.log('User deleted!');
+                });
+        } catch (error) {
+            setToastMessage(error);
+            setToastTextColorState("white")
+            setToastColorState("red")
+            childRef.current.showToast();
+        }
+    }
+    useEffect(() => {
+        getData();
+    }, [])
+
     return (
         <>
             <Toast
@@ -120,12 +170,29 @@ function Offer() {
                 </View>
 
                 <View>
-                    <Text style={{ fontWeight: '700', fontSize: 16, color: "black", marginLeft: 57, marginTop: 25 }}>Existing Offers</Text>
-                    <View style={{ marginLeft: 57, marginTop: 10 }}>
-                        <FlatList data={names} renderItem={(element) => {
-                            console.log(element.item.name);
-                            return <Text style={{ fontWeight: "600", color: "black", marginTop: 15 }}>{element.item.name}</Text>
-                        }} /></View>
+                    <Text style={{ fontWeight: '700', fontSize: 22, color: "black", textAlign: "center", marginTop: 25 }}>Running Offers</Text>
+                    <View style={{ marginTop: 10 }}>
+                        {
+                            performanceStateArray.length == null ? <ActivityIndicator size="large" color="red" style={{ marginVertical: 40 }} /> :
+                                performanceStateArray.map((item) => (
+
+                                    <View style={styles.MainOfferView} key={item.id}>
+                                        <View style={styles.MainOfferInner}>
+                                            <Text style={styles.OfferText}>Offer Name : {item.OfferName}</Text>
+                                            <Text style={styles.OfferText}>Offer Percentage: {item.OfferPercentage}%</Text>
+                                            <Text style={styles.OfferText}>Offer Code : {item.OfferCode}</Text>
+                                        </View>
+                                        <TouchableOpacity style={[styles.MainOfferInner, { alignItems: "flex-end", paddingRight: 10, width: windoWidth / 5, paddingTop: 10 }]} onPress={() => del(item.id)}>
+                                            <Image source={{ uri: "https://cdn-icons-png.flaticon.com/128/6861/6861362.png" }} style={{
+                                                width: 20,
+                                                height: 20
+                                            }} />
+                                        </TouchableOpacity>
+                                    </View>
+                                ))
+                        }
+
+                    </View>
                 </View>
 
             </ScrollView>
@@ -175,5 +242,24 @@ const styles = StyleSheet.create({
         fontSize: 15,
         fontWeight: '500'
     },
+    MainOfferView: {
+        display: "flex",
+        flexDirection: "row",
+        borderWidth: 2,
+        borderRadius: 8,
+        marginHorizontal: 20,
+        marginBottom: 20
+    },
+    MainOfferInner: {
+        width: windoWidth / 1.5,
+        // borderWidth: 1
+    },
+    OfferText: {
+        fontSize: 15,
+        color: "black",
+        marginHorizontal: 10,
+        marginVertical: 5,
+        fontWeight: "600"
+    }
 })
 export default Offer
