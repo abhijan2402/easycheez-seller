@@ -33,7 +33,7 @@ const MainNavigation = () => {
       <Tab.Screen name='Package' component={DefaultProduct} options={{
         tabBarIcon: ({ focused }) => (
           <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-            <FontAwesome5 name='shopping-cart' color={focused ? '#F05656' : '#808080'} size={22} />
+            <FontAwesome5 name='box' color={focused ? '#F05656' : '#808080'} size={22} />
             {/* <Text style={{color:focused ? '#F05656' : '#808080',textAlign:"center",fontFamily:"SourceSansPro-Regular"}}>Account</Text> */}
           </View>
         )

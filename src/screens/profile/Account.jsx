@@ -23,19 +23,19 @@ function Account({ navigation }) {
     const UserInfo = async () => {
         try {
             firestore().collection("StoreRegis").doc(userDetails.userDetails.storeID).get()
-                .then((res) => {
-                    setStoreDetails(res._data);
-                    firestore().collection("SellerShop").doc(userDetails.userDetails.profileID).get()
-                        .then((res) => {
-                            setUserDetails({ ...res._data, id: userUid.uid })
-                        })
-                        .catch((e) => {
-                            console.log(e)
-                        })
-                })
-                .catch((e) => {
-                    console.log(e)
-                })
+            .then((res) => {
+                setStoreDetails(res._data);
+                firestore().collection("SellerShop").doc(userDetails.userDetails.profileID).get()
+                    .then((res) => {
+                        setUserDetails({ ...res._data, id: userUid.uid })
+                    })
+                    .catch((e) => {
+                        console.log(e)
+                    })
+            })
+            .catch((e) => {
+                console.log(e)
+            })
         } catch (error) {
             console.error(error);
         }

@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
+import React, { useContext } from "react";
 import {
     View,
     Text,
@@ -10,11 +10,13 @@ import {
     Pressable
 } from 'react-native';
 import CustomButton from "../../components/Home/CustomButton";
-import { shopProduct } from "../../data/stopProductList";
+import { HomeContext } from "../../Navigation/HomeNavigation";
 const windoWidth = Dimensions.get('window').width;
 const windoHeight = Dimensions.get('window').height;
 
 const SeeEditProduct=()=>{
+    const {products} = useContext(HomeContext);
+    console.log((products));
     const navigation=useNavigation();
     return (
         <ScrollView style={{backgroundColor:"white",alignSelf:"center",flex:1,width:windoWidth}}>
@@ -23,16 +25,16 @@ const SeeEditProduct=()=>{
                 <CustomButton title={"Default Products"} onpress={()=>navigation.navigate("defaultproduct")} />
             </View>
             {
-                shopProduct.map((item,index)=>(
+                products.map((item,index)=>(
                     <View style={styles.ProView} key={index}>
                         <Pressable onPress={()=>navigation.navigate("editproduct",{selectedItem:item})} style={{position:"absolute",top:10,right:10}}>
                             <Image
                                 source={require('../../assets/edit.png')}
-                                style={{position:"absolute",width:20,height:20,tintColor:"black",top:10,right:10}}
+                                style={{position:"absolute",width:20,height:20,tintColor:"black",top:10,right:10,resizeMode:"contain"}}
                             />
                         </Pressable>
                         <Image
-                            source={{uri: item.imageUrl}}
+                            source={{uri: item.ProImage}}
                             style={styles.ProImage}
                         />
                         <View style={{width: windoWidth / 2.7}}>
@@ -45,7 +47,7 @@ const SeeEditProduct=()=>{
                                         marginHorizontal: 6,
                                     }}
                                 >
-                                    {item.name}
+                                    {item.ProductName}
                                 </Text>
                             </View>
                             <Text
@@ -56,7 +58,7 @@ const SeeEditProduct=()=>{
                                     marginVertical: 8,
                                     marginHorizontal: 6,
                                 }}>
-                                Price - {item.productPrice}/-
+                                Price - {item.ProductPrice}/-
                             </Text> 
                         </View>
                     </View>

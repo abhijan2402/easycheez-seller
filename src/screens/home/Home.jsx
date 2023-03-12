@@ -1,12 +1,13 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Text, View, StyleSheet, Dimensions, ScrollView, TextInput, Image, TouchableOpacity } from 'react-native'
 import AddPro from '../../components/Home/AddPro';
 import Header from '../../components/Home/Header';
 import ProductCard from '../../components/Home/ProductCard';
+import { HomeContext } from '../../Navigation/HomeNavigation';
 const windoWidth = Dimensions.get('window').width;
 const windoHeight = Dimensions.get('window').height;
 function Home({navigation}) {
-
+    const {productAmount} = useContext(HomeContext);
     return (
         <View style={styles.MainView}>
             <Header title="Home"/>
@@ -20,6 +21,7 @@ function Home({navigation}) {
                         Img="https://cdn-icons-png.flaticon.com/128/859/859270.png" 
                         bg="#FFE589"
                         onpress={()=>navigation.navigate('seeEditproduct')}
+                        number={productAmount}
                     />
                     <ProductCard 
                         title="Offers" 

@@ -24,12 +24,12 @@ const SetProductDetails=()=>{
                 <View style={{alignItems:"center"}}>
                     <View style={{backgroundColor:"#EDEDED",width:width-40,height:width-40,margin:10,borderRadius:10,alignItems:"center",justifyContent:"center"}}>
                         <Image
-                            source={{uri:selectedItem.imageUrl}}
+                            source={{uri:selectedItem.ProImage}}
                             style={{width:'50%',height:'50%',resizeMode:"contain",borderRadius:20}}            
                         />
                     </View>
                     <Text style={{color:"black",fontWeight:"bold",fontSize:15,width:width-50}}>
-                        {selectedItem.name}
+                        {selectedItem.ProductName}
                     </Text>
 
                     <View style={{width:width-50,paddingVertical:10,}}>

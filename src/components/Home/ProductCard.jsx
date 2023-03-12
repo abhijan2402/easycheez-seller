@@ -2,7 +2,7 @@ import React from 'react'
 import { Text, View, StyleSheet, Dimensions, ScrollView, TextInput, Image, TouchableOpacity, Pressable } from 'react-native'
 const windoWidth = Dimensions.get('window').width;
 const windoHeight = Dimensions.get('window').height;
-function ProductCard({title,bg,Img,onpress  }) {
+function ProductCard({title,bg,Img,onpress,number}) {
     return (
         <Pressable style={[styles.MainView,{backgroundColor:bg}]} onPress={onpress}>
             <View style={{marginVertical:10,display:"flex",flexDirection:"row",justifyContent:"space-around"}}>
@@ -11,7 +11,7 @@ function ProductCard({title,bg,Img,onpress  }) {
             </View>
             <View style={{marginVertical:20,display:"flex",flexDirection:"row",justifyContent:"space-around"}}>
                 <Text style={styles.MainSeeText}>{title}</Text>
-                <Text style={styles.MainSeeText}>25</Text>
+                <Text style={styles.MainSeeText}>{number}</Text>
             </View>
         </Pressable>
       )
