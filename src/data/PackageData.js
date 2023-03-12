@@ -36,7 +36,7 @@ const PackageData = [
     },
     {
         id: 1008,
-        imageUrl: "https://www.jiomart.com/p/groceries/patanjali-pure-honey-500-g/491061068#&gid=1&pid=1",
+        imageUrl: "https://www.patanjaliayurved.net/assets/product_images/400x300/1654944706400x300.jpg",
         name: "Patanjali Honey "
     },
     {
@@ -407,7 +407,7 @@ const PackageData = [
     },
     {
         id: 1082,
-        imageUrl: "https://m.media-amazon.com/images/I/51mBeN369DL._SY300_SX300_.jpgf",
+        imageUrl: "https://m.media-amazon.com/images/I/51mBeN369DL._SY300_SX300_.jpg",
         name: "Comfort Morning Fresh Fabric Conditioner 2 L Refill Pack, After Wash Liquid Fabric Softener - For Softness, Shine & Long Lasting Freshness"
     },
     {
