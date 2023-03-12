@@ -27,7 +27,7 @@ function Home({navigation}) {
                         title="Offers"
                         Img="https://cdn-icons-png.flaticon.com/128/3176/3176371.png"
                         bg="#62D7C2"
-                        onpress={() => navigation.navigate('Offer')}
+                        onpress={() => navigation.navigate('Offers')}
                     // onpress={()=>navigation.navigate('AddProduct')}
                     />
                 </View>

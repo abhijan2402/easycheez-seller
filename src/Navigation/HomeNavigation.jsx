@@ -6,6 +6,7 @@ import SeeEditProduct from '../screens/home/SeeEditProduct';
 import SetProductDetails from '../screens/home/SetProductDetails';
 import DefaultProduct from '../screens/store/DefaultProduct';
 import Package from '../screens/store/Package';
+import Offer from '../screens/home/Offer';
 const Stack = createNativeStackNavigator();
 
 const HomeNavigation = () => {
@@ -17,6 +18,7 @@ const HomeNavigation = () => {
           <Stack.Screen name="editproduct" component={SetProductDetails}/>
           <Stack.Screen name="defaultproduct" component={DefaultProduct}/>
           <Stack.Screen name="package" component={Package}/>
+          <Stack.Screen name="Offers" component={Offer}/>
       </Stack.Navigator>
   )
 }
