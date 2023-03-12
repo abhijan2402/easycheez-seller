@@ -11,18 +11,19 @@ import {
 } from 'react-native';
 import CustomButton from "../../components/Home/CustomButton";
 import { HomeContext } from "../../Navigation/HomeNavigation";
+import { MainContext } from "../../Navigation/MainNavigation";
 const windoWidth = Dimensions.get('window').width;
 const windoHeight = Dimensions.get('window').height;
 
 const SeeEditProduct=()=>{
-    const {products} = useContext(HomeContext);
-    console.log((products));
+    const {products} = useContext(MainContext);
     const navigation=useNavigation();
     return (
         <ScrollView style={{backgroundColor:"white",alignSelf:"center",flex:1,width:windoWidth}}>
             <View style={{flexDirection: 'row',justifyContent:"space-between",padding:15}}>
-                <CustomButton title={"Add Packages"} onpress={()=>navigation.navigate("package")} />
-                <CustomButton title={"Default Products"} onpress={()=>navigation.navigate("defaultproduct")} />
+                {/* <CustomButton title={"Add Packages"} onpress={()=>navigation.navigate("package")} />
+                <CustomButton title={"Default Products"} onpress={()=>navigation.navigate("defaultproduct")} /> */}
+                <Text style={{color:"black",fontWeight:"bold",padding:10,textAlign:"center",width:'100%',fontSize:25}}>Default Product</Text>
             </View>
             {
                 products.map((item,index)=>(
@@ -72,6 +73,7 @@ const styles = StyleSheet.create({
       width: windoWidth / 2.8,
       height: 100,
       alignItems: 'center',
+      resizeMode:"contain"
     },
     ProView: {
       display: 'flex',

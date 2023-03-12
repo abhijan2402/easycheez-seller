@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
     View,
     Text,
@@ -9,10 +9,15 @@ import {
 } from 'react-native';
 import { shopProductData } from "../../data/shopProductData";
 import DropDownPicker from 'react-native-dropdown-picker';
+import { MainContext } from "../../Navigation/MainNavigation";
 
 const{width,height}=Dimensions.get('window')
 
 const StoreAnalysis=()=>{
+    const {productAmount} = useContext(MainContext);
+    const {orders} = useContext(MainContext);
+    console.log(productAmount);
+
     const [dateOpen, setDateOpen] = useState(false);
     const [monthOpen, setMonthOpen] = useState(false);
     const [dateValue, setDateValue] = useState(null);
@@ -62,14 +67,18 @@ const StoreAnalysis=()=>{
                         </View>
                     </View>
                     <View style={{flexDirection:"row",flexWrap:"wrap",justifyContent:"space-evenly"}}>
-                        {
-                            shopProductData.map((item,index)=>(
-                                <View style={styles.shopProductDataCard} key={index}>
-                                    <Text style={{color:"black",fontWeight:"600"}}>{item.title}</Text>
-                                    <Text style={{color:"black",fontWeight:"600"}}>{item.available}</Text>
-                                </View>
-                            ))
-                        }
+                        <View style={styles.shopProductDataCard}>
+                            <Text style={{color:"black",fontWeight:"600"}}>Total Products</Text>
+                            <Text style={{color:"black",fontWeight:"600"}}>{productAmount}</Text>
+                        </View>
+                        <View style={styles.shopProductDataCard}>
+                            <Text style={{color:"black",fontWeight:"600"}}>Total Offers</Text>
+                            <Text style={{color:"black",fontWeight:"600"}}>0</Text>
+                        </View>
+                        <View style={[styles.shopProductDataCard,{width:width/1.20,height:70}]}>
+                            <Text style={{color:"black",fontWeight:"600"}}>Total Orders</Text>
+                            <Text style={{color:"black",fontWeight:"600"}}>{orders.length}</Text>
+                        </View>
                     </View>
                 </View>
             </View>

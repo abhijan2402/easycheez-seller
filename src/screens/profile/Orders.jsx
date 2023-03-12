@@ -6,18 +6,19 @@ import {
     StyleSheet,
     ScrollView,
     Image,
-    RefreshControl
+    RefreshControl,
+    LogBox
 } from 'react-native';
 import OrderButton from '../../components/Home/orderButton';
 import OrderList from '../../components/Home/OrderList';
-import firestore from '@react-native-firebase/firestore';
-import { GlobalVariable } from '../../../App';
+import { MainContext } from '../../Navigation/MainNavigation';
 const {width,height}=Dimensions.get('window');
 
 const Orders=()=>{
-    const { userDetails } = useContext(GlobalVariable);
-    
-    const [orderList,setOrderList]=useState([]);
+    const {orders,setOrders} = useContext(MainContext);
+
+
+    const [orderList,setOrderList]=useState(orders);
     const [filteredOrders,setFilteredOrders]=useState([]);
     const [selectedFeature,setSelectedFeature]=useState("allorders");
 
@@ -35,31 +36,17 @@ const Orders=()=>{
         setFilteredOrders(orderList)
     }
 
-    useEffect(()=>{
-        getAllOrders()
-    },[])
 
     const onRefresh = React.useCallback(async() => {
         setRefreshing(true);
-        await getAllOrders()
+        setOrderList(await setOrders());
         setRefreshing(false);
-      }, []);
+    }, []);
 
-    const getAllOrders=async()=>{
-        let resultArray=[];
-        firestore().collection("OrderPage").where("shopID","==",userDetails.userDetails.storeID).get()
-        .then((res)=>{
-            res.forEach((data)=>{
-                resultArray.push({...data._data,OrderID:data.id});
-            })
-            setOrderList(resultArray)
-        })
-        .catch((e)=>{
-            console.log(e);
-        })
-    }
     return (
+        LogBox.ignoreAllLogs(),
         <ScrollView style={sytles.container}
+        
             refreshControl={
                 <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }

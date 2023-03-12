@@ -27,7 +27,7 @@ function Account({ navigation }) {
                 setStoreDetails(res._data);
                 firestore().collection("SellerShop").doc(userDetails.userDetails.profileID).get()
                     .then((res) => {
-                        setUserDetails({ ...res._data, id: userUid.uid })
+                        setUserDetails({ ...res._data, id: userUid.uid });
                     })
                     .catch((e) => {
                         console.log(e)
@@ -73,7 +73,7 @@ function Account({ navigation }) {
                 </View> */}
                 <View style={styles.OptiionView}>
                     <Image source={{ uri: "https://cdn-icons-png.flaticon.com/128/8822/8822225.png" }} style={styles.LogoImage} />
-                    <Text style={styles.OptionText} onPress={() => { navigation.navigate('Subscription') }}>Subscription</Text>
+                    <Text style={styles.OptionText} onPress={() => { navigation.navigate('Subscription',{userData:userDetail}) }}>Subscription</Text>
                     <Image source={{ uri: "https://cdn-icons-png.flaticon.com/128/2989/2989988.png" }} style={styles.LogoImage} />
                 </View>
                 <View style={styles.OptiionView}>

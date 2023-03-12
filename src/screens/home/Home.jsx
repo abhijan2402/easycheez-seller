@@ -3,11 +3,11 @@ import { Text, View, StyleSheet, Dimensions, ScrollView, TextInput, Image, Touch
 import AddPro from '../../components/Home/AddPro';
 import Header from '../../components/Home/Header';
 import ProductCard from '../../components/Home/ProductCard';
-import { HomeContext } from '../../Navigation/HomeNavigation';
+import { MainContext } from '../../Navigation/MainNavigation';
 const windoWidth = Dimensions.get('window').width;
 const windoHeight = Dimensions.get('window').height;
 function Home({navigation}) {
-    const {productAmount} = useContext(HomeContext);
+    const {productAmount} = useContext(MainContext);
     return (
         <View style={styles.MainView}>
             <Header title="Home"/>

@@ -1,9 +1,12 @@
+import { useRoute } from '@react-navigation/native';
 import React, { useState } from 'react'
 import { View ,Text,StyleSheet,Image,Dimensions, TouchableOpacity} from 'react-native'
 import Header from '../../components/Home/Header'
 const windoWidth = Dimensions.get('window').width;
 const windoHeight = Dimensions.get('window').height;
 function Subscription() {
+    const route=useRoute();
+    const {userData} = route.params;
     const [CheckBox1, setCheckBox1] = useState(false)
     const [CheckBox2, setCheckBox2] = useState(false)
     const Check=()=>{
@@ -18,7 +21,7 @@ function Subscription() {
     <View style={styles.MainView}>
         <Header title="Subscription"/>
         <View>
-            <Text style={styles.NameText}>Hello Abhishek</Text>
+            <Text style={styles.NameText}>Hello, {userData.FirstName} {userData.LastName}</Text>
         </View>
         <TouchableOpacity style={[styles.MainBox,{borderWidth:CheckBox1?2:0,borderColor:CheckBox1?"#F05656":"green"}]} onPress={Check} >
             <Text style={styles.SubsText}>Subscription-</Text>
