@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import {
     View,
     Text,
@@ -7,7 +7,8 @@ import {
     ScrollView,
     Dimensions,
     Image,
-    Pressable
+    Pressable,
+    RefreshControl
 } from 'react-native';
 import CustomButton from "../../components/Home/CustomButton";
 import { HomeContext } from "../../Navigation/HomeNavigation";
@@ -16,17 +17,29 @@ const windoWidth = Dimensions.get('window').width;
 const windoHeight = Dimensions.get('window').height;
 
 const SeeEditProduct=()=>{
-    const {products} = useContext(MainContext);
+    const {products,getProducts} = useContext(MainContext);
+    const [allProduct,setAllProducts]=useState(products)
     const navigation=useNavigation();
+    const [refreshing, setRefreshing] = useState(false);
+
+    const onRefresh = React.useCallback(async() => {
+        setRefreshing(true);
+        setAllProducts(await getProducts())
+        setRefreshing(false);
+    }, []);
     return (
-        <ScrollView style={{backgroundColor:"white",alignSelf:"center",flex:1,width:windoWidth}}>
+        <ScrollView style={{backgroundColor:"white",alignSelf:"center",flex:1,width:windoWidth}}
+            refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+        >
             <View style={{flexDirection: 'row',justifyContent:"space-between",padding:15}}>
                 {/* <CustomButton title={"Add Packages"} onpress={()=>navigation.navigate("package")} />
                 <CustomButton title={"Default Products"} onpress={()=>navigation.navigate("defaultproduct")} /> */}
-                <Text style={{color:"black",fontWeight:"bold",padding:10,textAlign:"center",width:'100%',fontSize:25}}>Default Product</Text>
+                <Text style={{color:"black",fontWeight:"bold",padding:10,textAlign:"center",width:'100%',fontSize:25}}>Shop Product</Text>
             </View>
             {
-                products.map((item,index)=>(
+                allProduct.map((item,index)=>(
                     <View style={styles.ProView} key={index}>
                         <Pressable onPress={()=>navigation.navigate("editproduct",{selectedItem:item})} style={{position:"absolute",top:10,right:10}}>
                             <Image

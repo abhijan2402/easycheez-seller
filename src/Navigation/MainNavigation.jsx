@@ -27,13 +27,14 @@ const MainNavigation = () => {
   }, [])
   const getAllProducts = () => {
     const resulArray = [];
-    firestore().collection("ProductPage").where("storeID", "==", userDetails.userDetails.storeID).get()
-      .then((res) => {
+    return firestore().collection("ProductPage").where("storeID", "==", userDetails.userDetails.storeID).get()
+      .then(async(res) => {
         res._docs.map(item => {
-          resulArray.push(item._data);
+          resulArray.push({...item._data,id:item.id});
         });
         setShopAllProducts([...resulArray])
-        getAllOrders()
+        await getAllOrders()
+        return resulArray
       })
       .catch((e) => {
         console.log(e)
@@ -59,7 +60,8 @@ const MainNavigation = () => {
         products: shopAllProducts,
         productAmount: shopAllProducts.length,
         orders: shopOrders,
-        setOrders: getAllOrders
+        setOrders: getAllOrders,
+        getProducts:getAllProducts
       }}
     >
       <Tab.Navigator

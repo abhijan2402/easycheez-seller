@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Dimensions, FlatList, Image, Modal, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import OrderCard from "./OrderCard";
 
 
 const {width,height}=Dimensions.get('window');
@@ -7,48 +8,15 @@ const {width,height}=Dimensions.get('window');
 const OrderList=({orderList})=>{
     const [showmodal,setShowModal]=useState(false);
     const [selectedOrder,setSelectedOrder]=useState('');
-    const orderCard=(({item})=>(
-        <View style={styles.orderCard}>
-        <View style={{width:"100%",justifyContent:"space-around",flexDirection:"row",padding:5,borderBottomColor:"black",borderBottomWidth:1}}>
-            <View style={{alignItems:"center"}}>
-                <Text style={styles.titleHeader}>OrderID</Text>
-                <Text style={[styles.titleHeader,{fontSize:10}]}>{item.OrderID}</Text>
-            </View>
-            <View style={{alignItems:"center"}}>
-                <Text style={styles.titleHeader}>Amount</Text>
-                <Text style={styles.titleHeader}>{item.totalAmount}</Text>
-            </View>
-            <View style={{alignItems:"center"}}>
-                <Text style={styles.titleHeader}>Items</Text>
-                <Text style={styles.titleHeader}>{item.numOfItems}</Text>
-            </View>
-            </View>
-            <View style={{width:"100%",justifyContent:"space-around",padding:10,borderBottomColor:"black",borderBottomWidth:2}}>
-                <Text style={styles.titleHeader}>Place On {item.orderDate}</Text>
-                <Text style={styles.titleHeader}>{item.orderDate}</Text>
-            </View>
-            <View style={{width:"100%",justifyContent:"space-around",flexDirection:"row",padding:15,}}>
-                <Pressable style={{flexDirection:"row",justifyContent: 'center',alignItems: 'center',}} 
-                    onPress={()=>{
-                        setSelectedOrder(item)
-                        setShowModal(!showmodal)
-                    }}
-                >
-                    <Text style={styles.titleHeader}>View Details</Text>
-                    <Image style={{width:15,height:15,marginLeft:4}} source={{uri:"https://cdn-icons-png.flaticon.com/128/32/32195.png"}} />
-                </Pressable>
-                <Pressable style={[styles.orderStatus,item.orderStatus==="In progress"?{backgroundColor:"#F05656"}:{backgroundColor:"#7DFFA2"}]}>
-                    <Text style={[styles.titleHeader,item.orderStatus==="In progress"?{color:"white"}:{color:"black"}]}>{item.orderStatus}</Text>
-                </Pressable>
-            </View>
-        </View>
-    ))
     return(
         <View>
             <FlatList
                 data={orderList}
                 keyExtractor={item=>item.OrderID}
-                renderItem={orderCard}
+                renderItem={({item}) => <OrderCard item={item} setSelected={(item)=>{
+                    setSelectedOrder(item);
+                    setShowModal(!showmodal)
+                }} />}
             />  
             <Modal visible={showmodal} animationType='slide' transparent={true}>
                 <View style={styles.modeOuter}>
@@ -82,12 +50,6 @@ const OrderList=({orderList})=>{
     )
 }
 const styles=StyleSheet.create({
-    orderCard:{
-        borderColor:"black",
-        borderWidth:2,
-        borderRadius:10,
-        margin: 10,
-    },
     titleHeader:{
         fontWeight:"bold",
         color:"black",
@@ -108,8 +70,6 @@ const styles=StyleSheet.create({
     innnerModel: {
         backgroundColor: 'white',
         borderRadius: 10,
-        // justifyContent: "center",
-        // alignItems: 'center',
         width: width - 20,
         padding:20,
         height:height/2,
@@ -126,13 +86,5 @@ const styles=StyleSheet.create({
         fontWeight:"bold",
         color:"white"
     },
-    orderStatus:{
-        flexDirection:"row",
-        justifyContent: 'center',
-        alignItems: 'center',
-        width:width/2.4,
-        height:40,
-        borderRadius:5
-    }
 })
 export default OrderList;
