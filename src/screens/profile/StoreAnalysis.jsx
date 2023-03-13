@@ -40,7 +40,7 @@ const StoreAnalysis=()=>{
                         source={require('../../assets/qqq.png')}
                         style={{width:width-40,height:width-40,resizeMode:"contain",borderRadius:20}}            
                     />
-                    <View style={{width:width-40,flexDirection: 'row',justifyContent:"space-between",alignItems: 'center',marginVertical:10}}>  
+                    {/* <View style={{width:width-40,flexDirection: 'row',justifyContent:"space-between",alignItems: 'center',marginVertical:10}}>  
                         <View>
                             <DropDownPicker
                                 placeholder="Select Date"
@@ -65,7 +65,7 @@ const StoreAnalysis=()=>{
                                 setItems={setMonths}
                             />
                         </View>
-                    </View>
+                    </View> */}
                     <View style={{flexDirection:"row",flexWrap:"wrap",justifyContent:"space-evenly"}}>
                         <View style={styles.shopProductDataCard}>
                             <Text style={{color:"black",fontWeight:"600"}}>Total Products</Text>
