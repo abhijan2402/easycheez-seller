@@ -37,7 +37,7 @@ function DefaultProduct() {
                 ProOffer: OfferPrice,
                 ProductName: NewName,
                 ProductPrice: price,
-                storeID:userDetails.userDetails.storeID
+                storeID: userDetails.userDetails.storeID
             }
             await firestore()
                 .collection('ProductPage')
@@ -70,12 +70,12 @@ function DefaultProduct() {
                                 {item.name.substring(0, 35)}....
                             </Text>
                             <View style={{ flexDirection: "row", justifyContent: "space-between", borderTopWidth: 1.5 }}>
-                                <TouchableOpacity style={[styles.AddPriceBtn, { borderRightWidth: 1 }]} onPress={() =>  SetVal(item.name, item.ProImage)}>
+                                <TouchableOpacity style={[styles.AddPriceBtn, {}]} onPress={() => SetVal(item.name, item.ProImage)}>
                                     <Text style={{ fontSize: 12, color: "black", fontWeight: "bold" }}>Add Price</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity style={[styles.AddPriceBtn, { borderLeftWidth: 1 }]} onPress={() => SetVal(item.name, item.ProImage)}>
+                                {/* <TouchableOpacity style={[styles.AddPriceBtn, { borderLeftWidth: 1 }]} onPress={() => SetVal(item.name, item.ProImage)}>
                                     <Text style={{ color: "skyblue", fontSize: 12, fontWeight: "bold" }}>Add Offer</Text>
-                                </TouchableOpacity>
+                                </TouchableOpacity> */}
                             </View>
                         </View>
                     ))
@@ -84,7 +84,7 @@ function DefaultProduct() {
                     animationType="slide"
                     transparent={true}
                     visible={modalVisible}
-                    onRequestClose={()=>setModalVisible(false)}
+                    onRequestClose={() => setModalVisible(false)}
                 >
                     <View style={styles.centeredView}>
                         <View style={styles.modalView}>
@@ -99,7 +99,7 @@ function DefaultProduct() {
                                     placeholder={'Add Price'}
                                     onChangeText={value => { setprice(value) }}
                                     keyboardType={"numeric"}
-                                    />
+                                />
                                 <TextInput
                                     placeholderTextColor={"black"}
                                     style={styles.Box}
@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
     ImageView: {
     },
     AddPriceBtn: {
-        width: '50%',
+        width: '100%',
         padding: 5,
         alignItems: 'center',
         justifyContent: 'center',
@@ -166,6 +166,7 @@ const styles = StyleSheet.create({
         color: 'black',
         fontWeight: "bold",
         paddingHorizontal: 10,
+        height: windoHeight / 20
     },
     centeredView: {
         flex: 1,
