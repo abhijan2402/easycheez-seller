@@ -10,21 +10,21 @@ import {
     Pressable,
     RefreshControl
 } from 'react-native';
-import CustomButton from "../../components/Home/CustomButton";
-import { HomeContext } from "../../Navigation/HomeNavigation";
+import { GlobalVariable } from "../../../App";
 import { MainContext } from "../../Navigation/MainNavigation";
+import { getAllProducts } from "../../services/GetAllProcts";
 const windoWidth = Dimensions.get('window').width;
-const windoHeight = Dimensions.get('window').height;
 
 const SeeEditProduct=()=>{
-    const {products,getProducts} = useContext(MainContext);
+    const {products} = useContext(MainContext);
+    const { userDetails } = useContext(GlobalVariable);
     const [allProduct,setAllProducts]=useState(products)
     const navigation=useNavigation();
     const [refreshing, setRefreshing] = useState(false);
 
     const onRefresh = React.useCallback(async() => {
         setRefreshing(true);
-        setAllProducts(await getProducts())
+        setAllProducts(await getAllProducts(userDetails.userDetails.storeID))
         setRefreshing(false);
     }, []);
     return (
@@ -34,8 +34,6 @@ const SeeEditProduct=()=>{
             }
         >
             <View style={{flexDirection: 'row',justifyContent:"space-between",padding:15}}>
-                {/* <CustomButton title={"Add Packages"} onpress={()=>navigation.navigate("package")} />
-                <CustomButton title={"Default Products"} onpress={()=>navigation.navigate("defaultproduct")} /> */}
                 <Text style={{color:"black",fontWeight:"bold",padding:10,textAlign:"center",width:'100%',fontSize:25}}>Shop Product</Text>
             </View>
             {

@@ -13,8 +13,10 @@ import firestore from '@react-native-firebase/firestore';
 
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import DefaultProduct from '../screens/store/DefaultProduct';
-import PackageData from '../data/PackageData';
 import { GlobalVariable } from '../../App';
+import { getAllOrders } from '../services/GetAllOrders';
+import { getAllProducts } from '../services/GetAllProcts';
+import { getAllOffers } from '../services/GetAllOffers';
 const Tab = createBottomTabNavigator();
 export const MainContext = createContext();
 
@@ -22,46 +24,24 @@ const MainNavigation = () => {
   const { userDetails } = useContext(GlobalVariable);
   const [shopAllProducts, setShopAllProducts] = useState([]);
   const [shopOrders, setShopOrders] = useState([]);
+  const [shopOffers,setShopOffers]=useState([]);
+
   useEffect(() => {
-    getAllProducts()
+    async function queryAllData(){
+      setShopAllProducts(await getAllProducts(userDetails.userDetails.storeID));
+      setShopOrders(await getAllOrders(userDetails.userDetails.storeID));
+      setShopOffers(await getAllOffers(userDetails.userDetails.storeID));
+    }
+    queryAllData();
   }, [])
-  const getAllProducts = () => {
-    const resulArray = [];
-    return firestore().collection("ProductPage").where("storeID", "==", userDetails.userDetails.storeID).get()
-      .then(async(res) => {
-        res._docs.map(item => {
-          resulArray.push({...item._data,id:item.id});
-        });
-        setShopAllProducts([...resulArray])
-        await getAllOrders()
-        return resulArray
-      })
-      .catch((e) => {
-        console.log(e)
-      })
-  }
-  const getAllOrders = async () => {
-    let resultArray = [];
-    return firestore().collection("OrderPage").where("shopID", "==", userDetails.userDetails.storeID).get()
-      .then((res) => {
-        res.forEach((data) => {
-          resultArray.push({ ...data._data, OrderID: data.id });
-        })
-        setShopOrders(resultArray)
-        return resultArray
-      })
-      .catch((e) => {
-        console.log(e);
-      })
-  }
   return (
     <MainContext.Provider
       value={{
         products: shopAllProducts,
         productAmount: shopAllProducts.length,
         orders: shopOrders,
-        setOrders: getAllOrders,
-        getProducts:getAllProducts
+        offers:shopOffers,
+        offerAmount:shopOffers.length
       }}
     >
       <Tab.Navigator

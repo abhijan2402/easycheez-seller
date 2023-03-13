@@ -9,14 +9,16 @@ import {
     RefreshControl,
     LogBox
 } from 'react-native';
+import { GlobalVariable } from '../../../App';
 import OrderButton from '../../components/Home/orderButton';
 import OrderList from '../../components/Home/OrderList';
 import { MainContext } from '../../Navigation/MainNavigation';
+import { getAllOrders } from '../../services/GetAllOrders';
 const {width,height}=Dimensions.get('window');
 
 const Orders=()=>{
-    const {orders,setOrders} = useContext(MainContext);
-
+    const {orders} = useContext(MainContext);
+    const { userDetails } = useContext(GlobalVariable);
 
     const [orderList,setOrderList]=useState(orders);
     const [filteredOrders,setFilteredOrders]=useState([]);
@@ -39,7 +41,7 @@ const Orders=()=>{
 
     const onRefresh = React.useCallback(async() => {
         setRefreshing(true);
-        setOrderList(await setOrders());
+        setOrderList(await getAllOrders(userDetails.userDetails.storeID));
         setRefreshing(false);
     }, []);
 

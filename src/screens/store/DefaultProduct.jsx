@@ -1,11 +1,13 @@
 import { useNavigation } from '@react-navigation/native';
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Text, View, StyleSheet, Dimensions, ActivityIndicator, Modal, loading, ScrollView, Pressable, TextInput, Image, TouchableOpacity } from 'react-native'
 const windoWidth = Dimensions.get('window').width;
 const windoHeight = Dimensions.get('window').height;
 import firestore from '@react-native-firebase/firestore';
 import PackageData from '../../data/PackageData';
+import { GlobalVariable } from '../../../App';
 function DefaultProduct() {
+    const { userDetails } = useContext(GlobalVariable);
     const [modalVisible, setModalVisible] = useState(false);
     const [price, setprice] = useState("")
     const [loading, setLoading] = useState(false);
@@ -25,9 +27,9 @@ function DefaultProduct() {
     const AddProd = async () => {
         setLoading(true)
         try {
-            if (OfferPrice == null)
+            if (OfferPrice == '')
                 throw "Please enter Offer Price";
-            if (price == null)
+            if (price == '')
                 throw "Please enter Price";
             const ProdDetails = {
                 Category: "Grocery",
@@ -35,12 +37,12 @@ function DefaultProduct() {
                 ProOffer: OfferPrice,
                 ProductName: NewName,
                 ProductPrice: price,
+                storeID:userDetails.userDetails.storeID
             }
             await firestore()
                 .collection('ProductPage')
                 .add(ProdDetails)
-                .then((res) => {
-                    // console.log(res)
+                .then(() => {
                     setLoading(false)
                     setModalVisible(false)
                 })
@@ -62,16 +64,16 @@ function DefaultProduct() {
                     PackageData.map((item) => (
                         <View key={item.id} style={{ marginVertical: 10, elevation: 10, backgroundColor: "white", marginHorizontal: 4, borderRadius: 8, width: windoWidth / 2.2, }} >
                             <View style={styles.ImageView}>
-                                <Image source={{ uri: item.imageUrl }} style={styles.ImagePro} />
+                                <Image source={{ uri: item.ProImage }} style={styles.ImagePro} />
                             </View>
                             <Text style={styles.ProText}>
                                 {item.name.substring(0, 35)}....
                             </Text>
                             <View style={{ flexDirection: "row", justifyContent: "space-between", borderTopWidth: 1.5 }}>
-                                <TouchableOpacity style={[styles.AddPriceBtn, { borderRightWidth: 1 }]} onPress={() => navigation.navigate("editproduct", { selectedItem: item })}>
+                                <TouchableOpacity style={[styles.AddPriceBtn, { borderRightWidth: 1 }]} onPress={() =>  SetVal(item.name, item.ProImage)}>
                                     <Text style={{ fontSize: 12, color: "black", fontWeight: "bold" }}>Add Price</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity style={[styles.AddPriceBtn, { borderLeftWidth: 1 }]} onPress={() => SetVal(item.name, item.imageUrl)}>
+                                <TouchableOpacity style={[styles.AddPriceBtn, { borderLeftWidth: 1 }]} onPress={() => SetVal(item.name, item.ProImage)}>
                                     <Text style={{ color: "skyblue", fontSize: 12, fontWeight: "bold" }}>Add Offer</Text>
                                 </TouchableOpacity>
                             </View>
@@ -82,6 +84,7 @@ function DefaultProduct() {
                     animationType="slide"
                     transparent={true}
                     visible={modalVisible}
+                    onRequestClose={()=>setModalVisible(false)}
                 >
                     <View style={styles.centeredView}>
                         <View style={styles.modalView}>
@@ -95,13 +98,15 @@ function DefaultProduct() {
                                     style={styles.Box}
                                     placeholder={'Add Price'}
                                     onChangeText={value => { setprice(value) }}
-                                />
+                                    keyboardType={"numeric"}
+                                    />
                                 <TextInput
                                     placeholderTextColor={"black"}
                                     style={styles.Box}
                                     placeholder={'Add Offer Price'}
                                     onChangeText={value => { setOfferPrice(value) }}
                                     autoCapitalize={true}
+                                    keyboardType={"numeric"}
                                 />
                             </View>
                             <TouchableOpacity style={styles.MainButton} onPress={AddProd}>

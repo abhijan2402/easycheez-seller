@@ -7,7 +7,7 @@ import { MainContext } from '../../Navigation/MainNavigation';
 const windoWidth = Dimensions.get('window').width;
 const windoHeight = Dimensions.get('window').height;
 function Home({ navigation }) {
-    const { productAmount } = useContext(MainContext);
+    const { productAmount,offerAmount } = useContext(MainContext);
     return (
         <View style={styles.MainView}>
             <Header title="Home" />
@@ -22,12 +22,13 @@ function Home({ navigation }) {
                         bg="#FFE589"
                         onpress={() => navigation.navigate('seeEditproduct')}
                         number={productAmount}
-                    />
+                        />
                     <ProductCard
                         title="Offers"
                         Img="https://cdn-icons-png.flaticon.com/128/3176/3176371.png"
                         bg="#62D7C2"
                         onpress={() => navigation.navigate('Offers')}
+                        number={offerAmount}
                     // onpress={()=>navigation.navigate('AddProduct')}
                     />
                 </View>

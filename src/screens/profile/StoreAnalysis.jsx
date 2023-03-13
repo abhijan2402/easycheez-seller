@@ -14,7 +14,7 @@ import { MainContext } from "../../Navigation/MainNavigation";
 const{width,height}=Dimensions.get('window')
 
 const StoreAnalysis=()=>{
-    const {productAmount} = useContext(MainContext);
+    const {productAmount,offerAmount} = useContext(MainContext);
     const {orders} = useContext(MainContext);
     console.log(productAmount);
 
@@ -73,7 +73,7 @@ const StoreAnalysis=()=>{
                         </View>
                         <View style={styles.shopProductDataCard}>
                             <Text style={{color:"black",fontWeight:"600"}}>Total Offers</Text>
-                            <Text style={{color:"black",fontWeight:"600"}}>0</Text>
+                            <Text style={{color:"black",fontWeight:"600"}}>{offerAmount}</Text>
                         </View>
                         <View style={[styles.shopProductDataCard,{width:width/1.20,height:70}]}>
                             <Text style={{color:"black",fontWeight:"600"}}>Total Orders</Text>

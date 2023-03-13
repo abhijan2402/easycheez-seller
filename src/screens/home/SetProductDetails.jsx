@@ -1,4 +1,4 @@
-import { useRoute } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import React, { useEffect, useRef, useState } from "react";
 import {
     View,
@@ -11,13 +11,13 @@ import {
     ScrollView,
     ActivityIndicator
 } from 'react-native';
-import { useSafeAreaFrame } from "react-native-safe-area-context";
 import Toast from "../../components/common/Toast";
 import { UpdateProductPrice } from "../../services/UpdatePrice";
 
 const{width,height}=Dimensions.get('window')
 
 const SetProductDetails=()=>{
+    const navigaton=useNavigation();
     const [newPrice,setNewPrice]=useState('');
     const route=useRoute();
     const {selectedItem}=route.params;
@@ -41,6 +41,7 @@ const SetProductDetails=()=>{
                 setToastColorState("rgba(41,250,25,1)")
                 childRef.current.showToast();
                 setNewPrice('')
+                navigaton.goBack()
             }
             else{
                 setToastMessage("Price Not updated");
@@ -114,7 +115,8 @@ const styles=StyleSheet.create({
         padding:10,
         alignItems:"center",
         justifyContent:"center",
-        borderRadius:10
+        borderRadius:10,
+        height:40
     },
     input:{
         backgroundColor:"white",
