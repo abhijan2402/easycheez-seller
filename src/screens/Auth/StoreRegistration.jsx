@@ -58,6 +58,7 @@ const StoreRegistration = ({ navigation }) => {
         Address: Address,
         LandMark: LandMark,
       }
+      setLoading(true)
       await firestore()
         .collection('StoreRegis')
         .add(shopDetails)
@@ -75,6 +76,7 @@ const StoreRegistration = ({ navigation }) => {
             setToastColorState("rgba(41,250,25,1)")
             childRef.current.showToast();
             await setUserData()
+            setLoading(false)
           })
           .catch((error) => {
             console.log(error);
@@ -98,6 +100,7 @@ const StoreRegistration = ({ navigation }) => {
       setToastTextColorState("white")
       setToastColorState("red")
       childRef.current.showToast();
+      setLoading(false)
     }
   }
   return (
