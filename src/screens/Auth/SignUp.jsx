@@ -13,16 +13,16 @@ const SignUp = ({ navigation }) => {
     const [password, setpassword] = useState('');
     const [Cpassword, setCpassword] = useState('');
     const [loading, setLoading] = useState(false)
-    const [coords,setCoords]=useState('');
+    const [coords, setCoords] = useState('');
     const childRef = useRef(null);
 
     const [toastColorState, setToastColorState] = useState('rgba(41,250,25,1)');
     const [toastTextColorState, setToastTextColorState] = useState('black');
     const [toastMessage, setToastMessage] = useState('');
 
-    useEffect(()=>{
+    useEffect(() => {
         Geolocation.getCurrentPosition(info => setCoords(info.coords));
-    },[])
+    }, [])
     const validateUser = async () => {
         try {
             if (email === "" || password === "" || Cpassword === "") {
@@ -35,23 +35,23 @@ const SignUp = ({ navigation }) => {
                 setLoading(true)
                 try {
                     await auth()
-                    .createUserWithEmailAndPassword(email, password)
-                    .then((userCredential) => {
-                        const user = userCredential.user;
-                        return firestore().collection("Users").doc(user.uid).set({
-                            email:email,
-                            accountState:"newprofile",
-                            latitude:coords.latitude,
-                            longitude:coords.longitude
+                        .createUserWithEmailAndPassword(email, password)
+                        .then((userCredential) => {
+                            const user = userCredential.user;
+                            return firestore().collection("Users").doc(user.uid).set({
+                                email: email,
+                                accountState: "newprofile",
+                                latitude: coords.latitude,
+                                longitude: coords.longitude
+                            })
+                                .then(async () => {
+                                    navigation.replace('createprofile')
+                                })
+                                .catch((error) => {
+                                    console.log(error);
+                                })
+                                .finally(() => setLoading(false))
                         })
-                        .then(async() => {
-                            navigation.replace('createprofile')
-                        })
-                        .catch((error) => {
-                            console.log(error);
-                        })
-                        .finally(()=>setLoading(false))
-                    })
                 } catch (error) {
                     console.log(error)
                     setToastMessage('Something went wrong');
@@ -66,7 +66,7 @@ const SignUp = ({ navigation }) => {
             setToastTextColorState("white")
             setToastColorState("red")
             childRef.current.showToast();
-        }finally{
+        } finally {
             setLoading(false)
         }
     }
@@ -81,23 +81,23 @@ const SignUp = ({ navigation }) => {
             <ScrollView style={styles.Background}>
                 <Text style={styles.SubHead}>Sign Up</Text>
                 <Image source={require('../../assets/SignUp.jpg')} style={styles.image} />
-                <View style={{alignItems: 'center',}}>
-                    <TextInput 
+                <View style={{ alignItems: 'center', }}>
+                    <TextInput
                         style={styles.Box}
-                        placeholderTextColor={"black"} 
+                        placeholderTextColor={"black"}
                         placeholder={'Email'}
                         onChangeText={value => { setemail(value) }}
                     />
-                    <TextInput 
-                        style={styles.Box} 
-                        placeholderTextColor={"black"} 
+                    <TextInput
+                        style={styles.Box}
+                        placeholderTextColor={"black"}
                         placeholder={'Password'}
                         onChangeText={value => { setpassword(value) }}
                         autoCapitalize={true}
                     />
-                    <TextInput 
-                        style={styles.Box} 
-                        placeholderTextColor={"black"} 
+                    <TextInput
+                        style={styles.Box}
+                        placeholderTextColor={"black"}
                         placeholder={'Confirm Password'}
                         onChangeText={value => { setCpassword(value) }}
                         autoCapitalize={true}
@@ -105,8 +105,8 @@ const SignUp = ({ navigation }) => {
                     <TouchableOpacity style={styles.Btn} onPress={validateUser}>
                         {
                             loading ?
-                            <ActivityIndicator size={25} color={"white"} /> :
-                            <Text style={styles.BtnTxt}>Create Account</Text>
+                                <ActivityIndicator size={25} color={"white"} /> :
+                                <Text style={styles.BtnTxt}>Create Account</Text>
                         }
                     </TouchableOpacity>
                     <View style={styles.Last}>
@@ -133,33 +133,33 @@ const styles = StyleSheet.create({
         color: "black",
         fontSize: 30,
         fontWeight: '900',
-        textAlign:"center",
-        padding:10
+        textAlign: "center",
+        padding: 10
     },
     image: {
         height: windoHeight / 2,
         width: windoWidth,
     },
     Box: {
-        width:windoWidth/1.4,
-        height:windoHeight/18,
+        width: windoWidth / 1.4,
+        height: windoHeight / 18,
         marginTop: 10,
         borderRadius: 10,
         borderColor: "#808080",
         borderWidth: 1,
-        paddingLeft:10,
-        fontWeight:"bold",
-        color:"black",
-        paddingLeft:10
+        paddingLeft: 10,
+        fontWeight: "bold",
+        color: "black",
+        paddingLeft: 10
     },
     Btn: {
-        width:windoWidth/1.4,
-        height:windoHeight/17,
+        width: windoWidth / 1.4,
+        height: windoHeight / 17,
         marginTop: 10,
         backgroundColor: '#F05656',
         borderRadius: 10,
         marginBottom: 10,
-        alignItems:"center",
+        alignItems: "center",
         justifyContent: 'center',
     },
     BtnTxt: {
