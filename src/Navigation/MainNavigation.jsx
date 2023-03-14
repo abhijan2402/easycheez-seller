@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, style, Image } from 'react-native'
+import { View, Text, StyleSheet, style, Image, ActivityIndicator } from 'react-native'
 import React, { createContext, useContext, useEffect, useState } from 'react'
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -25,15 +25,24 @@ const MainNavigation = () => {
   const [shopAllProducts, setShopAllProducts] = useState([]);
   const [shopOrders, setShopOrders] = useState([]);
   const [shopOffers,setShopOffers]=useState([]);
-
+  const [loading,setLoading]=useState(true)
   useEffect(() => {
     async function queryAllData(){
       setShopAllProducts(await getAllProducts(userDetails.userDetails.storeID));
       setShopOrders(await getAllOrders(userDetails.userDetails.storeID));
       setShopOffers(await getAllOffers(userDetails.userDetails.storeID));
+      setLoading(false)
     }
     queryAllData();
   }, [])
+
+  if (loading) {
+    return (
+      <View style={{ backgroundColor: "white", flex: 1, alignItems: 'center', justifyContent: 'center', }}>
+        <ActivityIndicator size={35} color="blue" />
+      </View>
+    )
+  }
   return (
     <MainContext.Provider
       value={{
